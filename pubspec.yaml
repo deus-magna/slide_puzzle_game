@@ -27,3 +27,4 @@ flutter:
   generate: true
   assets:
    - assets/img/backgrounds/
+   - assets/img/characters/
