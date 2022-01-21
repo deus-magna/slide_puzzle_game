@@ -3,5 +3,9 @@
     "counterAppBarTitle": "Counter",
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
-    }
+    },
+    "difficultEasy": "Easy",
+    "difficultMedium": "Medium",
+    "difficultHard": "Hard",
+    "difficultGooLevel": "God Level"
 }
