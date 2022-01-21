@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 
-class InitialView extends StatelessWidget {
-  const InitialView({Key? key}) : super(key: key);
+class GameView extends StatelessWidget {
+  const GameView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +29,16 @@ class Header extends StatelessWidget {
   }
 }
 
-class PuzzleBoard extends StatelessWidget {
+class PuzzleBoard extends StatefulWidget {
   PuzzleBoard({Key? key}) : super(key: key);
 
+  @override
+  State<PuzzleBoard> createState() => _PuzzleBoardState();
+}
+
+class _PuzzleBoardState extends State<PuzzleBoard> {
   final numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
   final random = [0, 2, 3, 1, 7, 8, 6, 4, 5];
 
   @override
@@ -63,6 +69,7 @@ class PuzzleBoard extends StatelessWidget {
             return numbers[index] != 0
                 ? BoardTile(
                     tile: tiles[index],
+                    onPressed: () => clickGrid(index),
                   )
                 : const SizedBox.shrink();
           },
@@ -70,24 +77,43 @@ class PuzzleBoard extends StatelessWidget {
       ),
     );
   }
+
+  void clickGrid(int index) {
+    if (index - 1 >= 0 && numbers[index - 1] == 0 && index % 3 != 0 ||
+        index + 1 < 9 && numbers[index + 1] == 0 && (index + 1) % 3 != 0 ||
+        (index - 3 >= 0 && numbers[index - 3] == 0) ||
+        (index + 3 < 9 && numbers[index + 3] == 0)) {
+      setState(() {
+        // move++;
+        numbers[numbers.indexOf(0)] = numbers[index];
+        numbers[index] = 0;
+      });
+    }
+    // checkWin();
+  }
 }
 
 class BoardTile extends StatelessWidget {
-  const BoardTile({Key? key, required this.tile}) : super(key: key);
+  const BoardTile({Key? key, required this.tile, this.onPressed})
+      : super(key: key);
 
   final Tile tile;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.amber,
-        boxShadow: const [BoxShadow(offset: Offset(0, 10))],
+    return ElevatedButton(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: Colors.amber,
+          boxShadow: const [BoxShadow(offset: Offset(0, 10))],
+        ),
+        child: Center(
+          child: Text('${tile.currentPosition}'),
+        ),
       ),
-      child: Center(
-        child: Text('${tile.currentPosition}'),
-      ),
+      onPressed: onPressed,
     );
   }
 }

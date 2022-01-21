@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
-import 'package:slide_puzzle_game/presentation/views/initial_view.dart';
+import 'package:slide_puzzle_game/presentation/views/game_view.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const InitialView(),
+      home: const GameView(),
     );
   }
 }
