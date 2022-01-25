@@ -19,6 +19,7 @@ class GameView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: [
+                  SpaceBar(),
                   Header(),
                   const SizedBox(height: 10),
                   PuzzleBoard(),
@@ -27,6 +28,30 @@ class GameView extends StatelessWidget {
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class SpaceBar extends StatelessWidget {
+  const SpaceBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: kToolbarHeight,
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(height: 10),
+          IconButton(
+              onPressed: () => print('Pressed'),
+              icon: const Icon(
+                Icons.volume_off_rounded,
+                color: Colors.white,
+              )),
         ],
       ),
     );
@@ -67,7 +92,7 @@ class SpaceContainer extends StatelessWidget {
         child: Column(
           children: [
             Text(label, style: TextStyle(color: Colors.white)),
-            Text(value, style: TextStyle(color: Colors.white)),
+            Text(value, style: TextStyle(color: Colors.white, fontSize: 30)),
           ],
         ),
       ),
@@ -100,6 +125,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 3,
             mainAxisSpacing: 5,
@@ -143,7 +169,7 @@ class BoardTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
