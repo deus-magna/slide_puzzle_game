@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:slide_puzzle_game/app/app.dart';
+import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
+import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
 
 class GameView extends StatelessWidget {
   const GameView({Key? key}) : super(key: key);
@@ -7,14 +10,24 @@ class GameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Header(),
-            PuzzleBoard(),
-            Menu(),
-          ],
-        ),
+      body: Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          const GameViewBackground(),
+          SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Header(),
+                  const SizedBox(height: 10),
+                  PuzzleBoard(),
+                  Menu(),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -25,7 +38,40 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Slide Puzzle'));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const [
+        SpaceContainer(label: 'TIMER', value: '00:02:30'),
+        SizedBox(width: 20),
+        SpaceContainer(
+          label: 'MOVES',
+          value: '25',
+        ),
+      ],
+    );
+  }
+}
+
+class SpaceContainer extends StatelessWidget {
+  const SpaceContainer({Key? key, required this.label, required this.value})
+      : super(key: key);
+
+  final String label;
+  final String value;
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: spaceContainerDecoration,
+        child: Column(
+          children: [
+            Text(label, style: TextStyle(color: Colors.white)),
+            Text(value, style: TextStyle(color: Colors.white)),
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -49,12 +95,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
         .toList();
     final height = MediaQuery.of(context).size.height;
     return Container(
-      margin: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.green,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(width: 3, color: Colors.yellow),
-      ),
+      decoration: spaceContainerDecoration,
       height: height * 0.50,
       child: Padding(
         padding: const EdgeInsets.all(8),

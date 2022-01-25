@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
-import 'package:slide_puzzle_game/presentation/widgets/background_image.dart';
+import 'package:slide_puzzle_game/presentation/widgets/difficult_view_background.dart';
 
 class DifficultyView extends StatelessWidget {
   const DifficultyView({Key? key}) : super(key: key);
@@ -15,7 +15,7 @@ class DifficultyView extends StatelessWidget {
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          const BackgroundImage(
+          const DifficultViewBackground(
             backgroundImage:
                 'assets/img/backgrounds/difficult_view_background.png',
           ),

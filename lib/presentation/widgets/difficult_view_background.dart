@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 
-class BackgroundImage extends StatelessWidget {
-  const BackgroundImage({
+class DifficultViewBackground extends StatelessWidget {
+  const DifficultViewBackground({
     Key? key,
     required this.backgroundImage,
   }) : super(key: key);
