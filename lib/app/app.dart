@@ -7,9 +7,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:slide_puzzle_game/core/router/routing.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
-import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
-import 'package:slide_puzzle_game/presentation/views/game_view.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -17,6 +16,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Slide the Space',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
@@ -29,7 +29,8 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      home: const DifficultyView(),
+      initialRoute: '/difficult',
+      routes: getApplicationRoutes(),
     );
   }
 }
