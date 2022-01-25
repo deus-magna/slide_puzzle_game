@@ -112,35 +112,43 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
 
   final random = [0, 2, 3, 1, 7, 8, 6, 4, 5];
 
+  List<Tile> mockTiles() {
+    final tiles = <Tile>[];
+    for (final index in numbers) {
+      tiles.add(
+        Tile(
+            source: 'assets/img/tiles/uan/uan_$index.png',
+            validPosition: index,
+            currentPosition: index),
+      );
+    }
+    return tiles;
+  }
+
   @override
   Widget build(BuildContext context) {
-    final tiles = numbers
-        .map((number) =>
-            Tile(source: '', validPosition: number, currentPosition: number))
-        .toList();
-    final height = MediaQuery.of(context).size.height;
+    final tiles = mockTiles();
+    final size = MediaQuery.of(context).size;
     return Container(
       decoration: spaceContainerDecoration,
-      height: height * 0.50,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: GridView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            mainAxisSpacing: 5,
-            crossAxisSpacing: 5,
-          ),
-          itemCount: numbers.length,
-          itemBuilder: (context, index) {
-            return numbers[index] != 0
-                ? BoardTile(
-                    tile: tiles[index],
-                    onPressed: () => clickGrid(index),
-                  )
-                : const SizedBox.shrink();
-          },
+      height: size.width - 30,
+      child: GridView.builder(
+        padding: const EdgeInsets.all(10),
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
         ),
+        itemCount: numbers.length,
+        itemBuilder: (context, index) {
+          return numbers[index] != 0
+              ? BoardTile(
+                  tile: tiles[index],
+                  onPressed: () => clickGrid(index),
+                )
+              : const SizedBox.shrink();
+        },
       ),
     );
   }
@@ -170,17 +178,27 @@ class BoardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
+      style: TextButton.styleFrom(
+        padding: EdgeInsets.zero,
+      ),
+      onPressed: onPressed,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.amber,
           boxShadow: const [BoxShadow(offset: Offset(0, 10))],
         ),
-        child: Center(
-          child: Text('${tile.currentPosition}'),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image(
+            image: AssetImage(tile.source),
+            fit: BoxFit.cover,
+          ),
         ),
+        // child: Center(
+        //   child: Text('${tile.currentPosition}'),
+        // ),
       ),
-      onPressed: onPressed,
     );
   }
 }
