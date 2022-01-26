@@ -112,6 +112,8 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
 
   final random = [0, 2, 3, 1, 7, 8, 6, 4, 5];
 
+  AlignmentGeometry _alignment = Alignment.topCenter;
+
   List<Tile> mockTiles() {
     final tiles = <Tile>[];
     for (final index in numbers) {
@@ -143,9 +145,14 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
         itemCount: numbers.length,
         itemBuilder: (context, index) {
           return numbers[index] != 0
-              ? BoardTile(
-                  tile: tiles[index],
-                  onPressed: () => clickGrid(index),
+              ? AnimatedAlign(
+                  alignment: _alignment,
+                  duration: const Duration(seconds: 1),
+                  curve: Curves.easeInOut,
+                  child: BoardTile(
+                    tile: tiles[index],
+                    onPressed: () => clickGrid(index),
+                  ),
                 )
               : const SizedBox.shrink();
         },
@@ -160,8 +167,9 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
         (index + 3 < 9 && numbers[index + 3] == 0)) {
       setState(() {
         // move++;
-        numbers[numbers.indexOf(0)] = numbers[index];
-        numbers[index] = 0;
+        // numbers[numbers.indexOf(0)] = numbers[index];
+        // numbers[index] = 0;
+        _alignment = Alignment.bottomCenter;
       });
     }
     // checkWin();
@@ -184,12 +192,12 @@ class BoardTile extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           color: Colors.amber,
           boxShadow: const [BoxShadow(offset: Offset(0, 10))],
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           child: Image(
             image: AssetImage(tile.source),
             fit: BoxFit.cover,

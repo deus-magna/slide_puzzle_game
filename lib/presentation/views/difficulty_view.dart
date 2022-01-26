@@ -26,7 +26,7 @@ class DifficultyView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SpaceButton(
-                  onPressed: () => Navigator.of(context).pushNamed('/game'),
+                  onPressed: () => Navigator.of(context).pushNamed('/test'),
                   title: AppLocalizations.of(context).difficultEasy,
                   constraints: constraints,
                 ),
