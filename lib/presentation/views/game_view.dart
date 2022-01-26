@@ -115,15 +115,63 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
   AlignmentGeometry _alignment = Alignment.topCenter;
 
   List<Tile> mockTiles() {
-    final tiles = <Tile>[];
-    for (final index in numbers) {
-      tiles.add(
-        Tile(
-            source: 'assets/img/tiles/uan/uan_$index.png',
-            validPosition: index,
-            currentPosition: index),
-      );
-    }
+    final tiles = <Tile>[
+      Tile(
+        value: 0,
+        source: 'assets/img/tiles/uan/uan_0.png',
+        validPosition: const Position(x: 1, y: 1),
+        currentPosition: const Position(x: 1, y: 1),
+      ),
+      Tile(
+        value: 1,
+        source: 'assets/img/tiles/uan/uan_1.png',
+        validPosition: const Position(x: 2, y: 1),
+        currentPosition: const Position(x: 2, y: 1),
+      ),
+      Tile(
+        value: 2,
+        source: 'assets/img/tiles/uan/uan_2.png',
+        validPosition: const Position(x: 3, y: 1),
+        currentPosition: const Position(x: 3, y: 1),
+      ),
+      Tile(
+        value: 3,
+        source: 'assets/img/tiles/uan/uan_3.png',
+        validPosition: const Position(x: 1, y: 2),
+        currentPosition: const Position(x: 1, y: 2),
+      ),
+      Tile(
+        value: 4,
+        source: 'assets/img/tiles/uan/uan_4.png',
+        validPosition: const Position(x: 2, y: 2),
+        currentPosition: const Position(x: 2, y: 2),
+      ),
+      Tile(
+        value: 5,
+        source: 'assets/img/tiles/uan/uan_5.png',
+        validPosition: const Position(x: 3, y: 2),
+        currentPosition: const Position(x: 3, y: 2),
+      ),
+      Tile(
+        value: 6,
+        source: 'assets/img/tiles/uan/uan_6.png',
+        validPosition: const Position(x: 1, y: 3),
+        currentPosition: const Position(x: 1, y: 3),
+      ),
+      Tile(
+        value: 7,
+        source: 'assets/img/tiles/uan/uan_7.png',
+        validPosition: const Position(x: 2, y: 3),
+        currentPosition: const Position(x: 2, y: 3),
+      ),
+      Tile(
+        value: 8,
+        source: 'assets/img/tiles/uan/uan_8.png',
+        validPosition: const Position(x: 3, y: 3),
+        currentPosition: const Position(x: 3, y: 3),
+      ),
+    ];
+
     return tiles;
   }
 
