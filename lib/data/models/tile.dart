@@ -1,41 +1,28 @@
-class Tile {
+import 'package:equatable/equatable.dart';
+import 'package:slide_puzzle_game/data/models/position.dart';
+
+class Tile extends Equatable {
   Tile({
-    required this.value,
     required this.source,
+    required this.value,
     required this.validPosition,
     required this.currentPosition,
   });
 
-  final int value;
   final String source;
+  final int value;
   final Position validPosition;
   final Position currentPosition;
-}
 
-class Position implements Comparable<Position> {
-  /// {@macro position}
-  const Position({required this.x, required this.y});
-
-  /// The x position.
-  final int x;
-
-  /// The y position.
-  final int y;
+  Tile move(Position newPosition) {
+    return Tile(
+      source: source,
+      value: value,
+      validPosition: validPosition,
+      currentPosition: newPosition,
+    );
+  }
 
   @override
-  int compareTo(Position other) {
-    if (y < other.y) {
-      return -1;
-    } else if (y > other.y) {
-      return 1;
-    } else {
-      if (x < other.x) {
-        return -1;
-      } else if (x > other.x) {
-        return 1;
-      } else {
-        return 0;
-      }
-    }
-  }
+  List<Object?> get props => [source, value, validPosition, currentPosition];
 }

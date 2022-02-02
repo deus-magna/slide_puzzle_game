@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/app/app.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
 
 class GameView extends StatelessWidget {
@@ -10,25 +12,35 @@ class GameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          const GameViewBackground(),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  SpaceBar(),
-                  Header(),
-                  const SizedBox(height: 10),
-                  PuzzleBoard(),
-                  Menu(),
-                ],
-              ),
-            ),
-          ),
-        ],
+      body: BlocProvider(
+        create: (context) => GameCubit(),
+        child: BlocBuilder<GameCubit, GameState>(
+          builder: (_, state) {
+            return Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                const GameViewBackground(),
+                SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Column(
+                      children: [
+                        const SpaceBar(),
+                        const Header(),
+                        const SizedBox(height: 10),
+                        AspectRatio(
+                          aspectRatio: 1,
+                          child: PuzzleBoard(state: state),
+                        ),
+                        Menu(state: state),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -100,170 +112,98 @@ class SpaceContainer extends StatelessWidget {
   }
 }
 
-class PuzzleBoard extends StatefulWidget {
-  PuzzleBoard({Key? key}) : super(key: key);
+class PuzzleBoard extends StatelessWidget {
+  const PuzzleBoard({Key? key, required this.state}) : super(key: key);
 
-  @override
-  State<PuzzleBoard> createState() => _PuzzleBoardState();
-}
-
-class _PuzzleBoardState extends State<PuzzleBoard> {
-  final numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
-
-  final random = [0, 2, 3, 1, 7, 8, 6, 4, 5];
-
-  AlignmentGeometry _alignment = Alignment.topCenter;
-
-  List<Tile> mockTiles() {
-    final tiles = <Tile>[
-      Tile(
-        value: 0,
-        source: 'assets/img/tiles/uan/uan_0.png',
-        validPosition: const Position(x: 1, y: 1),
-        currentPosition: const Position(x: 1, y: 1),
-      ),
-      Tile(
-        value: 1,
-        source: 'assets/img/tiles/uan/uan_1.png',
-        validPosition: const Position(x: 2, y: 1),
-        currentPosition: const Position(x: 2, y: 1),
-      ),
-      Tile(
-        value: 2,
-        source: 'assets/img/tiles/uan/uan_2.png',
-        validPosition: const Position(x: 3, y: 1),
-        currentPosition: const Position(x: 3, y: 1),
-      ),
-      Tile(
-        value: 3,
-        source: 'assets/img/tiles/uan/uan_3.png',
-        validPosition: const Position(x: 1, y: 2),
-        currentPosition: const Position(x: 1, y: 2),
-      ),
-      Tile(
-        value: 4,
-        source: 'assets/img/tiles/uan/uan_4.png',
-        validPosition: const Position(x: 2, y: 2),
-        currentPosition: const Position(x: 2, y: 2),
-      ),
-      Tile(
-        value: 5,
-        source: 'assets/img/tiles/uan/uan_5.png',
-        validPosition: const Position(x: 3, y: 2),
-        currentPosition: const Position(x: 3, y: 2),
-      ),
-      Tile(
-        value: 6,
-        source: 'assets/img/tiles/uan/uan_6.png',
-        validPosition: const Position(x: 1, y: 3),
-        currentPosition: const Position(x: 1, y: 3),
-      ),
-      Tile(
-        value: 7,
-        source: 'assets/img/tiles/uan/uan_7.png',
-        validPosition: const Position(x: 2, y: 3),
-        currentPosition: const Position(x: 2, y: 3),
-      ),
-      Tile(
-        value: 8,
-        source: 'assets/img/tiles/uan/uan_8.png',
-        validPosition: const Position(x: 3, y: 3),
-        currentPosition: const Position(x: 3, y: 3),
-      ),
-    ];
-
-    return tiles;
-  }
+  final GameState state;
 
   @override
   Widget build(BuildContext context) {
-    final tiles = mockTiles();
-    final size = MediaQuery.of(context).size;
     return Container(
       decoration: spaceContainerDecoration,
-      height: size.width - 30,
-      child: GridView.builder(
-        padding: const EdgeInsets.all(10),
-        physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 5,
-        ),
-        itemCount: numbers.length,
-        itemBuilder: (context, index) {
-          return numbers[index] != 0
-              ? AnimatedAlign(
-                  alignment: _alignment,
-                  duration: const Duration(seconds: 1),
-                  curve: Curves.easeInOut,
-                  child: BoardTile(
-                    tile: tiles[index],
-                    onPressed: () => clickGrid(index),
-                  ),
-                )
-              : const SizedBox.shrink();
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final tileSize = constraints.maxWidth / state.size;
+          return AbsorbPointer(
+            absorbing: state.status != GameStatus.playing,
+            child: Stack(
+              children: state.puzzle.tiles
+                  .map((tile) => BoardTile(
+                        tile: tile,
+                        size: tileSize,
+                        onPressed: () =>
+                            context.read<GameCubit>().onTileTapped(tile),
+                      ))
+                  .toList(),
+            ),
+          );
         },
       ),
     );
   }
-
-  void clickGrid(int index) {
-    if (index - 1 >= 0 && numbers[index - 1] == 0 && index % 3 != 0 ||
-        index + 1 < 9 && numbers[index + 1] == 0 && (index + 1) % 3 != 0 ||
-        (index - 3 >= 0 && numbers[index - 3] == 0) ||
-        (index + 3 < 9 && numbers[index + 3] == 0)) {
-      setState(() {
-        // move++;
-        // numbers[numbers.indexOf(0)] = numbers[index];
-        // numbers[index] = 0;
-        _alignment = Alignment.bottomCenter;
-      });
-    }
-    // checkWin();
-  }
 }
 
 class BoardTile extends StatelessWidget {
-  const BoardTile({Key? key, required this.tile, this.onPressed})
-      : super(key: key);
+  const BoardTile({
+    Key? key,
+    required this.tile,
+    this.onPressed,
+    required this.size,
+  }) : super(key: key);
 
   final Tile tile;
+  final double size;
   final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: TextButton.styleFrom(
-        padding: EdgeInsets.zero,
-      ),
-      onPressed: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.amber,
-          boxShadow: const [BoxShadow(offset: Offset(0, 10))],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image(
-            image: AssetImage(tile.source),
-            fit: BoxFit.cover,
+    return AnimatedPositioned(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeInOut,
+      left: tile.currentPosition.x * size,
+      top: tile.currentPosition.y * size,
+      child: GestureDetector(
+        onTap: onPressed,
+        child: Container(
+          margin: const EdgeInsets.all(5),
+          width: size - 5,
+          height: size - 5,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.amber,
+            boxShadow: const [BoxShadow(offset: Offset(0, 10))],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            // child: Center(
+            //   child: Text('${tile.value}'),
+            // ),
+            child: Image(
+              image: AssetImage(tile.source),
+              fit: BoxFit.cover,
+            ),
           ),
         ),
-        // child: Center(
-        //   child: Text('${tile.currentPosition}'),
-        // ),
       ),
     );
   }
 }
 
 class Menu extends StatelessWidget {
-  const Menu({Key? key}) : super(key: key);
+  const Menu({Key? key, required this.state}) : super(key: key);
 
+  final GameState state;
   @override
   Widget build(BuildContext context) {
-    return Expanded(child: Container());
+    return Expanded(
+        child: Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        TextButton.icon(
+            onPressed: () => print('Start'),
+            icon: const Icon(Icons.replay),
+            label: Text(state.status == GameStatus.initial ? 'START' : 'RESET'))
+      ],
+    ));
   }
 }

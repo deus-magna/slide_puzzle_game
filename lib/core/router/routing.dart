@@ -7,6 +7,6 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
   return <String, WidgetBuilder>{
     '/game': (BuildContext context) => const GameView(),
     '/difficult': (BuildContext context) => const DifficultyView(),
-    '/test': (BuildContext context) => TestView(),
+    // '/test': (BuildContext context) => TestView(),
   };
 }
