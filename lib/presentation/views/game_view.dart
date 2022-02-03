@@ -4,6 +4,7 @@ import 'package:slide_puzzle_game/app/app.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
 
 class GameView extends StatelessWidget {
@@ -216,15 +217,15 @@ class Menu extends StatelessWidget {
   final GameState state;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-        child: Row(
+    return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        TextButton.icon(
-            onPressed: () => context.read<GameCubit>().shuffle(),
-            icon: const Icon(Icons.replay),
-            label: Text(state.status == GameStatus.initial ? 'START' : 'RESET'))
+        SpaceButton(
+          title: state.status == GameStatus.initial ? 'START' : 'RESET',
+          constraints: const BoxConstraints(minWidth: 88, minHeight: 60),
+          onPressed: () => context.read<GameCubit>().shuffle(),
+        ),
       ],
-    ));
+    );
   }
 }
