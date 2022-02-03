@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:equatable/equatable.dart';
 import 'package:slide_puzzle_game/data/models/position.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
@@ -112,6 +114,96 @@ class Puzzle extends Equatable {
       }
     }
     return Puzzle._(tiles: copy, whiteSpace: tile.currentPosition);
+  }
+
+  /// shuffle the puzzle tiles
+  Puzzle shuffle() {
+    final values = List.generate(
+      tiles.length,
+      (index) => index + 1,
+    )
+      ..add(0)
+      ..shuffle();
+
+    // [1,2,3,4,5,6,7,8,9,0] => [1,3,4,0,5,7,8,9,2,6]
+
+    if (_isSolvable(values)) {
+      var x = 0, y = 0;
+      late Position emptyPosition;
+      final copy = [...tiles];
+      final crossAxisCount = math.sqrt(values.length).toInt();
+
+      for (var i = 0; i < values.length; i++) {
+        final value = values[i];
+        final position = Position(x: x, y: y);
+        if (value == 0) {
+          emptyPosition = position;
+        } else {
+          copy[value - 1] = copy[value - 1].move(
+            position,
+          );
+        }
+
+        if ((i + 1) % crossAxisCount == 0) {
+          y++;
+          x = 0;
+        } else {
+          x++;
+        }
+      }
+
+      return Puzzle._(
+        tiles: copy,
+        whiteSpace: emptyPosition,
+      );
+    } else {
+      return shuffle();
+    }
+  }
+
+  bool _isSolvable(List<int> values) {
+    final n = math.sqrt(values.length);
+
+    /// inversions
+    var inversions = 0;
+    var y = 1;
+    var emptyPositionY = 1;
+
+    for (var i = 0; i < values.length; i++) {
+      if (i > 0 && i % n == 0) {
+        y++;
+      }
+
+      final current = values[i];
+      if (current == 1 || current == 0) {
+        if (current == 0) {
+          emptyPositionY = y;
+        }
+        continue;
+      }
+      for (var j = i + 1; j < values.length; j++) {
+        final next = values[j];
+
+        if (current > next && next != 0) {
+          inversions++;
+        }
+      }
+    }
+
+    // is odd
+    if (n % 2 != 0) {
+      return inversions % 2 == 0;
+    } else {
+      // is even
+
+      final yFromBottom = n - emptyPositionY + 1;
+
+      if (yFromBottom % 2 == 0) {
+        return inversions % 2 != 0;
+      } else {
+        return inversions % 2 == 0;
+      }
+    }
   }
 
   static List<String> getSources(int size) {

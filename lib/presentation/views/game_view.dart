@@ -26,7 +26,7 @@ class GameView extends StatelessWidget {
                     child: Column(
                       children: [
                         const SpaceBar(),
-                        const Header(),
+                        Header(moves: state.moves),
                         const SizedBox(height: 10),
                         AspectRatio(
                           aspectRatio: 1,
@@ -71,18 +71,20 @@ class SpaceBar extends StatelessWidget {
 }
 
 class Header extends StatelessWidget {
-  const Header({Key? key}) : super(key: key);
+  const Header({Key? key, required this.moves}) : super(key: key);
+
+  final int moves;
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: const [
-        SpaceContainer(label: 'TIMER', value: '00:02:30'),
-        SizedBox(width: 20),
+      children: [
+        const SpaceContainer(label: 'TIMER', value: '00:02:30'),
+        const SizedBox(width: 20),
         SpaceContainer(
           label: 'MOVES',
-          value: '25',
+          value: '$moves',
         ),
       ],
     );
@@ -90,8 +92,11 @@ class Header extends StatelessWidget {
 }
 
 class SpaceContainer extends StatelessWidget {
-  const SpaceContainer({Key? key, required this.label, required this.value})
-      : super(key: key);
+  const SpaceContainer({
+    Key? key,
+    required this.label,
+    required this.value,
+  }) : super(key: key);
 
   final String label;
   final String value;
@@ -158,7 +163,7 @@ class BoardTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedPositioned(
-      duration: const Duration(milliseconds: 100),
+      duration: const Duration(milliseconds: 200),
       curve: Curves.easeInOut,
       left: tile.currentPosition.x * size,
       top: tile.currentPosition.y * size,
@@ -175,13 +180,18 @@ class BoardTile extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            // child: Center(
-            //   child: Text('${tile.value}'),
-            // ),
-            child: Image(
-              image: AssetImage(tile.source),
-              fit: BoxFit.cover,
+            child: Stack(
+              children: [
+                Text('(${tile.currentPosition.x},${tile.currentPosition.y})'),
+                Center(
+                  child: Text('${tile.value}'),
+                ),
+              ],
             ),
+            // child: Image(
+            //   image: AssetImage(tile.source),
+            //   fit: BoxFit.cover,
+            // ),
           ),
         ),
       ),
@@ -200,7 +210,7 @@ class Menu extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         TextButton.icon(
-            onPressed: () => print('Start'),
+            onPressed: () => context.read<GameCubit>().shuffle(),
             icon: const Icon(Icons.replay),
             label: Text(state.status == GameStatus.initial ? 'START' : 'RESET'))
       ],

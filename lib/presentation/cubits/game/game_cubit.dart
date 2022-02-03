@@ -13,7 +13,7 @@ class GameCubit extends Cubit<GameState> {
             puzzle: Puzzle.create(3),
             isSolved: false,
             moves: 0,
-            status: GameStatus.playing,
+            status: GameStatus.initial,
           ),
         );
   Puzzle get puzzle => state.puzzle;
@@ -25,10 +25,20 @@ class GameCubit extends Cubit<GameState> {
           size: state.size,
           puzzle: puzzle.move(tile),
           isSolved: state.isSolved,
-          moves: state.moves,
+          moves: state.moves + 1,
           status: state.status,
         ),
       );
     }
+  }
+
+  void shuffle() {
+    emit(
+      state.copyWith(
+        puzzle: puzzle.shuffle(),
+        status: GameStatus.playing,
+        moves: 0,
+      ),
+    );
   }
 }
