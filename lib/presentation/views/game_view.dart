@@ -14,7 +14,18 @@ class GameView extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) => GameCubit(),
-        child: BlocBuilder<GameCubit, GameState>(
+        child: BlocConsumer<GameCubit, GameState>(
+          listener: (_, state) {
+            if (state.status == GameStatus.solved) {
+              showDialog<void>(
+                context: context,
+                builder: (_) => const AlertDialog(
+                  title: Text('Congrats'),
+                  content: Text('Has completado el puzzle'),
+                ),
+              );
+            }
+          },
           builder: (_, state) {
             return Stack(
               alignment: Alignment.topCenter,

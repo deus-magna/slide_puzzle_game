@@ -206,6 +206,21 @@ class Puzzle extends Equatable {
     }
   }
 
+  bool isSolved() {
+    final crossAxisCount = math.sqrt(tiles.length + 1).toInt();
+
+    if (whiteSpace.x == crossAxisCount - 1 &&
+        whiteSpace.y == crossAxisCount - 1) {
+      for (final tile in tiles) {
+        if (tile.currentPosition != tile.validPosition) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
+
   static List<String> getSources(int size) {
     switch (size) {
       case 3:

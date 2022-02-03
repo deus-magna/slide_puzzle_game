@@ -11,7 +11,6 @@ class GameCubit extends Cubit<GameState> {
           GameState(
             size: 3,
             puzzle: Puzzle.create(3),
-            isSolved: false,
             moves: 0,
             status: GameStatus.initial,
           ),
@@ -20,13 +19,15 @@ class GameCubit extends Cubit<GameState> {
 
   void onTileTapped(Tile tile) {
     if (puzzle.canMove(tile.currentPosition)) {
+      final newPuzzle = puzzle.move(tile);
+      final isSolved = newPuzzle.isSolved();
+
       emit(
         GameState(
           size: state.size,
-          puzzle: puzzle.move(tile),
-          isSolved: state.isSolved,
+          puzzle: newPuzzle,
           moves: state.moves + 1,
-          status: state.status,
+          status: isSolved ? GameStatus.solved : state.status,
         ),
       );
     }

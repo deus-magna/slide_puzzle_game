@@ -10,14 +10,13 @@ class GameState extends Equatable {
   const GameState({
     required this.size,
     required this.puzzle,
-    required this.isSolved,
     required this.moves,
     required this.status,
   });
 
   final int size;
   final Puzzle puzzle;
-  final bool isSolved;
+
   final int moves;
   final GameStatus status;
 
@@ -30,12 +29,11 @@ class GameState extends Equatable {
     return GameState(
       size: size ?? this.size,
       puzzle: puzzle ?? this.puzzle,
-      isSolved: isSolved ?? this.isSolved,
       moves: moves ?? this.moves,
       status: status ?? this.status,
     );
   }
 
   @override
-  List<Object?> get props => [size, puzzle, isSolved, moves, status];
+  List<Object?> get props => [size, puzzle, moves, status];
 }
