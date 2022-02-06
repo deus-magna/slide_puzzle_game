@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:slide_puzzle_game/app/app.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
-import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
+import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
 class GameView extends StatelessWidget {
   const GameView({Key? key}) : super(key: key);
