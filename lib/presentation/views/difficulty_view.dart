@@ -64,7 +64,8 @@ class SpaceButton extends StatelessWidget {
     required this.title,
     this.color = Colors.white,
     this.textColor = Colors.white,
-    this.constraints = const BoxConstraints(minWidth: 88, minHeight: 36),
+    this.constraints = const BoxConstraints(minWidth: 88, minHeight: 60),
+    // this.constraints = const BoxConstraints(minWidth: 88, minHeight: 36),
   }) : super(key: key);
 
   final void Function()? onPressed;

@@ -29,7 +29,7 @@ class App extends StatelessWidget {
         GlobalMaterialLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      initialRoute: '/difficult',
+      initialRoute: '/home',
       routes: getApplicationRoutes(),
     );
   }
