@@ -7,5 +7,8 @@
     "difficultEasy": "Easy",
     "difficultMedium": "Medium",
     "difficultHard": "Hard",
-    "difficultGooLevel": "God Level"
+    "difficultGooLevel": "God Level",
+    "homeRanking": "Ranking",
+    "homeHistory": "History",
+    "homeCredits": "Credits"
 }

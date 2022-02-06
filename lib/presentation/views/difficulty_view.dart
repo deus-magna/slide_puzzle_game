@@ -11,7 +11,6 @@ class DifficultyView extends StatelessWidget {
     const constraints = BoxConstraints(minWidth: 88, minHeight: 60);
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      // appBar: AppBar(),
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -28,25 +27,21 @@ class DifficultyView extends StatelessWidget {
                 SpaceButton(
                   onPressed: () => Navigator.of(context).pushNamed('/game'),
                   title: AppLocalizations.of(context).difficultEasy,
-                  constraints: constraints,
                 ),
                 const SizedBox(height: 25),
                 SpaceButton(
                   onPressed: () => print('selected'),
                   title: AppLocalizations.of(context).difficultMedium,
-                  constraints: constraints,
                 ),
                 const SizedBox(height: 25),
                 SpaceButton(
                   onPressed: () => print('selected'),
                   title: AppLocalizations.of(context).difficultHard,
-                  constraints: constraints,
                 ),
                 const SizedBox(height: 25),
                 SpaceButton(
                   onPressed: () => print('selected'),
                   title: AppLocalizations.of(context).difficultGooLevel,
-                  constraints: constraints,
                 ),
               ],
             ),

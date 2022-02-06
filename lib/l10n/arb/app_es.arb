@@ -7,5 +7,10 @@
     "difficultEasy": "Facil",
     "difficultMedium": "Medio",
     "difficultHard": "Dificl",
-    "difficultGooLevel": "Nivel Dios"
+    "difficultGooLevel": "Nivel Dios",
+
+    "homeRanking": "Clasificación",
+    "homeHistory": "Historia",
+    "homeCredits": "Creditos"
+
 }

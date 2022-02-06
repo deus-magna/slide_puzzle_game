@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
+import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -7,15 +9,31 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            SpaceButton(title: 'RANKING'),
-            SpaceButton(title: 'HISTORY'),
-            SpaceButton(title: 'CREDITS'),
-          ],
-        ),
+      body: Stack(
+        children: const [
+          HomeViewBackground(),
+          HomeViewBody(),
+        ],
+      ),
+    );
+  }
+}
+
+class HomeViewBody extends StatelessWidget {
+  const HomeViewBody({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SpaceButton(title: AppLocalizations.of(context).homeRanking),
+          SpaceButton(title: AppLocalizations.of(context).homeHistory),
+          SpaceButton(title: AppLocalizations.of(context).homeCredits),
+        ],
       ),
     );
   }
