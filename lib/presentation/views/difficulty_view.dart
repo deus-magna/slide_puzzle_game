@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/difficult_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
@@ -8,7 +9,6 @@ class DifficultyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const constraints = BoxConstraints(minWidth: 88, minHeight: 60);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: Stack(
@@ -25,22 +25,26 @@ class DifficultyView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 SpaceButton(
-                  onPressed: () => Navigator.of(context).pushNamed('/game'),
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed('/game', arguments: GameDifficult.easy),
                   title: AppLocalizations.of(context).difficultEasy,
                 ),
                 const SizedBox(height: 25),
                 SpaceButton(
-                  onPressed: () => print('selected'),
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed('/game', arguments: GameDifficult.medimum),
                   title: AppLocalizations.of(context).difficultMedium,
                 ),
                 const SizedBox(height: 25),
                 SpaceButton(
-                  onPressed: () => print('selected'),
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed('/game', arguments: GameDifficult.hard),
                   title: AppLocalizations.of(context).difficultHard,
                 ),
                 const SizedBox(height: 25),
                 SpaceButton(
-                  onPressed: () => print('selected'),
+                  onPressed: () => Navigator.of(context)
+                      .pushNamed('/game', arguments: GameDifficult.godLevel),
                   title: AppLocalizations.of(context).difficultGooLevel,
                 ),
               ],

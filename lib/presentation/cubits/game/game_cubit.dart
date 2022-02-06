@@ -6,15 +6,24 @@ import 'package:slide_puzzle_game/data/models/tile.dart';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit()
+  GameCubit._(int size)
       : super(
           GameState(
-            size: 3,
-            puzzle: Puzzle.create(3),
+            size: size,
+            puzzle: Puzzle.create(size),
             moves: 0,
             status: GameStatus.initial,
           ),
         );
+
+  factory GameCubit.easy() => GameCubit._(3);
+
+  factory GameCubit.medimun() => GameCubit._(4);
+
+  factory GameCubit.hard() => GameCubit._(5);
+
+  factory GameCubit.godLevel() => GameCubit._(6);
+
   Puzzle get puzzle => state.puzzle;
 
   void onTileTapped(Tile tile) {

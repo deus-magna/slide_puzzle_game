@@ -9,11 +9,26 @@ import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 class GameView extends StatelessWidget {
   const GameView({Key? key}) : super(key: key);
 
+  GameCubit getCubit(GameDifficult difficult) {
+    switch (difficult) {
+      case GameDifficult.easy:
+        return GameCubit.easy();
+      case GameDifficult.medimum:
+        return GameCubit.medimun();
+      case GameDifficult.hard:
+        return GameCubit.hard();
+      case GameDifficult.godLevel:
+        return GameCubit.godLevel();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final difficult =
+        ModalRoute.of(context)!.settings.arguments as GameDifficult?;
     return Scaffold(
       body: BlocProvider(
-        create: (context) => GameCubit(),
+        create: (context) => getCubit(difficult ?? GameDifficult.easy),
         child: BlocConsumer<GameCubit, GameState>(
           listener: (_, state) {
             if (state.status == GameStatus.solved) {

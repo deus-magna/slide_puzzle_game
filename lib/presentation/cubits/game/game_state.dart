@@ -1,5 +1,12 @@
 part of 'game_cubit.dart';
 
+enum GameDifficult {
+  easy,
+  medimum,
+  hard,
+  godLevel,
+}
+
 enum GameStatus {
   initial,
   playing,

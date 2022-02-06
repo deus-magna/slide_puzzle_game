@@ -33,7 +33,7 @@ class HomeViewBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          PlayButton(),
+          const PlayButton(),
           const SizedBox(height: 30),
           SpaceButton(
             title: AppLocalizations.of(context).homeRanking,
