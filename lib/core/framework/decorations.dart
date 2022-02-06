@@ -15,9 +15,18 @@ BoxDecoration alienButtonDecoration = BoxDecoration(
     color: pinkBorder,
   ),
   boxShadow: const [BoxShadow(offset: Offset(0, 10))],
-  gradient: const LinearGradient(
-    colors: [purple, pink],
-    begin: Alignment(-0.5, -1),
-    end: Alignment(0.5, 3.5),
-  ),
+  gradient: spaceGradient,
+);
+
+BoxDecoration playButtonDecoration = BoxDecoration(
+  shape: BoxShape.circle,
+  border: Border.all(width: 3, color: pinkBorder),
+  boxShadow: const [BoxShadow(offset: Offset(0, 6))],
+  gradient: spaceGradient,
+);
+
+const spaceGradient = LinearGradient(
+  colors: [purple, pink],
+  begin: Alignment(-0.5, -1),
+  end: Alignment(0.5, 3.5),
 );
