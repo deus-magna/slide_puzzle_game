@@ -60,15 +60,28 @@ class DifficultyView extends StatelessWidget {
     BuildContext context,
     GameDifficult gameDifficult,
   ) async {
-    final assetData = await getAssetData();
+    final assetData = await getAssetData(gameDifficult);
     final arguments =
         GameParams(assetData: assetData, gameDifficult: gameDifficult);
     Navigator.of(context).pushNamed('/game', arguments: arguments);
   }
 
-  Future<Uint8List> getAssetData() async {
-    final bytes = await rootBundle.load('assets/img/tiles/uan/uan.png');
+  Future<Uint8List> getAssetData(GameDifficult difficult) async {
+    final bytes = await bytesFromAsset(difficult);
     final mibiByte = bytes.buffer.asUint8List();
     return mibiByte;
+  }
+
+  Future<ByteData> bytesFromAsset(GameDifficult difficult) async {
+    switch (difficult) {
+      case GameDifficult.easy:
+        return rootBundle.load('assets/img/tiles/uan/uan.png');
+      case GameDifficult.medimum:
+        return rootBundle.load('assets/img/tiles/inky/inky.png');
+      case GameDifficult.hard:
+        return rootBundle.load('assets/img/tiles/ubbi/ubbi.png');
+      case GameDifficult.godLevel:
+        return rootBundle.load('assets/img/tiles/flamfy/flamfy.png');
+    }
   }
 }
