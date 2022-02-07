@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:slide_puzzle_game/data/models/position.dart';
 
 class Tile extends Equatable {
-  Tile({
+  const Tile({
     required this.source,
     required this.value,
     required this.validPosition,

@@ -68,7 +68,6 @@ class Puzzle extends Equatable {
     for (final img in parts) {
       final image8List = Uint8List.fromList(imglib.encodeJpg(img));
       output.add(image8List);
-      // output.add(Image.memory(image8List));
     }
 
     return output;
@@ -161,8 +160,6 @@ class Puzzle extends Equatable {
       ..add(0)
       ..shuffle();
 
-    // [1,2,3,4,5,6,7,8,9,0] => [1,3,4,0,5,7,8,9,2,6]
-
     if (_isSolvable(values)) {
       var x = 0, y = 0;
       late Position emptyPosition;
@@ -228,7 +225,7 @@ class Puzzle extends Equatable {
 
     // is odd
     if (n % 2 != 0) {
-      return inversions % 2 == 0;
+      return inversions.isOdd;
     } else {
       // is even
 
@@ -237,7 +234,7 @@ class Puzzle extends Equatable {
       if (yFromBottom % 2 == 0) {
         return inversions % 2 != 0;
       } else {
-        return inversions % 2 == 0;
+        return inversions.isOdd;
       }
     }
   }

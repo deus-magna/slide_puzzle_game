@@ -7,14 +7,14 @@ environment:
   sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
-  image: ^3.1.1
-  equatable: ^2.0.3
   bloc: ^8.0.2
+  equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
   flutter_localizations:
     sdk: flutter
+  image: ^3.1.1
   intl: ^0.17.0
 
 dev_dependencies:

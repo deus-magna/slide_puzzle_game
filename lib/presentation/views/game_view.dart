@@ -78,7 +78,7 @@ class SpaceBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: kToolbarHeight,
       width: double.infinity,
       child: Row(
@@ -86,11 +86,12 @@ class SpaceBar extends StatelessWidget {
         children: [
           const SizedBox(height: 10),
           IconButton(
-              onPressed: () => print('Pressed'),
-              icon: const Icon(
-                Icons.volume_off_rounded,
-                color: Colors.white,
-              )),
+            onPressed: () => print('Pressed'),
+            icon: const Icon(
+              Icons.volume_off_rounded,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );
@@ -135,8 +136,11 @@ class SpaceContainer extends StatelessWidget {
         decoration: spaceContainerDecoration,
         child: Column(
           children: [
-            Text(label, style: TextStyle(color: Colors.white)),
-            Text(value, style: TextStyle(color: Colors.white, fontSize: 30)),
+            Text(label, style: const TextStyle(color: Colors.white)),
+            Text(
+              value,
+              style: const TextStyle(color: Colors.white, fontSize: 30),
+            ),
           ],
         ),
       ),
@@ -241,7 +245,6 @@ class Menu extends StatelessWidget {
       children: [
         SpaceButton(
           title: state.status == GameStatus.initial ? 'START' : 'RESET',
-          constraints: const BoxConstraints(minWidth: 88, minHeight: 60),
           onPressed: () => context.read<GameCubit>().shuffle(),
         ),
       ],
