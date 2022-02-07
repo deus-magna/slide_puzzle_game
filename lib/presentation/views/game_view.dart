@@ -59,6 +59,7 @@ class GameView extends StatelessWidget {
                           aspectRatio: 1,
                           child: PuzzleBoard(state: state),
                         ),
+                        const SizedBox(height: 10),
                         Menu(state: state),
                       ],
                     ),
@@ -108,7 +109,7 @@ class Header extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const SpaceContainer(label: 'TIMER', value: '00:02:30'),
+        const SpaceContainer(label: 'TIMER', value: '02:30'),
         const SizedBox(width: 20),
         SpaceContainer(
           label: 'MOVES',
@@ -136,10 +137,10 @@ class SpaceContainer extends StatelessWidget {
         decoration: spaceContainerDecoration,
         child: Column(
           children: [
-            Text(label, style: const TextStyle(color: Colors.white)),
+            Text(label, style: Theme.of(context).textTheme.caption),
             Text(
               value,
-              style: const TextStyle(color: Colors.white, fontSize: 30),
+              style: Theme.of(context).textTheme.button,
             ),
           ],
         ),
@@ -155,22 +156,26 @@ class PuzzleBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const padding = 12.0;
     return Container(
       decoration: spaceContainerDecoration,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final tileSize = constraints.maxWidth / state.size;
+          final tileSize = (constraints.maxWidth - padding) / state.size;
           return AbsorbPointer(
             absorbing: state.status != GameStatus.playing,
-            child: Stack(
-              children: state.puzzle.tiles
-                  .map((tile) => BoardTile(
-                        tile: tile,
-                        size: tileSize,
-                        onPressed: () =>
-                            context.read<GameCubit>().onTileTapped(tile),
-                      ))
-                  .toList(),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+              child: Stack(
+                children: state.puzzle.tiles
+                    .map((tile) => BoardTile(
+                          tile: tile,
+                          size: tileSize,
+                          onPressed: () =>
+                              context.read<GameCubit>().onTileTapped(tile),
+                        ))
+                    .toList(),
+              ),
             ),
           );
         },
@@ -201,12 +206,11 @@ class BoardTile extends StatelessWidget {
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
-          margin: const EdgeInsets.all(5),
-          width: size - 5,
-          height: size - 5,
+          width: size - 4,
+          height: size - 4,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Colors.amber,
+            color: Colors.white,
             boxShadow: const [BoxShadow(offset: Offset(0, 10))],
           ),
           child: ClipRRect(
@@ -222,10 +226,6 @@ class BoardTile extends StatelessWidget {
             //       child: Text('${tile.value}'),
             //     ),
             //   ],
-            // ),
-            // child: Image(
-            //   image: AssetImage(tile.source),
-            //   fit: BoxFit.cover,
             // ),
           ),
         ),
@@ -243,9 +243,11 @@ class Menu extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SpaceButton(
-          title: state.status == GameStatus.initial ? 'START' : 'RESET',
-          onPressed: () => context.read<GameCubit>().shuffle(),
+        Expanded(
+          child: SpaceButton(
+            title: state.status == GameStatus.initial ? 'START' : 'RESET',
+            onPressed: () => context.read<GameCubit>().shuffle(),
+          ),
         ),
       ],
     );

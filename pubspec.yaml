@@ -25,6 +25,16 @@ dev_dependencies:
   very_good_analysis: ^2.4.0
 
 flutter:
+  fonts:
+    - family: Space-Mode
+      fonts:
+        - asset: fonts/space-mode-1.0-regular.otf
+        - asset: fonts/space-mode-1.0-semibold.otf
+          weight: 600
+        - asset: fonts/space-mode-1.0-bold.otf
+          weight: 700
+        - asset: fonts/space-mode-1.0-black.otf
+          weight: 800  
   uses-material-design: true
   generate: true
   assets:

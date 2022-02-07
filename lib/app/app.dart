@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/router/routing.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 
@@ -19,6 +20,11 @@ class App extends StatelessWidget {
       title: 'Slide the Space',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        fontFamily: 'Space-Mode',
+        textTheme: const TextTheme(
+          button: button,
+          caption: caption,
+        ),
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
         colorScheme: ColorScheme.fromSwatch(
           accentColor: const Color(0xFF13B9FF),
