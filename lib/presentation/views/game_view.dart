@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
+import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
@@ -9,26 +10,26 @@ import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 class GameView extends StatelessWidget {
   const GameView({Key? key}) : super(key: key);
 
-  GameCubit getCubit(GameDifficult difficult) {
-    switch (difficult) {
+  GameCubit getCubit(GameParams params) {
+    switch (params.gameDifficult) {
       case GameDifficult.easy:
-        return GameCubit.easy();
+        return GameCubit.easy(params.assetData);
       case GameDifficult.medimum:
-        return GameCubit.medimun();
+        return GameCubit.medimun(params.assetData);
       case GameDifficult.hard:
-        return GameCubit.hard();
+        return GameCubit.hard(params.assetData);
       case GameDifficult.godLevel:
-        return GameCubit.godLevel();
+        return GameCubit.godLevel(params.assetData);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final difficult =
-        ModalRoute.of(context)!.settings.arguments as GameDifficult?;
+    final gameParams =
+        ModalRoute.of(context)!.settings.arguments as GameParams?;
     return Scaffold(
       body: BlocProvider(
-        create: (context) => getCubit(difficult ?? GameDifficult.easy),
+        create: (context) => getCubit(gameParams!),
         child: BlocConsumer<GameCubit, GameState>(
           listener: (_, state) {
             if (state.status == GameStatus.solved) {
@@ -206,14 +207,18 @@ class BoardTile extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Stack(
-              children: [
-                Text('(${tile.currentPosition.x},${tile.currentPosition.y})'),
-                Center(
-                  child: Text('${tile.value}'),
-                ),
-              ],
+            child: Image(
+              image: MemoryImage(tile.source),
+              fit: BoxFit.cover,
             ),
+            // child: Stack(
+            //   children: [
+            //     Text('(${tile.currentPosition.x},${tile.currentPosition.y})'),
+            //     Center(
+            //       child: Text('${tile.value}'),
+            //     ),
+            //   ],
+            // ),
             // child: Image(
             //   image: AssetImage(tile.source),
             //   fit: BoxFit.cover,

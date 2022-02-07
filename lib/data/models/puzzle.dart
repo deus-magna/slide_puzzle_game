@@ -1,16 +1,22 @@
 import 'dart:math' as math;
+import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
+import 'package:image/image.dart' as imglib;
+
 import 'package:slide_puzzle_game/data/models/position.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 
 class Puzzle extends Equatable {
   const Puzzle._({required this.tiles, required this.whiteSpace});
 
-  factory Puzzle.create(int size) {
+  factory Puzzle.create(int size, Uint8List data) {
     var value = 1;
     final whiteSpace = Position(x: size - 1, y: size - 1);
-    final sources = getSources(size);
+
+    final list = List<int>.from(data);
+    final datas = splitImage(list, size);
+
     final tiles = <Tile>[];
     for (var y = 0; y < size; y++) {
       for (var x = 0; x < size; x++) {
@@ -18,10 +24,10 @@ class Puzzle extends Equatable {
         if (!isWhiteSpace) {
           final position = Position(x: x, y: y);
           final tile = Tile(
-            source: sources[value - 1],
             validPosition: position,
             currentPosition: position,
             value: value,
+            source: datas[value - 1],
           );
           value++;
           tiles.add(tile);
@@ -37,6 +43,36 @@ class Puzzle extends Equatable {
   final List<Tile> tiles;
 
   final Position whiteSpace;
+
+  static List<Uint8List> splitImage(List<int> input, int size) {
+    // convert image to image from image package
+    final image = imglib.decodeImage(input);
+
+    var x = 0, y = 0;
+    final width = (image!.width / size).round();
+    final height = (image.height / size).round();
+
+    // split image to parts
+    final parts = <imglib.Image>[];
+    for (var i = 0; i < size; i++) {
+      for (var j = 0; j < size; j++) {
+        parts.add(imglib.copyCrop(image, x, y, width, height));
+        x += width;
+      }
+      x = 0;
+      y += height;
+    }
+
+    // convert image from image package to Image Widget to display
+    final output = <Uint8List>[];
+    for (final img in parts) {
+      final image8List = Uint8List.fromList(imglib.encodeJpg(img));
+      output.add(image8List);
+      // output.add(Image.memory(image8List));
+    }
+
+    return output;
+  }
 
   bool canMove(Position currentPosition) =>
       currentPosition.x == whiteSpace.x || currentPosition.y == whiteSpace.y;
@@ -219,63 +255,6 @@ class Puzzle extends Equatable {
       return true;
     }
     return false;
-  }
-
-  static List<String> getSources(int size) {
-    switch (size) {
-      case 3:
-        return [
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_2.png',
-          'assets/img/tiles/uan/uan_3.png',
-          'assets/img/tiles/uan/uan_4.png',
-          'assets/img/tiles/uan/uan_5.png',
-          'assets/img/tiles/uan/uan_6.png',
-          'assets/img/tiles/uan/uan_7.png',
-          'assets/img/tiles/uan/uan_8.png',
-        ];
-
-      default:
-        return [
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_2.png',
-          'assets/img/tiles/uan/uan_3.png',
-          'assets/img/tiles/uan/uan_4.png',
-          'assets/img/tiles/uan/uan_5.png',
-          'assets/img/tiles/uan/uan_6.png',
-          'assets/img/tiles/uan/uan_7.png',
-          'assets/img/tiles/uan/uan_8.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_2.png',
-          'assets/img/tiles/uan/uan_3.png',
-          'assets/img/tiles/uan/uan_4.png',
-          'assets/img/tiles/uan/uan_5.png',
-          'assets/img/tiles/uan/uan_6.png',
-          'assets/img/tiles/uan/uan_7.png',
-          'assets/img/tiles/uan/uan_8.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_2.png',
-          'assets/img/tiles/uan/uan_3.png',
-          'assets/img/tiles/uan/uan_4.png',
-          'assets/img/tiles/uan/uan_5.png',
-          'assets/img/tiles/uan/uan_6.png',
-          'assets/img/tiles/uan/uan_7.png',
-          'assets/img/tiles/uan/uan_8.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_1.png',
-          'assets/img/tiles/uan/uan_2.png',
-          'assets/img/tiles/uan/uan_3.png',
-          'assets/img/tiles/uan/uan_4.png',
-          'assets/img/tiles/uan/uan_5.png',
-          'assets/img/tiles/uan/uan_6.png',
-          'assets/img/tiles/uan/uan_7.png',
-          'assets/img/tiles/uan/uan_8.png',
-        ];
-    }
   }
 
   @override

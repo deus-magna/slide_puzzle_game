@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:equatable/equatable.dart';
 import 'package:slide_puzzle_game/data/models/position.dart';
 
@@ -9,15 +11,15 @@ class Tile extends Equatable {
     required this.currentPosition,
   });
 
-  final String source;
+  final Uint8List source;
   final int value;
   final Position validPosition;
   final Position currentPosition;
 
   Tile move(Position newPosition) {
     return Tile(
-      source: source,
       value: value,
+      source: source,
       validPosition: validPosition,
       currentPosition: newPosition,
     );

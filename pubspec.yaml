@@ -7,6 +7,7 @@ environment:
   sdk: ">=2.14.0 <3.0.0"
 
 dependencies:
+  image: ^3.1.1
   equatable: ^2.0.3
   bloc: ^8.0.2
   flutter:
@@ -27,6 +28,7 @@ flutter:
   uses-material-design: true
   generate: true
   assets:
+   - assets/
    - assets/img/backgrounds/
    - assets/img/characters/
    - assets/img/tiles/uan/
