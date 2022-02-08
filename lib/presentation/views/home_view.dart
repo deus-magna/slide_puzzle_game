@@ -39,7 +39,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   void initState() {
     super.initState();
     player = AudioPlayer()..setAsset('assets/audio/space_coin.mp3');
-    context.read<AudioCubit>().play();
+    context.read<AudioCubit>().playMenuMusic();
   }
 
   @override
@@ -66,7 +66,6 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           SpaceButton(
             title: AppLocalizations.of(context).homeRanking,
             padding: padding,
-            onPressed: () => context.read<AudioCubit>().play(),
           ),
           const SizedBox(height: 30),
           SpaceButton(

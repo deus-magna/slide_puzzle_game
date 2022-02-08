@@ -57,7 +57,10 @@ class GameView extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        const SpaceBar(),
+                        SpaceBar(
+                          onPressed: () =>
+                              context.read<AudioCubit>().playMenuMusic(),
+                        ),
                         Header(moves: state.moves),
                         const SizedBox(height: 10),
                         AspectRatio(
@@ -144,8 +147,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
   void initState() {
     super.initState();
     player = AudioPlayer()..setAsset('assets/audio/short_laser_gun.wav');
-    context.read<AudioCubit>().setAsset('assets/audio/space_chillout.mp3');
-    context.read<AudioCubit>().play();
+    context.read<AudioCubit>().playGameMusic();
   }
 
   @override

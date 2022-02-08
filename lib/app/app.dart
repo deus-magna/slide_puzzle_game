@@ -20,11 +20,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-            create: (_) => AudioCubit(
-                AudioPlayer()..setAsset('assets/audio/space_age.mp3')))
-      ],
+      providers: [BlocProvider(create: (_) => AudioCubit(AudioPlayer()))],
       child: MaterialApp(
         title: 'Slide the Space',
         debugShowCheckedModeBanner: false,
