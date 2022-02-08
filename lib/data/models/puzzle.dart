@@ -153,13 +153,12 @@ class Puzzle extends Equatable {
 
   /// shuffle the puzzle tiles
   Puzzle shuffle() {
-    final values = List.generate(
-      tiles.length,
-      (index) => index + 1,
-    )
+    final values = List.generate(tiles.length, (index) => index + 1)
       ..add(0)
       ..shuffle();
 
+    // final values = [0, 8, 2, 1, 4, 3, 7, 6, 5];
+    print('Is Solvable? ${_isSolvable(values)}');
     if (_isSolvable(values)) {
       var x = 0, y = 0;
       late Position emptyPosition;
@@ -194,49 +193,67 @@ class Puzzle extends Equatable {
     }
   }
 
-  bool _isSolvable(List<int> values) {
+  int _findEmptyPosition(List<int> values) {
     final n = math.sqrt(values.length);
-
-    /// inversions
-    var inversions = 0;
-    var y = 1;
-    var emptyPositionY = 1;
-
-    for (var i = 0; i < values.length; i++) {
-      if (i > 0 && i % n == 0) {
-        y++;
-      }
-
+    var row = 0, emptyPositionRow = 0;
+    for (var i = 0; i < values.length - 1; i++) {
       final current = values[i];
-      if (current == 1 || current == 0) {
-        if (current == 0) {
-          emptyPositionY = y;
-        }
+      if (i % n == 0) {
+        row++;
+      }
+      if (current == 0) {
+        emptyPositionRow = row;
+      }
+    }
+    print('emptyPositionRow: $emptyPositionRow');
+    return emptyPositionRow;
+  }
+
+  int _getInversionsCount(List<int> values) {
+    var inversionsCount = 0;
+    for (var i = 0; i < values.length - 1; i++) {
+      final current = values[i];
+      // Si el valor es 1 no tiene inversiones posibles, pasamos al siguiente
+      if (current == 1) {
         continue;
       }
       for (var j = i + 1; j < values.length; j++) {
         final next = values[j];
-
+        // Si el valor a la izquierda es el vacio, esa inversion
         if (current > next && next != 0) {
-          inversions++;
+          // Tenemos una nueva inversion Ej. 5 > 1
+          inversionsCount++;
         }
       }
     }
+    print('Inversions: $inversionsCount');
+    return inversionsCount;
+  }
 
-    // is odd
-    if (n % 2 != 0) {
-      return inversions.isOdd;
-    } else {
-      // is even
+  bool _isSolvable(List<int> values) {
+    final n = math.sqrt(values.length).toInt();
+    print('N: $n');
+    final inversionsCount = _getInversionsCount(values);
 
-      final yFromBottom = n - emptyPositionY + 1;
-
-      if (yFromBottom % 2 == 0) {
-        return inversions % 2 != 0;
-      } else {
-        return inversions.isOdd;
+    // Si N es impar y el numero de inversiones es par, es solucionable
+    if (n.isOdd && inversionsCount.isEven) {
+      return true;
+    } else if (n.isEven) {
+      // Si N es par, necesitamos la posicion del tile vacio
+      final emptyPositionRow = _findEmptyPosition(values);
+      final emptyPositionRowFromBottom = n - emptyPositionRow + 1;
+      print('emptyPositionRowFromBottom: $emptyPositionRowFromBottom');
+      // Si el espacio vacio es par y
+      // las inversiones son impar, se puede solucionar
+      if (emptyPositionRowFromBottom.isEven && inversionsCount.isOdd) {
+        return true;
+      } else if (emptyPositionRowFromBottom.isOdd && inversionsCount.isEven) {
+        // Si el espacio vacio es impar y el numero de
+        // inversiones es par, es solucionable
+        return true;
       }
     }
+    return false;
   }
 
   bool isSolved() {

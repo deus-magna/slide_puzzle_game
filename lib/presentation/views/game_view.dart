@@ -215,9 +215,17 @@ class BoardTile extends StatelessWidget {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image(
-              image: MemoryImage(tile.source),
-              fit: BoxFit.cover,
+            child: Stack(
+              children: [
+                Image(
+                  image: MemoryImage(tile.source),
+                  fit: BoxFit.cover,
+                ),
+                Text(
+                  '  ${tile.value}',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ],
             ),
             // child: Stack(
             //   children: [
