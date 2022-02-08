@@ -4,13 +4,14 @@
     "@counterAppBarTitle": {
         "description": "Texto mostrado en la AppBar de la página del contador"
     },
-    "difficultEasy": "Facil",
-    "difficultMedium": "Medio",
-    "difficultHard": "Dificl",
-    "difficultGooLevel": "Nivel Dios",
+    "difficultEasy": "facil",
+    "difficultMedium": "medio",
+    "difficultHard": "dificl",
+    "difficultGooLevel": "nivel dios",
 
-    "homeRanking": "Clasificación",
-    "homeHistory": "Historia",
-    "homeCredits": "Creditos"
+    "homeRanking": "clasificación",
+    "homeHistory": "historia",
+    "homeCredits": "creditos",
+    "backButton": "átras"
 
 }

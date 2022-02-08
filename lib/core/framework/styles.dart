@@ -9,11 +9,11 @@ import 'package:flutter/material.dart';
 // const H3 = TextStyle(
 //     fontSize: 20.0, color: primaryTextColor, fontWeight: FontWeight.w600);
 
-// const H4 = TextStyle(
-//     fontSize: 18.0, color: primaryTextColor, fontWeight: FontWeight.w600);
+const h4 =
+    TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700);
 
-// const H5 = TextStyle(
-//     fontSize: 16.0, color: primaryTextColor, fontWeight: FontWeight.w400);
+const h5 =
+    TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w700);
 
 const caption =
     TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w600);

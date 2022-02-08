@@ -22,6 +22,8 @@ class App extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Space-Mode',
         textTheme: const TextTheme(
+          headline4: h4,
+          headline5: h5,
           button: button,
           caption: caption,
         ),

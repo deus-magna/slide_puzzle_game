@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
+import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
@@ -85,7 +86,14 @@ class SpaceBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(height: 10),
+          // const SizedBox(height: 10),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(
+              AppLocalizations.of(context).backButton,
+              style: Theme.of(context).textTheme.headline4,
+            ),
+          ),
           IconButton(
             onPressed: () => print('Pressed'),
             icon: const Icon(

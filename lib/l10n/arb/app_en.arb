@@ -4,11 +4,13 @@
     "@counterAppBarTitle": {
         "description": "Text shown in the AppBar of the Counter Page"
     },
-    "difficultEasy": "Easy",
-    "difficultMedium": "Medium",
-    "difficultHard": "Hard",
-    "difficultGooLevel": "God Level",
-    "homeRanking": "Ranking",
-    "homeHistory": "History",
-    "homeCredits": "Credits"
+    "difficultEasy": "easy",
+    "difficultMedium": "medium",
+    "difficultHard": "hard",
+    "difficultGooLevel": "god level",
+    "homeRanking": "ranking",
+    "homeHistory": "history",
+    "homeCredits": "credits",
+    "backButton": "back"
+
 }
