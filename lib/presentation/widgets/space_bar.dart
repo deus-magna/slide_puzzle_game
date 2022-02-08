@@ -40,7 +40,7 @@ class _SpaceBarState extends State<SpaceBar> {
         children: [
           TextButton(
             onPressed: () {
-              player.replay();
+              player.replay(context);
               Navigator.of(context).pop();
 
               widget.onPressed!();
@@ -55,17 +55,33 @@ class _SpaceBarState extends State<SpaceBar> {
           ),
           BlocBuilder<AudioCubit, AudioState>(
             builder: (context, state) {
-              return IconButton(
-                onPressed: () {
-                  player.replay();
-                  context.read<AudioCubit>().toogleMusic();
-                },
-                icon: Icon(
-                  state.isMuted
-                      ? Icons.volume_off_rounded
-                      : Icons.volume_up_rounded,
-                  color: widget.color,
-                ),
+              return Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      player.replay(context);
+                      context.read<AudioCubit>().toogleSoudEffects();
+                    },
+                    icon: Icon(
+                      state.isSoundEffectsMuted
+                          ? Icons.music_off_rounded
+                          : Icons.music_note_rounded,
+                      color: widget.color,
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      player.replay(context);
+                      context.read<AudioCubit>().toogleMusic();
+                    },
+                    icon: Icon(
+                      state.isAmbientMusicMuted
+                          ? Icons.volume_off_rounded
+                          : Icons.volume_up_rounded,
+                      color: widget.color,
+                    ),
+                  ),
+                ],
               );
             },
           ),

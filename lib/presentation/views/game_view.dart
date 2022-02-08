@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
-import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
 class GameView extends StatelessWidget {
-  const GameView({Key? key}) : super(key: key);
+  const GameView({Key? key, required this.gameParams}) : super(key: key);
+
+  final GameParams gameParams;
 
   GameCubit getCubit(GameParams params) {
     switch (params.gameDifficult) {
@@ -30,8 +32,8 @@ class GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final gameParams =
-        ModalRoute.of(context)!.settings.arguments as GameParams?;
+    // final gameParams =
+    //     ModalRoute.of(context)!.settings.arguments as GameParams?;
     return Scaffold(
       body: BlocProvider(
         create: (context) => getCubit(gameParams!),
@@ -92,11 +94,20 @@ class Header extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const SpaceContainer(label: 'TIMER', value: '02:30'),
+        const SpaceContainer(
+          label: 'TIMER',
+          value: '02:30',
+          animationOffset: 400,
+          duration: Duration(milliseconds: 2000),
+          direction: Axis.vertical,
+        ),
         const SizedBox(width: 20),
         SpaceContainer(
           label: 'MOVES',
           value: '$moves',
+          animationOffset: 1000,
+          duration: const Duration(milliseconds: 1000),
+          direction: Axis.horizontal,
         ),
       ],
     );
@@ -108,24 +119,35 @@ class SpaceContainer extends StatelessWidget {
     Key? key,
     required this.label,
     required this.value,
+    required this.animationOffset,
+    required this.duration,
+    required this.direction,
   }) : super(key: key);
 
   final String label;
   final String value;
+  final double animationOffset;
+  final Duration duration;
+  final Axis direction;
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        decoration: spaceContainerDecoration,
-        child: Column(
-          children: [
-            Text(label, style: Theme.of(context).textTheme.caption),
-            Text(
-              value,
-              style: Theme.of(context).textTheme.button,
-            ),
-          ],
+      child: TranslateAnimation(
+        duration: duration,
+        offset: animationOffset,
+        offsetDirection: direction,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: spaceContainerDecoration,
+          child: Column(
+            children: [
+              Text(label, style: Theme.of(context).textTheme.caption),
+              Text(
+                value,
+                style: Theme.of(context).textTheme.button,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -159,30 +181,35 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
   @override
   Widget build(BuildContext context) {
     const padding = 12.0;
-    return Container(
-      decoration: spaceContainerDecoration,
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final tileSize = (constraints.maxWidth - padding) / widget.state.size;
-          return AbsorbPointer(
-            absorbing: widget.state.status != GameStatus.playing,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              child: Stack(
-                children: widget.state.puzzle.tiles
-                    .map((tile) => BoardTile(
-                          tile: tile,
-                          size: tileSize,
-                          onPressed: () {
-                            player.replay();
-                            context.read<GameCubit>().onTileTapped(tile);
-                          },
-                        ))
-                    .toList(),
+    return TranslateAnimation(
+      duration: const Duration(milliseconds: 2000),
+      offset: MediaQuery.of(context).size.height * 0.5,
+      child: Container(
+        decoration: spaceContainerDecoration,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final tileSize =
+                (constraints.maxWidth - padding) / widget.state.size;
+            return AbsorbPointer(
+              absorbing: widget.state.status != GameStatus.playing,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                child: Stack(
+                  children: widget.state.puzzle.tiles
+                      .map((tile) => BoardTile(
+                            tile: tile,
+                            size: tileSize,
+                            onPressed: () {
+                              player.replay(context);
+                              context.read<GameCubit>().onTileTapped(tile);
+                            },
+                          ))
+                      .toList(),
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -233,7 +260,7 @@ class BoardTile extends StatelessWidget {
             ),
             // child: Stack(
             //   children: [
-            //     Text('(${tile.currentPosition.x},${tile.currentPosition.y})'),
+            //    Text('(${tile.currentPosition.x},${tile.currentPosition.y})'),
             //     Center(
             //       child: Text('${tile.value}'),
             //     ),

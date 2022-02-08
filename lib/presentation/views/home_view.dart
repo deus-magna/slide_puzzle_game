@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:provider/src/provider.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
+import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
@@ -58,8 +59,19 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         children: [
           PlayButton(
             onPressed: () {
-              player.replay();
-              Navigator.of(context).pushNamed('/difficult');
+              player.replay(context);
+              Navigator.of(context).push<void>(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: const DifficultyView(),
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 800),
+                ),
+              );
+              // Navigator.of(context).pushNamed('/difficult');
             },
           ),
           const SizedBox(height: 30),
