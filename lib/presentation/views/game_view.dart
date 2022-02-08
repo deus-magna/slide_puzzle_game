@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
+import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
+import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
@@ -126,10 +129,30 @@ class SpaceContainer extends StatelessWidget {
   }
 }
 
-class PuzzleBoard extends StatelessWidget {
+class PuzzleBoard extends StatefulWidget {
   const PuzzleBoard({Key? key, required this.state}) : super(key: key);
 
   final GameState state;
+
+  @override
+  State<PuzzleBoard> createState() => _PuzzleBoardState();
+}
+
+class _PuzzleBoardState extends State<PuzzleBoard> {
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer()..setAsset('assets/audio/short_laser_gun.wav');
+    context.read<AudioCubit>().setAsset('assets/audio/space_chillout.mp3');
+    context.read<AudioCubit>().play();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -138,18 +161,20 @@ class PuzzleBoard extends StatelessWidget {
       decoration: spaceContainerDecoration,
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final tileSize = (constraints.maxWidth - padding) / state.size;
+          final tileSize = (constraints.maxWidth - padding) / widget.state.size;
           return AbsorbPointer(
-            absorbing: state.status != GameStatus.playing,
+            absorbing: widget.state.status != GameStatus.playing,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
               child: Stack(
-                children: state.puzzle.tiles
+                children: widget.state.puzzle.tiles
                     .map((tile) => BoardTile(
                           tile: tile,
                           size: tileSize,
-                          onPressed: () =>
-                              context.read<GameCubit>().onTileTapped(tile),
+                          onPressed: () {
+                            player.replay();
+                            context.read<GameCubit>().onTileTapped(tile);
+                          },
                         ))
                     .toList(),
               ),

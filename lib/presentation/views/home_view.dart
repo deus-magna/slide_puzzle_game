@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:provider/src/provider.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
+import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
+import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
@@ -20,10 +24,29 @@ class HomeView extends StatelessWidget {
   }
 }
 
-class HomeViewBody extends StatelessWidget {
+class HomeViewBody extends StatefulWidget {
   const HomeViewBody({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<HomeViewBody> createState() => _HomeViewBodyState();
+}
+
+class _HomeViewBodyState extends State<HomeViewBody> {
+  late AudioPlayer player;
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer()..setAsset('assets/audio/space_coin.mp3');
+    context.read<AudioCubit>().play();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +56,17 @@ class HomeViewBody extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const PlayButton(),
+          PlayButton(
+            onPressed: () {
+              player.replay();
+              Navigator.of(context).pushNamed('/difficult');
+            },
+          ),
           const SizedBox(height: 30),
           SpaceButton(
             title: AppLocalizations.of(context).homeRanking,
             padding: padding,
+            onPressed: () => context.read<AudioCubit>().play(),
           ),
           const SizedBox(height: 30),
           SpaceButton(
@@ -58,12 +87,15 @@ class HomeViewBody extends StatelessWidget {
 class PlayButton extends StatelessWidget {
   const PlayButton({
     Key? key,
+    this.onPressed,
   }) : super(key: key);
+
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).pushNamed('/difficult'),
+      onTap: onPressed,
       child: Container(
         alignment: Alignment.center,
         decoration: playButtonDecoration,

@@ -1,7 +1,10 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
@@ -9,8 +12,27 @@ import 'package:slide_puzzle_game/presentation/widgets/difficult_view_background
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
-class DifficultyView extends StatelessWidget {
+class DifficultyView extends StatefulWidget {
   const DifficultyView({Key? key}) : super(key: key);
+
+  @override
+  State<DifficultyView> createState() => _DifficultyViewState();
+}
+
+class _DifficultyViewState extends State<DifficultyView> {
+  late AudioPlayer player;
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer()..setAsset('assets/audio/space_coin.mp3');
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +97,7 @@ class DifficultyView extends StatelessWidget {
     BuildContext context,
     GameDifficult gameDifficult,
   ) async {
+    unawaited(player.replay());
     final assetData = await getAssetData(gameDifficult);
     final arguments =
         GameParams(assetData: assetData, gameDifficult: gameDifficult);
