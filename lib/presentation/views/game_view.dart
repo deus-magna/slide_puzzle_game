@@ -97,15 +97,15 @@ class Header extends StatelessWidget {
         const SpaceContainer(
           label: 'TIMER',
           value: '02:30',
-          animationOffset: 400,
-          duration: Duration(milliseconds: 2000),
-          direction: Axis.vertical,
+          animationOffset: -400,
+          duration: Duration(milliseconds: 1000),
+          direction: Axis.horizontal,
         ),
         const SizedBox(width: 20),
         SpaceContainer(
           label: 'MOVES',
           value: '$moves',
-          animationOffset: 1000,
+          animationOffset: 400,
           duration: const Duration(milliseconds: 1000),
           direction: Axis.horizontal,
         ),
@@ -182,7 +182,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
   Widget build(BuildContext context) {
     const padding = 12.0;
     return TranslateAnimation(
-      duration: const Duration(milliseconds: 2000),
+      duration: const Duration(milliseconds: 1500),
       offset: MediaQuery.of(context).size.height * 0.5,
       child: Container(
         decoration: spaceContainerDecoration,
@@ -283,9 +283,13 @@ class Menu extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          child: SpaceButton(
-            title: state.status == GameStatus.initial ? 'START' : 'RESET',
-            onPressed: () => context.read<GameCubit>().shuffle(),
+          child: TranslateAnimation(
+            duration: const Duration(milliseconds: 2500),
+            offset: MediaQuery.of(context).size.height * 0.5,
+            child: SpaceButton(
+              title: state.status == GameStatus.initial ? 'START' : 'RESET',
+              onPressed: () => context.read<GameCubit>().shuffle(),
+            ),
           ),
         ),
       ],

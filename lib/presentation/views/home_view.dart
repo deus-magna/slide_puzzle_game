@@ -52,6 +52,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   Widget build(BuildContext context) {
     const padding = EdgeInsets.symmetric(horizontal: 90);
+    const duration = 800;
 
     return SafeArea(
       child: Column(
@@ -83,11 +84,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           SpaceButton(
             title: AppLocalizations.of(context).homeHistory,
             padding: padding,
+            duration: const Duration(milliseconds: duration * 2),
           ),
           const SizedBox(height: 30),
           SpaceButton(
             title: AppLocalizations.of(context).homeCredits,
             padding: padding,
+            duration: const Duration(milliseconds: duration * 3),
           ),
         ],
       ),

@@ -54,7 +54,7 @@ class _DifficultyViewState extends State<DifficultyView> {
   }
 
   Widget _buildBody(Size size, BuildContext context) {
-    final duration = 800;
+    const duration = 800;
     return SafeArea(
       child: Column(
         children: [
@@ -69,27 +69,26 @@ class _DifficultyViewState extends State<DifficultyView> {
                   SpaceButton(
                     onPressed: () => pushGameView(context, GameDifficult.easy),
                     title: AppLocalizations.of(context).difficultEasy,
-                    duration: Duration(milliseconds: duration),
                   ),
                   const SizedBox(height: 25),
                   SpaceButton(
                     onPressed: () =>
                         pushGameView(context, GameDifficult.medimum),
                     title: AppLocalizations.of(context).difficultMedium,
-                    duration: Duration(milliseconds: duration * 2),
+                    duration: const Duration(milliseconds: duration * 2),
                   ),
                   const SizedBox(height: 25),
                   SpaceButton(
                     onPressed: () => pushGameView(context, GameDifficult.hard),
                     title: AppLocalizations.of(context).difficultHard,
-                    duration: Duration(milliseconds: duration * 3),
+                    duration: const Duration(milliseconds: duration * 3),
                   ),
                   const SizedBox(height: 25),
                   SpaceButton(
                     onPressed: () =>
                         pushGameView(context, GameDifficult.godLevel),
                     title: AppLocalizations.of(context).difficultGooLevel,
-                    duration: Duration(milliseconds: duration * 4),
+                    duration: const Duration(milliseconds: duration * 4),
                   ),
                 ],
               ),
