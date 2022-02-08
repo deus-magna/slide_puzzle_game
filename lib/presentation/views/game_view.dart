@@ -6,6 +6,7 @@ import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
+import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
 class GameView extends StatelessWidget {
@@ -70,38 +71,6 @@ class GameView extends StatelessWidget {
             );
           },
         ),
-      ),
-    );
-  }
-}
-
-class SpaceBar extends StatelessWidget {
-  const SpaceBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: kToolbarHeight,
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // const SizedBox(height: 10),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              AppLocalizations.of(context).backButton,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ),
-          IconButton(
-            onPressed: () => print('Pressed'),
-            icon: const Icon(
-              Icons.volume_off_rounded,
-              color: Colors.white,
-            ),
-          ),
-        ],
       ),
     );
   }
