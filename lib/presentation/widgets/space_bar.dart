@@ -17,6 +17,7 @@ class SpaceBar extends StatefulWidget {
 }
 
 class _SpaceBarState extends State<SpaceBar> {
+  Function()? get onPressed => widget.onPressed;
   late AudioPlayer player;
   @override
   void initState() {
@@ -42,8 +43,7 @@ class _SpaceBarState extends State<SpaceBar> {
             onPressed: () {
               player.replay(context);
               Navigator.of(context).pop();
-
-              widget.onPressed!();
+              onPressed?.call();
             },
             child: Text(
               AppLocalizations.of(context).backButton,

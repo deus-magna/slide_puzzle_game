@@ -5,8 +5,10 @@ import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
+import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
+import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
@@ -32,20 +34,19 @@ class GameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final gameParams =
-    //     ModalRoute.of(context)!.settings.arguments as GameParams?;
     return Scaffold(
       body: BlocProvider(
-        create: (context) => getCubit(gameParams!),
+        create: (context) => getCubit(gameParams),
         child: BlocConsumer<GameCubit, GameState>(
           listener: (_, state) {
             if (state.status == GameStatus.solved) {
-              showDialog<void>(
-                context: context,
-                builder: (_) => const AlertDialog(
-                  title: Text('Congrats'),
-                  content: Text('Has completado el puzzle'),
-                ),
+              utils.showMissionCompleteDialog(
+                context,
+                title: AppLocalizations.of(context).missionComplete,
+                timer: '02:14',
+                label: AppLocalizations.of(context).totalMoves,
+                moves: '${state.moves}',
+                button: AppLocalizations.of(context).nextButton,
               );
             }
           },

@@ -13,6 +13,7 @@ class SpaceButton extends StatelessWidget {
     this.padding = EdgeInsets.zero,
     this.offsetDirection = Axis.horizontal,
     this.duration = const Duration(milliseconds: 800),
+    this.animate = true,
     // this.constraints = const BoxConstraints(minWidth: 88, minHeight: 36),
   }) : super(key: key);
 
@@ -24,28 +25,33 @@ class SpaceButton extends StatelessWidget {
   final EdgeInsets padding;
   final Axis offsetDirection;
   final Duration duration;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
-    return TranslateAnimation(
-      offsetDirection: offsetDirection,
-      duration: duration,
-      child: Padding(
-        padding: padding,
-        child: TextButton(
-          onPressed: onPressed,
-          child: Container(
-            constraints: constraints,
-            alignment: Alignment.center,
-            decoration: alienButtonDecoration,
-            child: Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .button!
-                  .copyWith(color: textColor),
-              textAlign: TextAlign.center,
-            ),
+    return animate
+        ? TranslateAnimation(
+            offsetDirection: offsetDirection,
+            duration: duration,
+            child: _buildButton(context),
+          )
+        : _buildButton(context);
+  }
+
+  Padding _buildButton(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: TextButton(
+        onPressed: onPressed,
+        child: Container(
+          constraints: constraints,
+          alignment: Alignment.center,
+          decoration: alienButtonDecoration,
+          child: Text(
+            title,
+            style:
+                Theme.of(context).textTheme.button!.copyWith(color: textColor),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

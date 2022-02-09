@@ -12,6 +12,10 @@
     "homeRanking": "clasificación",
     "homeHistory": "historia",
     "homeCredits": "creditos",
-    "backButton": "átras"
+    "backButton": "atras",
+    "missionComplete": "mision completada",
+    "totalMoves": "total movimientos",
+    "nextButton": "siguiente",
+    "shareButton": "compartir"
 
 }

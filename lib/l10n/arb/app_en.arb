@@ -11,6 +11,11 @@
     "homeRanking": "ranking",
     "homeHistory": "history",
     "homeCredits": "credits",
-    "backButton": "back"
+    "backButton": "back",
+    "missionComplete": "mission complete",
+    "totalMoves": "total moves",
+    "nextButton": "next",
+    "shareButton": "share"
+
 
 }

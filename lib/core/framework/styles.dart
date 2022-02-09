@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 // const H2 = TextStyle(
 //     fontSize: 24.0, color: primaryTextColor, fontWeight: FontWeight.w600);
 
-// const H3 = TextStyle(
-//     fontSize: 20.0, color: primaryTextColor, fontWeight: FontWeight.w600);
+const h3 =
+    TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w800);
 
 const h4 =
     TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700);

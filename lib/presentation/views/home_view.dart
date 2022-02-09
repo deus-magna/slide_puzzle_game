@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
+import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
@@ -79,6 +80,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           SpaceButton(
             title: AppLocalizations.of(context).homeRanking,
             padding: padding,
+            onPressed: () {},
           ),
           const SizedBox(height: 30),
           SpaceButton(

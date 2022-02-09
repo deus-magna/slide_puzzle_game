@@ -14,19 +14,41 @@ import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/core/router/routing.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 
-class App extends StatelessWidget {
+class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
+
+  @override
+  State<App> createState() => _AppState();
+}
+
+class _AppState extends State<App> {
+  late AudioPlayer player;
+
+  @override
+  void initState() {
+    player = AudioPlayer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (_) => AudioCubit(AudioPlayer()))],
+      providers: [
+        BlocProvider(create: (_) => AudioCubit(player)),
+      ],
       child: MaterialApp(
         title: 'Slide the Space',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           fontFamily: 'Space-Mode',
           textTheme: const TextTheme(
+            headline3: h3,
             headline4: h4,
             headline5: h5,
             button: button,

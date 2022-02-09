@@ -41,6 +41,7 @@ flutter:
   assets:
    - assets/audio/
    - assets/
+   - assets/img/
    - assets/img/backgrounds/
    - assets/img/characters/
    - assets/img/tiles/uan/
