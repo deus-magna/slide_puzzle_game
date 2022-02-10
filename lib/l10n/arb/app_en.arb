@@ -15,7 +15,8 @@
     "missionComplete": "mission complete",
     "totalMoves": "total moves",
     "nextButton": "next",
-    "shareButton": "share"
-
-
+    "shareButton": "share",
+    "historyTitle": "explore an",
+    "historySubtitle": "infinite planet",
+    "historyMessage": "Cada estrella es la luz de un sol remoto y a su alrededor orbitan planetas repletos de vida. Viaja a un planeta en especifico en este universo infinito, descubre lugares y seres extraordinarios nunca antes vistos que quizá nunca mas volveras a encontrar. Deberas descubrir la fauna de este planeta, investigar diferentes criaturas y llenar tu “album de aliens” con todos los datos posibles. Todo esto con el fin de determinar si es un planeta habitable para los tuyos y poder darle un nombre.\n\nEn este universo con vida propia obtendrás información de cada criatura que logres descubrir, completa los puzzles de un mismo alien en diferentes dificultades para completar su entrada.\n\nTu viaje estará repleto de peligros, ¿lograras completar este desafío?"
 }

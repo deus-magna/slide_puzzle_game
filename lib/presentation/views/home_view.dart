@@ -4,9 +4,9 @@ import 'package:just_audio/just_audio.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
-import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
+import 'package:slide_puzzle_game/presentation/views/history/history_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
@@ -60,21 +60,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PlayButton(
-            onPressed: () {
-              player.replay(context);
-              Navigator.of(context).push<void>(
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) {
-                    return FadeTransition(
-                      opacity: animation,
-                      child: const DifficultyView(),
-                    );
-                  },
-                  transitionDuration: const Duration(milliseconds: 800),
-                ),
-              );
-              // Navigator.of(context).pushNamed('/difficult');
-            },
+            onPressed: () => pushView(child: const DifficultyView()),
           ),
           const SizedBox(height: 30),
           SpaceButton(
@@ -87,6 +73,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             title: AppLocalizations.of(context).homeHistory,
             padding: padding,
             duration: const Duration(milliseconds: duration * 2),
+            onPressed: () => pushView(child: const HistoryView()),
           ),
           const SizedBox(height: 30),
           SpaceButton(
@@ -95,6 +82,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
             duration: const Duration(milliseconds: duration * 3),
           ),
         ],
+      ),
+    );
+  }
+
+  void pushView({required Widget child}) {
+    player.replay(context);
+    Navigator.of(context).push<void>(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
+        transitionDuration: const Duration(milliseconds: 800),
       ),
     );
   }
