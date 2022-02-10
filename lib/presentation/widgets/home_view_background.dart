@@ -14,6 +14,8 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
   late Animation<double> _animationRocket;
   late Animation<double> _animationShadow;
   late Animation<double> _animationStar;
+  late Animation<double> _animationStar2;
+  late Animation<double> _animationStar3;
   @override
   void initState() {
     super.initState();
@@ -22,9 +24,34 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
       duration: const Duration(milliseconds: 4000),
     );
 
-    _animationStar = CurvedAnimation(
-      parent: _controller,
-      curve: const Interval(0.35, 0.90, curve: Curves.ease),
+    _animationStar = Tween<double>(
+      begin: 0.3,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.05, 0.6, curve: Curves.ease),
+      ),
+    );
+
+    _animationStar2 = Tween<double>(
+      begin: 0.3,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.5, 0.8, curve: Curves.ease),
+      ),
+    );
+
+    _animationStar3 = Tween<double>(
+      begin: 0.3,
+      end: 1,
+    ).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.1, 0.8, curve: Curves.ease),
+      ),
     );
 
     _animationRocket = Tween<double>(
@@ -75,18 +102,6 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
               ),
             ),
             Positioned(
-              bottom: 80,
-              right: -48,
-              height: size.width * 0.11,
-              child: Transform.scale(
-                scale: _animationShadow.value,
-                child: const Image(
-                  image: AssetImage('assets/img/shadow.png'),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-            ),
-            Positioned(
               top: 80,
               right: 40,
               height: size.width * 0.2,
@@ -94,6 +109,42 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
                 scale: _animationStar.value,
                 child: const Image(
                   image: AssetImage('assets/img/star.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 155,
+              right: 0,
+              height: size.width * 0.15,
+              child: Transform.scale(
+                scale: _animationStar2.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star2.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              top: size.height * 0.445,
+              left: -10,
+              height: size.width * 0.08,
+              child: Transform.scale(
+                scale: _animationStar3.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star3.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 80,
+              right: -48,
+              height: size.width * 0.11,
+              child: Transform.scale(
+                scale: _animationShadow.value,
+                child: const Image(
+                  image: AssetImage('assets/img/shadow.png'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
