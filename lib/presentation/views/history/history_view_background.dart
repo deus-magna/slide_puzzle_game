@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class HistoryViewBackground extends StatefulWidget {
   const HistoryViewBackground({Key? key}) : super(key: key);
@@ -43,6 +44,14 @@ class _HistoryViewBackgroundState extends State<HistoryViewBackground>
 
   @override
   Widget build(BuildContext context) {
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => _buildMobile(),
+      tablet: (BuildContext context) => _buildMobile(),
+      desktop: (BuildContext context) => _buildDesktop(),
+    );
+  }
+
+  Widget _buildMobile() {
     final size = MediaQuery.of(context).size;
     return AnimatedBuilder(
       animation: _controller,
@@ -54,6 +63,37 @@ class _HistoryViewBackgroundState extends State<HistoryViewBackground>
               child: Image(
                 image: AssetImage(
                     'assets/img/backgrounds/history_view_background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              top: 10 + (_animationMoon.value * 0.2) / 2,
+              right: -(size.height * 0.25) + (_animationMoon.value * 0.2),
+              height: size.height * 0.25,
+              child: const Image(
+                image: AssetImage('assets/img/moon.png'),
+                fit: BoxFit.fitHeight,
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildDesktop() {
+    final size = MediaQuery.of(context).size;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            const SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image(
+                image: AssetImage(
+                    'assets/img/backgrounds/history_view_background_desktop.png'),
                 fit: BoxFit.cover,
               ),
             ),
