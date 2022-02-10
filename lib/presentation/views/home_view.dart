@@ -8,6 +8,7 @@ import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
 import 'package:slide_puzzle_game/presentation/views/history/history_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
+import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
 class HomeView extends StatelessWidget {
@@ -52,34 +53,48 @@ class _HomeViewBodyState extends State<HomeViewBody> {
 
   @override
   Widget build(BuildContext context) {
-    const padding = EdgeInsets.symmetric(horizontal: 90);
+    const padding = EdgeInsets.symmetric(horizontal: 10);
     const duration = 800;
 
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          PlayButton(
-            onPressed: () => pushView(child: const DifficultyView()),
-          ),
-          const SizedBox(height: 30),
-          SpaceButton(
-            title: AppLocalizations.of(context).homeRanking,
-            padding: padding,
-            onPressed: () {},
-          ),
-          const SizedBox(height: 30),
-          SpaceButton(
-            title: AppLocalizations.of(context).homeHistory,
-            padding: padding,
-            duration: const Duration(milliseconds: duration * 2),
-            onPressed: () => pushView(child: const HistoryView()),
-          ),
-          const SizedBox(height: 30),
-          SpaceButton(
-            title: AppLocalizations.of(context).homeCredits,
-            padding: padding,
-            duration: const Duration(milliseconds: duration * 3),
+          const SpaceBar(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: (MediaQuery.of(context).size.width / 2).clamp(200, 300),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    PlayButton(
+                      onPressed: () => pushView(child: const DifficultyView()),
+                    ),
+                    const SizedBox(height: 30),
+                    SpaceButton(
+                      title: AppLocalizations.of(context).homeRanking,
+                      padding: padding,
+                      onPressed: () {},
+                    ),
+                    const SizedBox(height: 30),
+                    SpaceButton(
+                      title: AppLocalizations.of(context).homeHistory,
+                      padding: padding,
+                      duration: const Duration(milliseconds: duration * 2),
+                      onPressed: () => pushView(child: const HistoryView()),
+                    ),
+                    const SizedBox(height: 30),
+                    SpaceButton(
+                      title: AppLocalizations.of(context).homeCredits,
+                      padding: padding,
+                      duration: const Duration(milliseconds: duration * 3),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),

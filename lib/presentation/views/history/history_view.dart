@@ -46,6 +46,7 @@ class HistoryViewBody extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 20),
+                    height: size.height * 0.8,
                     width: isDesktop
                         ? size.width / 3
                         : double.infinity.clamp(200, 350),

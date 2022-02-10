@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:slide_puzzle_game/core/framework/extensions.dart';
 
 class HomeViewBackground extends StatefulWidget {
@@ -88,6 +89,15 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    return ScreenTypeLayout.builder(
+      mobile: (BuildContext context) => _buildMobile(size),
+      tablet: (BuildContext context) => _buildTablet(size),
+      desktop: (BuildContext context) => _buildDesktop(size),
+    );
+  }
+
+  Widget _buildTablet(Size size) {
     return AnimatedBuilder(
       animation: _controller,
       builder: (context, child) {
@@ -95,6 +105,163 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
           children: [
             const SizedBox(
               width: double.infinity,
+              height: double.infinity,
+              child: Image(
+                image: AssetImage(
+                    'assets/img/backgrounds/home_view_background_tablet.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              top: 90,
+              right: 110,
+              height: 82,
+              child: Transform.scale(
+                scale: _animationStar.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 180,
+              right: 40,
+              height: 55,
+              child: Transform.scale(
+                scale: _animationStar2.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star2.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              top: size.height * 0.445,
+              left: size.width * 0.25,
+              height: 35,
+              child: Transform.scale(
+                scale: _animationStar3.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star3.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 80,
+              right: -80,
+              height: 66,
+              child: Transform.scale(
+                scale: _animationShadow.value,
+                child: const Image(
+                  image: AssetImage('assets/img/shadow.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 85 + _animationRocket.value,
+              right: -60,
+              height: 571,
+              child: const Image(
+                image: AssetImage('assets/img/rocket.png'),
+                fit: BoxFit.fitHeight,
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildDesktop(Size size) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            const SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image(
+                image: AssetImage(
+                    'assets/img/backgrounds/home_view_background_desktop.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              top: 110,
+              right: 150,
+              height: 82,
+              child: Transform.scale(
+                scale: _animationStar.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              top: 200,
+              right: 80,
+              height: 55,
+              child: Transform.scale(
+                scale: _animationStar2.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star2.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              top: size.height * 0.445,
+              right: size.width * 0.35,
+              height: 35,
+              child: Transform.scale(
+                scale: _animationStar3.value,
+                child: const Image(
+                  image: AssetImage('assets/img/star3.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 80,
+              right: 50,
+              height: 51,
+              child: Transform.scale(
+                scale: _animationShadow.value,
+                child: const Image(
+                  image: AssetImage('assets/img/shadow.png'),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+            ),
+            Positioned(
+              bottom: 85 + _animationRocket.value,
+              right: 60,
+              height: 442,
+              child: const Image(
+                image: AssetImage('assets/img/rocket.png'),
+                fit: BoxFit.fitHeight,
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildMobile(Size size) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            const SizedBox(
+              width: double.infinity,
+              height: double.infinity,
               child: Image(
                 image: AssetImage(
                     'assets/img/backgrounds/home_view_background.png'),

@@ -46,7 +46,7 @@ class _HistoryViewBackgroundState extends State<HistoryViewBackground>
   Widget build(BuildContext context) {
     return ScreenTypeLayout.builder(
       mobile: (BuildContext context) => _buildMobile(),
-      tablet: (BuildContext context) => _buildMobile(),
+      tablet: (BuildContext context) => _buildTablet(),
       desktop: (BuildContext context) => _buildDesktop(),
     );
   }
@@ -63,6 +63,37 @@ class _HistoryViewBackgroundState extends State<HistoryViewBackground>
               child: Image(
                 image: AssetImage(
                     'assets/img/backgrounds/history_view_background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
+            Positioned(
+              top: 10 + (_animationMoon.value * 0.2) / 2,
+              right: -(size.height * 0.25) + (_animationMoon.value * 0.2),
+              height: size.height * 0.25,
+              child: const Image(
+                image: AssetImage('assets/img/moon.png'),
+                fit: BoxFit.fitHeight,
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _buildTablet() {
+    final size = MediaQuery.of(context).size;
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Stack(
+          children: [
+            const SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: Image(
+                image: AssetImage(
+                    'assets/img/backgrounds/history_view_background_tablet.png'),
                 fit: BoxFit.cover,
               ),
             ),
