@@ -9,7 +9,7 @@ import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
-import 'package:slide_puzzle_game/presentation/views/game_view.dart';
+import 'package:slide_puzzle_game/presentation/views/game/game_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/difficult_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
