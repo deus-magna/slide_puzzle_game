@@ -43,10 +43,7 @@ class _DifficultyViewState extends State<DifficultyView> {
       body: Stack(
         alignment: Alignment.topCenter,
         children: [
-          const DifficultViewBackground(
-            backgroundImage:
-                'assets/img/backgrounds/difficult_view_background.png',
-          ),
+          const DifficultViewBackground(),
           _buildBody(size, context),
         ],
       ),
@@ -60,37 +57,42 @@ class _DifficultyViewState extends State<DifficultyView> {
         children: [
           const SpaceBar(color: Colors.black),
           Expanded(
-            child: SizedBox(
-              width: size.width * 0.6,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SpaceButton(
-                    onPressed: () => pushGameView(context, GameDifficult.easy),
-                    title: AppLocalizations.of(context).difficultEasy,
-                  ),
-                  const SizedBox(height: 25),
-                  SpaceButton(
-                    onPressed: () =>
-                        pushGameView(context, GameDifficult.medimum),
-                    title: AppLocalizations.of(context).difficultMedium,
-                    duration: const Duration(milliseconds: duration * 2),
-                  ),
-                  const SizedBox(height: 25),
-                  SpaceButton(
-                    onPressed: () => pushGameView(context, GameDifficult.hard),
-                    title: AppLocalizations.of(context).difficultHard,
-                    duration: const Duration(milliseconds: duration * 3),
-                  ),
-                  const SizedBox(height: 25),
-                  SpaceButton(
-                    onPressed: () =>
-                        pushGameView(context, GameDifficult.godLevel),
-                    title: AppLocalizations.of(context).difficultGooLevel,
-                    duration: const Duration(milliseconds: duration * 4),
-                  ),
-                ],
+            child: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                width: (MediaQuery.of(context).size.width / 2).clamp(200, 300),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SpaceButton(
+                      onPressed: () =>
+                          pushGameView(context, GameDifficult.easy),
+                      title: AppLocalizations.of(context).difficultEasy,
+                    ),
+                    const SizedBox(height: 25),
+                    SpaceButton(
+                      onPressed: () =>
+                          pushGameView(context, GameDifficult.medimum),
+                      title: AppLocalizations.of(context).difficultMedium,
+                      duration: const Duration(milliseconds: duration * 2),
+                    ),
+                    const SizedBox(height: 25),
+                    SpaceButton(
+                      onPressed: () =>
+                          pushGameView(context, GameDifficult.hard),
+                      title: AppLocalizations.of(context).difficultHard,
+                      duration: const Duration(milliseconds: duration * 3),
+                    ),
+                    const SizedBox(height: 25),
+                    SpaceButton(
+                      onPressed: () =>
+                          pushGameView(context, GameDifficult.godLevel),
+                      title: AppLocalizations.of(context).difficultGooLevel,
+                      duration: const Duration(milliseconds: duration * 4),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

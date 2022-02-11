@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 
 class DifficultViewBackground extends StatefulWidget {
   const DifficultViewBackground({
     Key? key,
-    required this.backgroundImage,
   }) : super(key: key);
-
-  final String backgroundImage;
 
   @override
   State<DifficultViewBackground> createState() =>
@@ -57,12 +55,32 @@ class _DifficultViewBackgroundState extends State<DifficultViewBackground>
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+
+    return ResponsiveBuilder(builder: (context, sizingInformation) {
+      final isDesktop =
+          sizingInformation.deviceScreenType == DeviceScreenType.desktop;
+      final isMobile =
+          sizingInformation.deviceScreenType == DeviceScreenType.mobile;
+
+      return isDesktop
+          ? _buildContent(size,
+              'assets/img/backgrounds/difficult_view_background_desktop.png')
+          : isMobile
+              ? _buildContent(
+                  size, 'assets/img/backgrounds/difficult_view_background.png')
+              : _buildContent(size,
+                  'assets/img/backgrounds/difficult_view_background_tablet.png');
+    });
+  }
+
+  Widget _buildContent(Size size, String image) {
     return Stack(
       children: [
         SizedBox(
           width: double.infinity,
+          height: double.infinity,
           child: Image(
-            image: AssetImage(widget.backgroundImage),
+            image: AssetImage(image),
             fit: BoxFit.cover,
           ),
         ),
