@@ -55,43 +55,54 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   Widget build(BuildContext context) {
     const padding = EdgeInsets.symmetric(horizontal: 10);
     const duration = 800;
+    final size = MediaQuery.of(context).size;
+    final constraints = BoxConstraints(
+        maxWidth: (size.width / 2).clamp(200, 300), minHeight: 60);
 
     return SafeArea(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const SpaceBar(),
+          const SpaceBar(showBackButton: false),
           Expanded(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: (MediaQuery.of(context).size.width / 2).clamp(200, 300),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    PlayButton(
-                      onPressed: () => pushView(child: const DifficultyView()),
-                    ),
-                    const SizedBox(height: 30),
-                    SpaceButton(
-                      title: AppLocalizations.of(context).homeRanking,
-                      padding: padding,
-                      onPressed: () {},
-                    ),
-                    const SizedBox(height: 30),
-                    SpaceButton(
-                      title: AppLocalizations.of(context).homeHistory,
-                      padding: padding,
-                      duration: const Duration(milliseconds: duration * 2),
-                      onPressed: () => pushView(child: const HistoryView()),
-                    ),
-                    const SizedBox(height: 30),
-                    SpaceButton(
-                      title: AppLocalizations.of(context).homeCredits,
-                      padding: padding,
-                      duration: const Duration(milliseconds: duration * 3),
-                    ),
-                  ],
+            child: SizedBox(
+              height: size.height,
+              width: size.width,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 10),
+                      PlayButton(
+                        onPressed: () =>
+                            pushView(child: const DifficultyView()),
+                      ),
+                      const SizedBox(height: 30),
+                      SpaceButton(
+                        title: AppLocalizations.of(context).homeRanking,
+                        padding: padding,
+                        onPressed: () {},
+                        constraints: constraints,
+                      ),
+                      const SizedBox(height: 30),
+                      SpaceButton(
+                        title: AppLocalizations.of(context).homeHistory,
+                        padding: padding,
+                        duration: const Duration(milliseconds: duration * 2),
+                        onPressed: () => pushView(child: const HistoryView()),
+                        constraints: constraints,
+                      ),
+                      const SizedBox(height: 30),
+                      SpaceButton(
+                        title: AppLocalizations.of(context).homeCredits,
+                        padding: padding,
+                        duration: const Duration(milliseconds: duration * 3),
+                        constraints: constraints,
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
             ),

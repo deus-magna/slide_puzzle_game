@@ -6,11 +6,16 @@ import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 
 class SpaceBar extends StatefulWidget {
-  const SpaceBar({Key? key, this.color = Colors.white, this.onPressed})
-      : super(key: key);
+  const SpaceBar({
+    Key? key,
+    this.color = Colors.white,
+    this.onPressed,
+    this.showBackButton = true,
+  }) : super(key: key);
 
   final Color color;
   final Function()? onPressed;
+  final bool showBackButton;
 
   @override
   State<SpaceBar> createState() => _SpaceBarState();
@@ -39,20 +44,23 @@ class _SpaceBarState extends State<SpaceBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          TextButton(
-            onPressed: () {
-              player.replay(context);
-              Navigator.of(context).pop();
-              onPressed?.call();
-            },
-            child: Text(
-              AppLocalizations.of(context).backButton,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline4!
-                  .copyWith(color: widget.color),
-            ),
-          ),
+          if (widget.showBackButton)
+            TextButton(
+              onPressed: () {
+                player.replay(context);
+                Navigator.of(context).pop();
+                onPressed?.call();
+              },
+              child: Text(
+                AppLocalizations.of(context).backButton,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline4!
+                    .copyWith(color: widget.color),
+              ),
+            )
+          else
+            const SizedBox.shrink(),
           BlocBuilder<AudioCubit, AudioState>(
             builder: (context, state) {
               return Row(

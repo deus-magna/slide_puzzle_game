@@ -52,46 +52,57 @@ class _DifficultyViewState extends State<DifficultyView> {
 
   Widget _buildBody(Size size, BuildContext context) {
     const duration = 800;
+    final size = MediaQuery.of(context).size;
+    final constraints = BoxConstraints(
+        maxWidth: (size.width / 2).clamp(200, 300), minHeight: 60);
     return SafeArea(
       child: Column(
         children: [
           const SpaceBar(color: Colors.black),
           Expanded(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: (MediaQuery.of(context).size.width / 2).clamp(200, 300),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    SpaceButton(
-                      onPressed: () =>
-                          pushGameView(context, GameDifficult.easy),
-                      title: AppLocalizations.of(context).difficultEasy,
-                    ),
-                    const SizedBox(height: 25),
-                    SpaceButton(
-                      onPressed: () =>
-                          pushGameView(context, GameDifficult.medimum),
-                      title: AppLocalizations.of(context).difficultMedium,
-                      duration: const Duration(milliseconds: duration * 2),
-                    ),
-                    const SizedBox(height: 25),
-                    SpaceButton(
-                      onPressed: () =>
-                          pushGameView(context, GameDifficult.hard),
-                      title: AppLocalizations.of(context).difficultHard,
-                      duration: const Duration(milliseconds: duration * 3),
-                    ),
-                    const SizedBox(height: 25),
-                    SpaceButton(
-                      onPressed: () =>
-                          pushGameView(context, GameDifficult.godLevel),
-                      title: AppLocalizations.of(context).difficultGooLevel,
-                      duration: const Duration(milliseconds: duration * 4),
-                    ),
-                  ],
+            child: SizedBox(
+              height: size.height,
+              width: size.width,
+              child: Center(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 10),
+                      SpaceButton(
+                        onPressed: () =>
+                            pushGameView(context, GameDifficult.easy),
+                        title: AppLocalizations.of(context).difficultEasy,
+                        constraints: constraints,
+                      ),
+                      const SizedBox(height: 25),
+                      SpaceButton(
+                        onPressed: () =>
+                            pushGameView(context, GameDifficult.medimum),
+                        title: AppLocalizations.of(context).difficultMedium,
+                        duration: const Duration(milliseconds: duration * 2),
+                        constraints: constraints,
+                      ),
+                      const SizedBox(height: 25),
+                      SpaceButton(
+                        onPressed: () =>
+                            pushGameView(context, GameDifficult.hard),
+                        title: AppLocalizations.of(context).difficultHard,
+                        duration: const Duration(milliseconds: duration * 3),
+                        constraints: constraints,
+                      ),
+                      const SizedBox(height: 25),
+                      SpaceButton(
+                        onPressed: () =>
+                            pushGameView(context, GameDifficult.godLevel),
+                        title: AppLocalizations.of(context).difficultGooLevel,
+                        duration: const Duration(milliseconds: duration * 4),
+                        constraints: constraints,
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
             ),
