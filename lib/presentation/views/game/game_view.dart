@@ -54,6 +54,8 @@ class GameView extends StatelessWidget {
             }
           },
           builder: (_, state) {
+            final gameWidth =
+                MediaQuery.of(context).size.height.clamp(300, 450).toDouble();
             return Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -67,20 +69,17 @@ class GameView extends StatelessWidget {
                           onPressed: () =>
                               context.read<AudioCubit>().playMenuMusic(),
                         ),
-                        Header(moves: state.moves),
+                        Header(moves: state.moves, width: gameWidth),
                         const SizedBox(height: 10),
                         SizedBox(
-                          height: MediaQuery.of(context)
-                              .size
-                              .height
-                              .clamp(200, 400),
+                          height: gameWidth,
                           child: AspectRatio(
                             aspectRatio: 1,
                             child: PuzzleBoard(state: state),
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Menu(state: state),
+                        Menu(state: state, width: gameWidth),
                       ],
                     ),
                   ),

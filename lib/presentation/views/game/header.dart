@@ -3,31 +3,39 @@ import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 
 class Header extends StatelessWidget {
-  const Header({Key? key, required this.moves}) : super(key: key);
+  const Header({
+    Key? key,
+    required this.moves,
+    required this.width,
+  }) : super(key: key);
 
   final int moves;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const SpaceContainer(
-          label: 'TIMER',
-          value: '02:30',
-          animationOffset: -400,
-          duration: Duration(milliseconds: 1000),
-          direction: Axis.horizontal,
-        ),
-        const SizedBox(width: 20),
-        SpaceContainer(
-          label: 'MOVES',
-          value: '$moves',
-          animationOffset: 400,
-          duration: const Duration(milliseconds: 1000),
-          direction: Axis.horizontal,
-        ),
-      ],
+    return SizedBox(
+      width: width,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SpaceContainer(
+            label: 'TIMER',
+            value: '02:30',
+            animationOffset: -400,
+            duration: Duration(milliseconds: 1000),
+            direction: Axis.horizontal,
+          ),
+          const SizedBox(width: 20),
+          SpaceContainer(
+            label: 'MOVES',
+            value: '$moves',
+            animationOffset: 400,
+            duration: const Duration(milliseconds: 1000),
+            direction: Axis.horizontal,
+          ),
+        ],
+      ),
     );
   }
 }
