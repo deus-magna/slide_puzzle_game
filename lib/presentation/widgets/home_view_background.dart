@@ -17,6 +17,20 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
   late Animation<double> _animationStar;
   late Animation<double> _animationStar2;
   late Animation<double> _animationStar3;
+
+  final desktopBackground = Image.asset(
+    'assets/img/backgrounds/home_view_background_desktop.png',
+    fit: BoxFit.cover,
+  );
+  final tabletBackground = Image.asset(
+    'assets/img/backgrounds/home_view_background_tablet.png',
+    fit: BoxFit.cover,
+  );
+
+  final mobileBackground = Image.asset(
+    'assets/img/backgrounds/home_view_background.png',
+    fit: BoxFit.cover,
+  );
   @override
   void initState() {
     super.initState();
@@ -81,6 +95,14 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
   }
 
   @override
+  void didChangeDependencies() {
+    precacheImage(desktopBackground.image, context);
+    precacheImage(tabletBackground.image, context);
+    precacheImage(mobileBackground.image, context);
+    super.didChangeDependencies();
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -103,14 +125,10 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
       builder: (context, child) {
         return Stack(
           children: [
-            const SizedBox(
+            SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: Image(
-                image: AssetImage(
-                    'assets/img/backgrounds/home_view_background_tablet.png'),
-                fit: BoxFit.cover,
-              ),
+              child: tabletBackground,
             ),
             Positioned(
               top: 90,
@@ -181,14 +199,10 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
       builder: (context, child) {
         return Stack(
           children: [
-            const SizedBox(
+            SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: Image(
-                image: AssetImage(
-                    'assets/img/backgrounds/home_view_background_desktop.png'),
-                fit: BoxFit.cover,
-              ),
+              child: desktopBackground,
             ),
             Positioned(
               top: 110,
@@ -259,14 +273,10 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
       builder: (context, child) {
         return Stack(
           children: [
-            const SizedBox(
+            SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child: Image(
-                image: AssetImage(
-                    'assets/img/backgrounds/home_view_background.png'),
-                fit: BoxFit.cover,
-              ),
+              child: mobileBackground,
             ),
             Positioned(
               top: 80,
