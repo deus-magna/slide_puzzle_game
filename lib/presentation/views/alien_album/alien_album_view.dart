@@ -91,6 +91,7 @@ class AlienAlbumBody extends StatelessWidget {
         height: '90 cm',
         nature: 'Amigable',
         src: 'assets/img/characters/uan.png',
+        isSolved: false,
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -100,6 +101,7 @@ class AlienAlbumBody extends StatelessWidget {
         height: '80 cm',
         nature: 'Intrepido',
         src: 'assets/img/characters/inky.png',
+        isSolved: false,
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
       ),
@@ -109,6 +111,7 @@ class AlienAlbumBody extends StatelessWidget {
         height: '150 cm',
         nature: 'Timido',
         src: 'assets/img/characters/ubbi.png',
+        isSolved: false,
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
       ),
@@ -118,6 +121,7 @@ class AlienAlbumBody extends StatelessWidget {
         height: '80 cm',
         nature: 'Agresivo',
         src: 'assets/img/characters/flamfy.png',
+        isSolved: false,
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
       ),
@@ -134,6 +138,7 @@ class AlienEntryTile extends StatelessWidget {
   final AlienEntry alienEntry;
   @override
   Widget build(BuildContext context) {
+    final shadow = alienEntry.src.substring(0, alienEntry.src.length - 4);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.all(20),
@@ -148,9 +153,10 @@ class AlienEntryTile extends StatelessWidget {
           Row(
             children: [
               Image.asset(
-                alienEntry.src,
-                fit: BoxFit.fitWidth,
+                alienEntry.isSolved ? alienEntry.src : '${shadow}_shadow.png',
+                fit: BoxFit.contain,
                 width: 150,
+                height: 150,
               ),
               const SizedBox(width: 20),
               Flexible(
@@ -167,7 +173,9 @@ class AlienEntryTile extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      'Peso: ${alienEntry.wieght}\nAltura: ${alienEntry.height}\nNaturaleza: ${alienEntry.nature}',
+                      alienEntry.isSolved
+                          ? 'Peso: ${alienEntry.wieght}\nAltura: ${alienEntry.height}\nNaturaleza: ${alienEntry.nature}'
+                          : 'Peso: ??\nAltura: ??\nNaturaleza: ??',
                       style: Theme.of(context).textTheme.headline5,
                       textAlign: TextAlign.center,
                     ),
@@ -178,7 +186,9 @@ class AlienEntryTile extends StatelessWidget {
           ),
           const SizedBox(height: 30),
           Text(
-            alienEntry.description,
+            alienEntry.isSolved
+                ? alienEntry.description
+                : 'Aun no existen datos',
             textAlign: TextAlign.justify,
             style: const TextStyle(
               color: Colors.white,
