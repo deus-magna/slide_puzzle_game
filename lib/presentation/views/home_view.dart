@@ -5,6 +5,7 @@ import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
+import 'package:slide_puzzle_game/presentation/views/alien_album/alien_album_view.dart';
 import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
 import 'package:slide_puzzle_game/presentation/views/history/history_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
@@ -77,6 +78,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                       PlayButton(
                         onPressed: () =>
                             pushView(child: const DifficultyView()),
+                      ),
+                      const SizedBox(height: 30),
+                      SpaceButton(
+                        title: AppLocalizations.of(context).homeAlbum,
+                        padding: padding,
+                        onPressed: () =>
+                            pushView(child: const AlienAlbumView()),
+                        constraints: constraints,
                       ),
                       const SizedBox(height: 30),
                       SpaceButton(
