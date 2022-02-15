@@ -91,7 +91,7 @@ class AlienAlbumBody extends StatelessWidget {
         height: '90 cm',
         nature: 'Amigable',
         src: 'assets/img/characters/uan.png',
-        isSolved: false,
+        isSolved: true,
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -101,29 +101,29 @@ class AlienAlbumBody extends StatelessWidget {
         height: '80 cm',
         nature: 'Intrepido',
         src: 'assets/img/characters/inky.png',
-        isSolved: false,
+        isSolved: true,
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
       ),
       const AlienEntry(
         name: 'Ubbi',
-        wieght: '100 kg',
-        height: '150 cm',
+        wieght: '80 kg',
+        height: '120 cm',
         nature: 'Timido',
         src: 'assets/img/characters/ubbi.png',
-        isSolved: false,
+        isSolved: true,
         description:
-            'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
+            'Es dificil de ver, se encuentra en lugares oscuros y se camufla muy bien con la fauna de este planea, es mas rapido de lo que parece',
       ),
       const AlienEntry(
         name: 'Flamfy',
-        wieght: '15 kg',
-        height: '80 cm',
+        wieght: '57 kg',
+        height: '150 cm',
         nature: 'Agresivo',
         src: 'assets/img/characters/flamfy.png',
-        isSolved: false,
+        isSolved: true,
         description:
-            'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
+            'Este alien no esta bien emocionalmente, quema todo a su alrededor ya que puede escupir fuego, son peligrosos y territoriales, se debe tener mucho cuidado',
       ),
     ];
   }
