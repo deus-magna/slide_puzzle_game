@@ -39,8 +39,10 @@ class GameView extends StatelessWidget {
       body: BlocProvider(
         create: (context) => getCubit(gameParams),
         child: BlocConsumer<GameCubit, GameState>(
-          listener: (_, state) {
+          listener: (_, state) async {
             if (state.status == GameStatus.solved) {
+              await Future<void>.delayed(const Duration(milliseconds: 400));
+
               utils.showMissionCompleteDialog(
                 context,
                 title: AppLocalizations.of(context).missionComplete,
