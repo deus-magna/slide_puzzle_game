@@ -21,7 +21,7 @@ class CustomDialog extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
+      width: (MediaQuery.of(context).size.width).clamp(200, 450),
       child: Stack(
         children: <Widget>[
           _buildCard(context),

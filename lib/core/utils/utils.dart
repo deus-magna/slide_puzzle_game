@@ -8,6 +8,7 @@ void showMissionCompleteDialog(BuildContext context,
     required String label,
     required String moves,
     required String button,
+    required String album,
     Function()? onPressed}) {
   showDialog<void>(
     context: context,
@@ -27,12 +28,26 @@ void showMissionCompleteDialog(BuildContext context,
           const SizedBox(height: 20),
           _buildTotalMoves(label, context, moves),
           const SizedBox(height: 20),
-          SpaceButton(
-              animate: false,
-              onPressed: onPressed == null
-                  ? () => Navigator.of(context).pop()
-                  : onPressed,
-              title: button),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: SpaceButton(
+                    animate: false,
+                    onPressed: onPressed ?? () => Navigator.of(context).pop(),
+                    title: button),
+              ),
+              Expanded(
+                child: SpaceButton(
+                    animate: false,
+                    onPressed: () {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/album', ModalRoute.withName('home'));
+                    },
+                    title: album),
+              ),
+            ],
+          ),
           const SizedBox(height: 20),
         ],
       ),

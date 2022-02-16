@@ -41,9 +41,8 @@ class GameCubit extends Cubit<GameState> {
     if (puzzle.canMove(tile.currentPosition)) {
       final newPuzzle = puzzle.move(tile);
       final isSolved = newPuzzle.isSolved();
-
       if (isSolved) {
-        await setAlienSolved(alienName: 'Uan');
+        await _addAlienToAlbum();
       }
 
       emit(
@@ -56,6 +55,25 @@ class GameCubit extends Cubit<GameState> {
         ),
       );
     }
+  }
+
+  Future<void> _addAlienToAlbum() async {
+    var name = '';
+    switch (state.size) {
+      case 3:
+        name = 'Uan';
+        break;
+      case 4:
+        name = 'Inky';
+        break;
+      case 5:
+        name = 'Ubbi';
+        break;
+      case 6:
+        name = 'Flamfly';
+        break;
+    }
+    await setAlienSolved(alienName: name);
   }
 
   void shuffle() {

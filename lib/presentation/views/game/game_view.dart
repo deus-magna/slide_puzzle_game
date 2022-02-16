@@ -47,7 +47,14 @@ class GameView extends StatelessWidget {
                 timer: '02:14',
                 label: AppLocalizations.of(context).totalMoves,
                 moves: '${state.moves}',
-                button: AppLocalizations.of(context).nextButton,
+                button: AppLocalizations.of(context).levelsButton,
+                onPressed: () {
+                  context.read<AudioCubit>().playMenuMusic();
+                  Navigator.of(context)
+                    ..pop()
+                    ..pop();
+                },
+                album: AppLocalizations.of(context).albumButton,
               );
             }
           },

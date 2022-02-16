@@ -166,7 +166,7 @@ class AlienEntryTile extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      alienEntry.name,
+                      alienEntry.isSolved ? alienEntry.name : '--',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Color(0xFFCF33E5),

@@ -11,6 +11,7 @@ import 'package:slide_puzzle_game/presentation/views/history/history_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/home_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
+import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -91,7 +92,21 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                       SpaceButton(
                         title: AppLocalizations.of(context).homeRanking,
                         padding: padding,
-                        onPressed: () {},
+                        onPressed: () {
+                          utils.showMissionCompleteDialog(
+                            context,
+                            title: AppLocalizations.of(context).missionComplete,
+                            timer: '02:14',
+                            label: AppLocalizations.of(context).totalMoves,
+                            moves: '24',
+                            button: AppLocalizations.of(context).levelsButton,
+                            onPressed: () {
+                              context.read<AudioCubit>().playMenuMusic();
+                              Navigator.of(context).pop();
+                            },
+                            album: AppLocalizations.of(context).albumButton,
+                          );
+                        },
                         constraints: constraints,
                       ),
                       const SizedBox(height: 30),

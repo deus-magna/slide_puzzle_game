@@ -64,7 +64,7 @@ class _AppState extends State<App> {
           GlobalMaterialLocalizations.delegate,
         ],
         supportedLocales: AppLocalizations.supportedLocales,
-        initialRoute: '/home',
+        initialRoute: 'home',
         routes: getApplicationRoutes(),
       ),
     );
