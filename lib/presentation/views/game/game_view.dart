@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
@@ -15,7 +14,6 @@ import 'package:slide_puzzle_game/presentation/views/game/header.dart';
 import 'package:slide_puzzle_game/presentation/views/game/menu.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
-import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
 class GameView extends StatelessWidget {
   const GameView({Key? key, required this.gameParams}) : super(key: key);

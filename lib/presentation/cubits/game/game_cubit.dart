@@ -4,11 +4,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:slide_puzzle_game/data/models/puzzle.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
+import 'package:slide_puzzle_game/domain/use_cases/set_alien_solved.dart';
+import 'package:slide_puzzle_game/injection_container.dart';
 
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit._(int size, Uint8List imageData)
+  GameCubit._(int size, Uint8List imageData, {required this.setAlienSolved})
       : super(
           GameState(
             size: size,
@@ -19,20 +21,30 @@ class GameCubit extends Cubit<GameState> {
           ),
         );
 
-  factory GameCubit.easy(Uint8List imageData) => GameCubit._(3, imageData);
+  factory GameCubit.easy(Uint8List imageData) =>
+      GameCubit._(3, imageData, setAlienSolved: SetAlienSolved(sl()));
 
-  factory GameCubit.medimun(Uint8List imageData) => GameCubit._(4, imageData);
+  factory GameCubit.medimun(Uint8List imageData) =>
+      GameCubit._(4, imageData, setAlienSolved: SetAlienSolved(sl()));
 
-  factory GameCubit.hard(Uint8List imageData) => GameCubit._(5, imageData);
+  factory GameCubit.hard(Uint8List imageData) =>
+      GameCubit._(5, imageData, setAlienSolved: SetAlienSolved(sl()));
 
-  factory GameCubit.godLevel(Uint8List imageData) => GameCubit._(6, imageData);
+  factory GameCubit.godLevel(Uint8List imageData) =>
+      GameCubit._(6, imageData, setAlienSolved: SetAlienSolved(sl()));
+
+  final SetAlienSolved setAlienSolved;
 
   Puzzle get puzzle => state.puzzle;
 
-  void onTileTapped(Tile tile) {
+  Future<void> onTileTapped(Tile tile) async {
     if (puzzle.canMove(tile.currentPosition)) {
       final newPuzzle = puzzle.move(tile);
       final isSolved = newPuzzle.isSolved();
+
+      if (isSolved) {
+        await setAlienSolved(alienName: 'Uan');
+      }
 
       emit(
         GameState(

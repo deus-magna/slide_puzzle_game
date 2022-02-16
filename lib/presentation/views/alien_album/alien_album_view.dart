@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/data/models/alien_entry.dart';
+import 'package:slide_puzzle_game/domain/use_cases/is_alien_solved.dart';
+import 'package:slide_puzzle_game/injection_container.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/history/history_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
@@ -84,44 +86,45 @@ class AlienAlbumBody extends StatelessWidget {
   }
 
   List<AlienEntry> _buildAliens() {
+    final isAlienSolved = IsAlienSolved(sl());
     return <AlienEntry>[
-      const AlienEntry(
+      AlienEntry(
         name: 'Uan',
         wieght: '20 kg',
         height: '90 cm',
         nature: 'Amigable',
         src: 'assets/img/characters/uan.png',
-        isSolved: true,
+        isSolved: isAlienSolved(alienName: 'Uan'),
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
-      const AlienEntry(
+      AlienEntry(
         name: 'Inky',
         wieght: '15 kg',
         height: '80 cm',
         nature: 'Intrepido',
         src: 'assets/img/characters/inky.png',
-        isSolved: true,
+        isSolved: isAlienSolved(alienName: 'Inky'),
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
       ),
-      const AlienEntry(
+      AlienEntry(
         name: 'Ubbi',
         wieght: '80 kg',
         height: '120 cm',
         nature: 'Timido',
         src: 'assets/img/characters/ubbi.png',
-        isSolved: true,
+        isSolved: isAlienSolved(alienName: 'Ubbi'),
         description:
             'Es dificil de ver, se encuentra en lugares oscuros y se camufla muy bien con la fauna de este planea, es mas rapido de lo que parece',
       ),
-      const AlienEntry(
+      AlienEntry(
         name: 'Flamfy',
         wieght: '57 kg',
         height: '150 cm',
         nature: 'Agresivo',
         src: 'assets/img/characters/flamfy.png',
-        isSolved: true,
+        isSolved: isAlienSolved(alienName: 'Flamfy'),
         description:
             'Este alien no esta bien emocionalmente, quema todo a su alrededor ya que puede escupir fuego, son peligrosos y territoriales, se debe tener mucho cuidado',
       ),
