@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
@@ -9,7 +11,7 @@ import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
-import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/views/game/header.dart';
 import 'package:slide_puzzle_game/presentation/views/game/menu.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
@@ -30,6 +32,8 @@ class GameView extends StatelessWidget {
         return GameCubit.hard(params.assetData);
       case GameDifficult.godLevel:
         return GameCubit.godLevel(params.assetData);
+      default:
+        return GameCubit.easy(params.assetData);
     }
   }
 
@@ -41,22 +45,23 @@ class GameView extends StatelessWidget {
         child: BlocConsumer<GameCubit, GameState>(
           listener: (_, state) async {
             if (state.status == GameStatus.solved) {
-              await Future<void>.delayed(const Duration(milliseconds: 400));
-
-              utils.showMissionCompleteDialog(
-                context,
-                title: AppLocalizations.of(context).missionComplete,
-                timer: '02:14',
-                label: AppLocalizations.of(context).totalMoves,
-                moves: '${state.moves}',
-                button: AppLocalizations.of(context).levelsButton,
-                onPressed: () {
-                  context.read<AudioCubit>().playMenuMusic();
-                  Navigator.of(context)
-                    ..pop()
-                    ..pop();
-                },
-                album: AppLocalizations.of(context).albumButton,
+              Timer(
+                const Duration(milliseconds: 400),
+                () => utils.showMissionCompleteDialog(
+                  context,
+                  title: AppLocalizations.of(context).missionComplete,
+                  timer: '02:14',
+                  label: AppLocalizations.of(context).totalMoves,
+                  moves: '${state.moves}',
+                  button: AppLocalizations.of(context).levelsButton,
+                  onPressed: () {
+                    context.read<AudioCubit>().playMenuMusic();
+                    Navigator.of(context)
+                      ..pop()
+                      ..pop();
+                  },
+                  album: AppLocalizations.of(context).albumButton,
+                ),
               );
             }
           },

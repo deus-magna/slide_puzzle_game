@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
-import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
 class Menu extends StatelessWidget {

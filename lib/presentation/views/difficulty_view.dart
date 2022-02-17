@@ -1,14 +1,12 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
-import 'package:slide_puzzle_game/data/models/game_params.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
-import 'package:slide_puzzle_game/presentation/cubits/game/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/difficult_view/difficult_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/views/game/game_view.dart';
 import 'package:slide_puzzle_game/presentation/widgets/difficult_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
@@ -40,12 +38,44 @@ class _DifficultyViewState extends State<DifficultyView> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.topCenter,
-        children: [
-          const DifficultViewBackground(),
-          _buildBody(size, context),
-        ],
+      body: BlocProvider(
+        create: (context) => DifficultCubit(),
+        child: BlocConsumer<DifficultCubit, DifficultState>(
+          listener: (context, state) {
+            if (state is DifficultLoaded) {
+              Navigator.of(context).push<void>(
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) {
+                    return FadeTransition(
+                      opacity: animation,
+                      child: GameView(
+                        gameParams: state.gameParams,
+                      ),
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 1000),
+                ),
+              );
+            }
+          },
+          builder: (context, state) {
+            if (state is DifficultLoading) {
+              return const SizedBox(
+                height: double.infinity,
+                width: double.infinity,
+                child: Center(child: CircularProgressIndicator()),
+              );
+            } else {
+              return Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  const DifficultViewBackground(),
+                  _buildBody(size, context),
+                ],
+              );
+            }
+          },
+        ),
       ),
     );
   }
@@ -117,42 +147,7 @@ class _DifficultyViewState extends State<DifficultyView> {
     GameDifficult gameDifficult,
   ) async {
     unawaited(player.replay(context));
-    final assetData = await getAssetData(gameDifficult);
-    final arguments =
-        GameParams(assetData: assetData, gameDifficult: gameDifficult);
 
-    await Navigator.of(context).push<void>(
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return FadeTransition(
-            opacity: animation,
-            child: GameView(
-              gameParams: arguments,
-            ),
-          );
-        },
-        transitionDuration: const Duration(milliseconds: 1000),
-      ),
-    );
-    // Navigator.of(context).pushNamed('/game', arguments: arguments);
-  }
-
-  Future<Uint8List> getAssetData(GameDifficult difficult) async {
-    final bytes = await bytesFromAsset(difficult);
-    final mibiByte = bytes.buffer.asUint8List();
-    return mibiByte;
-  }
-
-  Future<ByteData> bytesFromAsset(GameDifficult difficult) async {
-    switch (difficult) {
-      case GameDifficult.easy:
-        return rootBundle.load('assets/img/tiles/uan/uan.png');
-      case GameDifficult.medimum:
-        return rootBundle.load('assets/img/tiles/inky/inky.png');
-      case GameDifficult.hard:
-        return rootBundle.load('assets/img/tiles/ubbi/ubbi.png');
-      case GameDifficult.godLevel:
-        return rootBundle.load('assets/img/tiles/flamfy/flamfy.png');
-    }
+    await context.read<DifficultCubit>().loadAssets(gameDifficult);
   }
 }
