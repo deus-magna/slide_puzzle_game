@@ -194,9 +194,20 @@ class BoardTile extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: Stack(
               children: [
-                Image(
-                  image: MemoryImage(tile.source!),
-                  fit: BoxFit.cover,
+                ColorFiltered(
+                  colorFilter: tile.currentPosition == tile.validPosition
+                      ? const ColorFilter.mode(
+                          Colors.transparent,
+                          BlendMode.multiply,
+                        )
+                      : const ColorFilter.mode(
+                          Colors.grey,
+                          BlendMode.saturation,
+                        ),
+                  child: Image(
+                    image: MemoryImage(tile.source!),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 Text(
                   '  ${tile.value}',

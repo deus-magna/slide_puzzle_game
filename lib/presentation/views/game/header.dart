@@ -20,15 +20,15 @@ class Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           const SpaceContainer(
-            label: 'TIMER',
-            value: '02:30',
+            label: 'timer',
+            value: '02 30',
             animationOffset: -400,
             duration: Duration(milliseconds: 1000),
             direction: Axis.horizontal,
           ),
           const SizedBox(width: 20),
           SpaceContainer(
-            label: 'MOVES',
+            label: 'moves',
             value: '$moves',
             animationOffset: 400,
             duration: const Duration(milliseconds: 1000),

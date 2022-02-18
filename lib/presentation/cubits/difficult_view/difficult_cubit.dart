@@ -1,9 +1,9 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
+import 'package:slide_puzzle_game/data/models/alien_asset.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/domain/use_cases/split_image.dart';
 import 'package:slide_puzzle_game/injection_container.dart';
@@ -36,34 +36,24 @@ class DifficultCubit extends Cubit<DifficultState> {
   }
 
   Future<AssetData> _bytesFromAsset(GameDifficult difficult) async {
+    var maxValue = 3;
     switch (difficult) {
       case GameDifficult.easy:
-        return _loadEasyAlien();
+        maxValue = 3;
+        break;
       case GameDifficult.medimum:
-        return _loadEasyAlien();
-      // return rootBundle.load('assets/img/tiles/inky/inky.png');
+        maxValue = 5;
+        break;
       case GameDifficult.hard:
-        return _loadEasyAlien();
-      // return rootBundle.load('assets/img/tiles/ubbi/ubbi.png');
+        maxValue = 7;
+        break;
       case GameDifficult.godLevel:
-        return _loadEasyAlien();
-      // return rootBundle.load('assets/img/tiles/flamfy/flamfy.png');
+        maxValue = 9;
+        break;
     }
-  }
-
-  Future<AssetData> _loadEasyAlien() async {
     final random = Random();
-    final randomNumber = random.nextInt(3);
-    switch (randomNumber) {
-      case 0:
-        final image = await rootBundle.load('assets/img/tiles/balloopus.png');
-        return AssetData(image, 'balloopus');
-      case 1:
-        final image = await rootBundle.load('assets/img/tiles/uan/uan.png');
-        return AssetData(image, 'uan');
-      default:
-        final image = await rootBundle.load('assets/img/tiles/lemhost.png');
-        return AssetData(image, 'lemhost');
-    }
+    final randomNumber = random.nextInt(maxValue);
+    final image = await rootBundle.load(aliensAssets[randomNumber].assetPath);
+    return AssetData(image, aliensAssets[randomNumber].name);
   }
 }

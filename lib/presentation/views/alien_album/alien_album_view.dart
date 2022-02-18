@@ -93,28 +93,48 @@ class AlienAlbumBody extends StatelessWidget {
         wieght: '20 kg',
         height: '90 cm',
         nature: 'Amigable',
-        imagePath: 'assets/img/characters/uan.png',
+        imagePath: 'assets/img/entries/uan.png',
         isSolved: isAlienSolved(alienName: 'uan'),
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
       AlienEntry(
-        name: 'Uan',
+        name: 'Lemhost',
         wieght: '20 kg',
         height: '90 cm',
         nature: 'Amigable',
-        imagePath: 'assets/img/characters/uan.png',
-        isSolved: isAlienSolved(alienName: 'uan'),
+        imagePath: 'assets/img/entries/lemhost.png',
+        isSolved: isAlienSolved(alienName: 'lemhost'),
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
       AlienEntry(
-        name: 'Uan',
+        name: 'Balloopus',
         wieght: '20 kg',
         height: '90 cm',
         nature: 'Amigable',
-        imagePath: 'assets/img/characters/uan.png',
-        isSolved: isAlienSolved(alienName: 'uan'),
+        imagePath: 'assets/img/entries/balloopus.png',
+        isSolved: isAlienSolved(alienName: 'balloopus'),
+        description:
+            'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
+      ),
+      AlienEntry(
+        name: 'Bathead',
+        wieght: '20 kg',
+        height: '90 cm',
+        nature: 'Amigable',
+        imagePath: 'assets/img/entries/bathead.png',
+        isSolved: isAlienSolved(alienName: 'bathead'),
+        description:
+            'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
+      ),
+      AlienEntry(
+        name: 'Biglaught',
+        wieght: '20 kg',
+        height: '90 cm',
+        nature: 'Amigable',
+        imagePath: 'assets/img/entries/biglaught.png',
+        isSolved: isAlienSolved(alienName: 'biglaught'),
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -123,7 +143,7 @@ class AlienAlbumBody extends StatelessWidget {
         wieght: '15 kg',
         height: '80 cm',
         nature: 'Intrepido',
-        imagePath: 'assets/img/characters/inky.png',
+        imagePath: 'assets/img/entries/inky.png',
         isSolved: isAlienSolved(alienName: 'inky'),
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
@@ -133,17 +153,27 @@ class AlienAlbumBody extends StatelessWidget {
         wieght: '80 kg',
         height: '120 cm',
         nature: 'Timido',
-        imagePath: 'assets/img/characters/ubbi.png',
+        imagePath: 'assets/img/entries/ubbi.png',
         isSolved: isAlienSolved(alienName: 'ubbi'),
         description:
             'Es dificil de ver, se encuentra en lugares oscuros y se camufla muy bien con la fauna de este planea, es mas rapido de lo que parece',
+      ),
+      AlienEntry(
+        name: 'Tentamoon',
+        wieght: '20 kg',
+        height: '90 cm',
+        nature: 'Amigable',
+        imagePath: 'assets/img/entries/tentamoon.png',
+        isSolved: isAlienSolved(alienName: 'tentamoon'),
+        description:
+            'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
       AlienEntry(
         name: 'Flamfy',
         wieght: '57 kg',
         height: '150 cm',
         nature: 'Agresivo',
-        imagePath: 'assets/img/characters/flamfy.png',
+        imagePath: 'assets/img/entries/flamfy.png',
         isSolved: isAlienSolved(alienName: 'flamfy'),
         description:
             'Este alien no esta bien emocionalmente, quema todo a su alrededor ya que puede escupir fuego, son peligrosos y territoriales, se debe tener mucho cuidado',
@@ -193,7 +223,7 @@ class AlienEntryTile extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: Color(0xFFCF33E5),
-                        fontSize: 30,
+                        fontSize: 24,
                         fontWeight: FontWeight.w800,
                       ),
                     ),
