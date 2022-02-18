@@ -8,12 +8,24 @@ class GameParams extends Equatable {
     required this.assetData,
     required this.gameDifficult,
     required this.assets,
+    required this.alienName,
   });
 
   final Uint8List assetData;
   final GameDifficult gameDifficult;
   final List<Uint8List> assets;
+  final String alienName;
 
   @override
-  List<Object?> get props => [assetData, gameDifficult, assets];
+  List<Object?> get props => [assetData, gameDifficult, assets, alienName];
+}
+
+class AssetData extends Equatable {
+  const AssetData(this.image, this.name);
+
+  final ByteData image;
+  final String name;
+
+  @override
+  List<Object?> get props => [image, name];
 }

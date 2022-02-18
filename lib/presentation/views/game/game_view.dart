@@ -30,6 +30,7 @@ class GameView extends StatelessWidget {
           gameParams.gameDifficult,
           gameParams.assetData,
           gameParams.assets,
+          gameParams.alienName,
         ),
         child: BlocConsumer<GameCubit, GameState>(
           listener: (_, state) async {
@@ -56,7 +57,8 @@ class GameView extends StatelessWidget {
           },
           builder: (_, state) {
             final gameWidth =
-                MediaQuery.of(context).size.height.clamp(300, 450).toDouble();
+                MediaQuery.of(context).size.width.clamp(300, 450).toDouble();
+            print('gameWidth $gameWidth');
             return Stack(
               alignment: Alignment.topCenter,
               children: [
@@ -76,7 +78,7 @@ class GameView extends StatelessWidget {
                           height: gameWidth,
                           child: AspectRatio(
                             aspectRatio: 1,
-                            child: PuzzleBoard(state: state),
+                            child: PuzzleBoard(state: state, width: gameWidth),
                           ),
                         ),
                         const SizedBox(height: 10),
@@ -95,9 +97,11 @@ class GameView extends StatelessWidget {
 }
 
 class PuzzleBoard extends StatefulWidget {
-  const PuzzleBoard({Key? key, required this.state}) : super(key: key);
+  const PuzzleBoard({Key? key, required this.state, required this.width})
+      : super(key: key);
 
   final GameState state;
+  final double width;
 
   @override
   State<PuzzleBoard> createState() => _PuzzleBoardState();
@@ -130,6 +134,8 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
           builder: (context, constraints) {
             final tileSize =
                 (constraints.maxWidth - padding) / widget.state.size;
+            print(
+                'tileSize $tileSize and ${tileSize * 3} ${constraints.maxWidth}');
             return AbsorbPointer(
               absorbing: widget.state.status != GameStatus.playing,
               child: Container(

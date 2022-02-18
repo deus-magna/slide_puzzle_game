@@ -7,7 +7,7 @@ class AlienEntry extends Equatable {
     required this.height,
     required this.nature,
     required this.description,
-    required this.src,
+    required this.imagePath,
     required this.isSolved,
   });
 
@@ -16,9 +16,16 @@ class AlienEntry extends Equatable {
   final String height;
   final String nature;
   final String description;
-  final String src;
+  final String imagePath;
   final bool isSolved;
 
   @override
-  List<Object?> get props => [name, wieght, height, nature, description];
+  List<Object?> get props => [
+        name,
+        wieght,
+        height,
+        nature,
+        description,
+        imagePath,
+      ];
 }

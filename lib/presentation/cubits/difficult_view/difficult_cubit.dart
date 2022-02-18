@@ -1,8 +1,8 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/domain/use_cases/split_image.dart';
@@ -19,36 +19,51 @@ class DifficultCubit extends Cubit<DifficultState> {
 
   Future<void> loadAssets(GameDifficult gameDifficult) async {
     emit(DifficultLoading());
-    final assetData = await _getAssetData(gameDifficult);
-    final input = List<int>.from(assetData);
+    final assetData = await _bytesFromAsset(gameDifficult);
+    final mibiByte = assetData.image.buffer.asUint8List();
+
+    final input = List<int>.from(mibiByte);
     final sources = await _splitImage(input, gameDifficult.size);
 
     emit(DifficultLoaded(
       GameParams(
-        assetData: assetData,
+        assetData: mibiByte,
         gameDifficult: gameDifficult,
         assets: sources,
+        alienName: assetData.name,
       ),
     ));
   }
 
-  Future<Uint8List> _getAssetData(GameDifficult difficult) async {
-    final bytes = await _bytesFromAsset(difficult);
-    final mibiByte = bytes.buffer.asUint8List();
-    return mibiByte;
-  }
-
-  Future<ByteData> _bytesFromAsset(GameDifficult difficult) async {
+  Future<AssetData> _bytesFromAsset(GameDifficult difficult) async {
     switch (difficult) {
       case GameDifficult.easy:
-        print('Inicia el read');
-        return rootBundle.load('assets/img/tiles/uan/uan.png');
+        return _loadEasyAlien();
       case GameDifficult.medimum:
-        return rootBundle.load('assets/img/tiles/inky/inky.png');
+        return _loadEasyAlien();
+      // return rootBundle.load('assets/img/tiles/inky/inky.png');
       case GameDifficult.hard:
-        return rootBundle.load('assets/img/tiles/ubbi/ubbi.png');
+        return _loadEasyAlien();
+      // return rootBundle.load('assets/img/tiles/ubbi/ubbi.png');
       case GameDifficult.godLevel:
-        return rootBundle.load('assets/img/tiles/flamfy/flamfy.png');
+        return _loadEasyAlien();
+      // return rootBundle.load('assets/img/tiles/flamfy/flamfy.png');
+    }
+  }
+
+  Future<AssetData> _loadEasyAlien() async {
+    final random = Random();
+    final randomNumber = random.nextInt(3);
+    switch (randomNumber) {
+      case 0:
+        final image = await rootBundle.load('assets/img/tiles/balloopus.png');
+        return AssetData(image, 'balloopus');
+      case 1:
+        final image = await rootBundle.load('assets/img/tiles/uan/uan.png');
+        return AssetData(image, 'uan');
+      default:
+        final image = await rootBundle.load('assets/img/tiles/lemhost.png');
+        return AssetData(image, 'lemhost');
     }
   }
 }

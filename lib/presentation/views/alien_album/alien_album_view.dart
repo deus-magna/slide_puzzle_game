@@ -93,8 +93,28 @@ class AlienAlbumBody extends StatelessWidget {
         wieght: '20 kg',
         height: '90 cm',
         nature: 'Amigable',
-        src: 'assets/img/characters/uan.png',
-        isSolved: isAlienSolved(alienName: 'Uan'),
+        imagePath: 'assets/img/characters/uan.png',
+        isSolved: isAlienSolved(alienName: 'uan'),
+        description:
+            'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
+      ),
+      AlienEntry(
+        name: 'Uan',
+        wieght: '20 kg',
+        height: '90 cm',
+        nature: 'Amigable',
+        imagePath: 'assets/img/characters/uan.png',
+        isSolved: isAlienSolved(alienName: 'uan'),
+        description:
+            'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
+      ),
+      AlienEntry(
+        name: 'Uan',
+        wieght: '20 kg',
+        height: '90 cm',
+        nature: 'Amigable',
+        imagePath: 'assets/img/characters/uan.png',
+        isSolved: isAlienSolved(alienName: 'uan'),
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -103,8 +123,8 @@ class AlienAlbumBody extends StatelessWidget {
         wieght: '15 kg',
         height: '80 cm',
         nature: 'Intrepido',
-        src: 'assets/img/characters/inky.png',
-        isSolved: isAlienSolved(alienName: 'Inky'),
+        imagePath: 'assets/img/characters/inky.png',
+        isSolved: isAlienSolved(alienName: 'inky'),
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
       ),
@@ -113,8 +133,8 @@ class AlienAlbumBody extends StatelessWidget {
         wieght: '80 kg',
         height: '120 cm',
         nature: 'Timido',
-        src: 'assets/img/characters/ubbi.png',
-        isSolved: isAlienSolved(alienName: 'Ubbi'),
+        imagePath: 'assets/img/characters/ubbi.png',
+        isSolved: isAlienSolved(alienName: 'ubbi'),
         description:
             'Es dificil de ver, se encuentra en lugares oscuros y se camufla muy bien con la fauna de este planea, es mas rapido de lo que parece',
       ),
@@ -123,8 +143,8 @@ class AlienAlbumBody extends StatelessWidget {
         wieght: '57 kg',
         height: '150 cm',
         nature: 'Agresivo',
-        src: 'assets/img/characters/flamfy.png',
-        isSolved: isAlienSolved(alienName: 'Flamfy'),
+        imagePath: 'assets/img/characters/flamfy.png',
+        isSolved: isAlienSolved(alienName: 'flamfy'),
         description:
             'Este alien no esta bien emocionalmente, quema todo a su alrededor ya que puede escupir fuego, son peligrosos y territoriales, se debe tener mucho cuidado',
       ),
@@ -141,7 +161,8 @@ class AlienEntryTile extends StatelessWidget {
   final AlienEntry alienEntry;
   @override
   Widget build(BuildContext context) {
-    final shadow = alienEntry.src.substring(0, alienEntry.src.length - 4);
+    final shadow =
+        alienEntry.imagePath.substring(0, alienEntry.imagePath.length - 4);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 20),
       padding: const EdgeInsets.all(20),
@@ -156,7 +177,9 @@ class AlienEntryTile extends StatelessWidget {
           Row(
             children: [
               Image.asset(
-                alienEntry.isSolved ? alienEntry.src : '${shadow}_shadow.png',
+                alienEntry.isSolved
+                    ? alienEntry.imagePath
+                    : '${shadow}_shadow.png',
                 fit: BoxFit.contain,
                 width: 150,
                 height: 150,

@@ -30,13 +30,13 @@ enum GameStatus {
 }
 
 class GameState extends Equatable {
-  const GameState({
-    required this.size,
-    required this.puzzle,
-    required this.moves,
-    required this.status,
-    required this.imageData,
-  });
+  const GameState(
+      {required this.size,
+      required this.puzzle,
+      required this.moves,
+      required this.status,
+      required this.imageData,
+      required this.alienName});
 
   final int size;
   final Puzzle puzzle;
@@ -44,6 +44,7 @@ class GameState extends Equatable {
   final int moves;
   final GameStatus status;
   final Uint8List imageData;
+  final String alienName;
 
   GameState copyWith({
     int? size,
@@ -52,16 +53,17 @@ class GameState extends Equatable {
     int? moves,
     GameStatus? status,
     Uint8List? imageData,
+    String? alienName,
   }) {
     return GameState(
-      size: size ?? this.size,
-      puzzle: puzzle ?? this.puzzle,
-      moves: moves ?? this.moves,
-      status: status ?? this.status,
-      imageData: imageData ?? this.imageData,
-    );
+        size: size ?? this.size,
+        puzzle: puzzle ?? this.puzzle,
+        moves: moves ?? this.moves,
+        status: status ?? this.status,
+        imageData: imageData ?? this.imageData,
+        alienName: alienName ?? this.alienName);
   }
 
   @override
-  List<Object?> get props => [size, puzzle, moves, status];
+  List<Object?> get props => [size, puzzle, moves, status, alienName];
 }

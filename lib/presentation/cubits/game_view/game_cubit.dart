@@ -10,19 +10,34 @@ import 'package:slide_puzzle_game/injection_container.dart';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit._(int size, Uint8List imageData, List<Uint8List> sources)
-      : super(
+  GameCubit._(
+    int size,
+    Uint8List imageData,
+    List<Uint8List> sources,
+    String alienName,
+  ) : super(
           GameState(
             size: size,
             puzzle: Puzzle.create(size, sources: sources),
             moves: 0,
             status: GameStatus.initial,
             imageData: imageData,
+            alienName: alienName,
           ),
         );
-  factory GameCubit.init(GameDifficult difficult, Uint8List imageData,
-          List<Uint8List> sources) =>
-      GameCubit._(difficult.size, imageData, sources);
+
+  factory GameCubit.init(
+    GameDifficult difficult,
+    Uint8List imageData,
+    List<Uint8List> sources,
+    String alienName,
+  ) =>
+      GameCubit._(
+        difficult.size,
+        imageData,
+        sources,
+        alienName,
+      );
 
   // Use case for set when alien is solved
   final SetAlienSolved setAlienSolved = sl<SetAlienSolved>();
@@ -38,35 +53,17 @@ class GameCubit extends Cubit<GameState> {
       }
 
       emit(
-        GameState(
-          size: state.size,
+        state.copyWith(
           puzzle: newPuzzle,
           moves: state.moves + 1,
           status: isSolved ? GameStatus.solved : state.status,
-          imageData: state.imageData,
         ),
       );
     }
   }
 
-  Future<void> _addAlienToAlbum() async {
-    var name = '';
-    switch (state.size) {
-      case 3:
-        name = 'Uan';
-        break;
-      case 4:
-        name = 'Inky';
-        break;
-      case 5:
-        name = 'Ubbi';
-        break;
-      case 6:
-        name = 'Flamfly';
-        break;
-    }
-    await setAlienSolved(alienName: name);
-  }
+  Future<void> _addAlienToAlbum() async =>
+      setAlienSolved(alienName: state.alienName);
 
   void shuffle() {
     emit(
