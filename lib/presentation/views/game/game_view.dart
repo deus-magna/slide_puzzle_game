@@ -22,36 +22,8 @@ class GameView extends StatelessWidget {
 
   final GameParams gameParams;
 
-  // GameCubit getCubit(GameParams params) {
-  //   switch (params.gameDifficult) {
-  //     case GameDifficult.easy:
-  //       return GameCubit.easy(params.assetData, params.assets);
-  //     case GameDifficult.medimum:
-  //       return GameCubit.medimun(params.assetData, params.assets);
-  //     case GameDifficult.hard:
-  //       return GameCubit.hard(params.assetData, params.assets);
-  //     case GameDifficult.godLevel:
-  //       return GameCubit.godLevel(params.assetData, params.assets);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: BlocProvider(
-    //     create: (context) => getCubit(gameParams),
-    //     child: BlocConsumer<GameCubit, GameState>(
-    //       listener: (context, state) {
-    //         // TODO: implement listener
-    //       },
-    //       builder: (context, state) {
-    //         return const Center(
-    //           child: Text('Hola Mundo'),
-    //         );
-    //       },
-    //     ),
-    //   ),
-    // );
     return Scaffold(
       body: BlocProvider(
         create: (context) => GameCubit.init(

@@ -24,18 +24,6 @@ class GameCubit extends Cubit<GameState> {
           List<Uint8List> sources) =>
       GameCubit._(difficult.size, imageData, sources);
 
-  // factory GameCubit.easy(Uint8List imageData, List<Uint8List> sources) =>
-  //     GameCubit._(3, imageData, sources);
-
-  // factory GameCubit.medimun(Uint8List imageData, List<Uint8List> sources) =>
-  //     GameCubit._(4, imageData, sources);
-
-  // factory GameCubit.hard(Uint8List imageData, List<Uint8List> sources) =>
-  //     GameCubit._(5, imageData, sources);
-
-  // factory GameCubit.godLevel(Uint8List imageData, List<Uint8List> sources) =>
-  //     GameCubit._(6, imageData, sources);
-
   // Use case for set when alien is solved
   final SetAlienSolved setAlienSolved = sl<SetAlienSolved>();
 

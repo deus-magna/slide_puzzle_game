@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
@@ -43,7 +44,6 @@ class _DifficultyViewState extends State<DifficultyView> {
         child: BlocConsumer<DifficultCubit, DifficultState>(
           listener: (context, state) {
             if (state is DifficultLoaded) {
-              print('Ya llegamos aca');
               Navigator.of(context).push<void>(
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) {
@@ -60,21 +60,41 @@ class _DifficultyViewState extends State<DifficultyView> {
             }
           },
           builder: (context, state) {
-            if (state is DifficultLoading) {
-              return const SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-                child: Center(child: CircularProgressIndicator()),
-              );
-            } else {
-              return Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  const DifficultViewBackground(),
+            return Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                const DifficultViewBackground(),
+                if (state is DifficultLoading)
+                  Center(
+                    child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 20),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 40),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(width: 3, color: pinkBorder),
+                            color: Colors.black.withOpacity(0.3)),
+                        height: (size.height * 0.2).clamp(150, 200),
+                        width: double.infinity.clamp(200, 350),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                            const SizedBox(height: 20),
+                            Text(
+                              AppLocalizations.of(context).difficultLoading,
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                          ],
+                        )),
+                  )
+                else
                   _buildBody(size, context),
-                ],
-              );
-            }
+              ],
+            );
           },
         ),
       ),
