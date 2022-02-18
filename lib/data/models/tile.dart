@@ -11,7 +11,7 @@ class Tile extends Equatable {
     required this.currentPosition,
   });
 
-  final Uint8List source;
+  final Uint8List? source;
   final int value;
   final Position validPosition;
   final Position currentPosition;

@@ -7,7 +7,23 @@ enum GameDifficult {
   godLevel,
 }
 
+extension GameDifficultExtension on GameDifficult {
+  int get size {
+    switch (this) {
+      case GameDifficult.easy:
+        return 3;
+      case GameDifficult.medimum:
+        return 4;
+      case GameDifficult.hard:
+        return 5;
+      case GameDifficult.godLevel:
+        return 6;
+    }
+  }
+}
+
 enum GameStatus {
+  loading,
   initial,
   playing,
   solved,

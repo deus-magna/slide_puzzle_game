@@ -43,6 +43,7 @@ class _DifficultyViewState extends State<DifficultyView> {
         child: BlocConsumer<DifficultCubit, DifficultState>(
           listener: (context, state) {
             if (state is DifficultLoaded) {
+              print('Ya llegamos aca');
               Navigator.of(context).push<void>(
                 PageRouteBuilder(
                   pageBuilder: (context, animation, secondaryAnimation) {

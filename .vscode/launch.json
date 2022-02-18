@@ -8,12 +8,12 @@
       "name": "Launch development",
       "request": "launch",
       "type": "dart",
-      "program": "lib/main_development.dart",
+      "program": "lib/main.dart",
       "args": [
         "--flavor",
         "development",
         "--target",
-        "lib/main_development.dart"
+        "lib/main.dart"
       ]
     },
     {

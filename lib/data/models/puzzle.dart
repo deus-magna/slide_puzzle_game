@@ -2,20 +2,19 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'package:equatable/equatable.dart';
-import 'package:image/image.dart' as imglib;
 
 import 'package:slide_puzzle_game/data/models/position.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 
 class Puzzle extends Equatable {
-  const Puzzle._({required this.tiles, required this.whiteSpace});
+  const Puzzle._({
+    required this.tiles,
+    required this.whiteSpace,
+  });
 
-  factory Puzzle.create(int size, Uint8List data) {
+  factory Puzzle.create(int size, {required List<Uint8List> sources}) {
     var value = 1;
     final whiteSpace = Position(x: size - 1, y: size - 1);
-
-    final list = List<int>.from(data);
-    final datas = splitImage(list, size);
 
     final tiles = <Tile>[];
     for (var y = 0; y < size; y++) {
@@ -27,51 +26,25 @@ class Puzzle extends Equatable {
             validPosition: position,
             currentPosition: position,
             value: value,
-            source: datas[value - 1],
+            source: sources[value - 1],
           );
           value++;
           tiles.add(tile);
         }
       }
     }
+    print('termina puzzle create');
     return Puzzle._(
       tiles: tiles,
       whiteSpace: whiteSpace,
     );
   }
 
+  // The tiles and his data
   final List<Tile> tiles;
 
+  // Indicates blank space
   final Position whiteSpace;
-
-  static List<Uint8List> splitImage(List<int> input, int size) {
-    // convert image to image from image package
-    final image = imglib.decodeImage(input);
-
-    var x = 0, y = 0;
-    final width = (image!.width / size).round();
-    final height = (image.height / size).round();
-
-    // split image to parts
-    final parts = <imglib.Image>[];
-    for (var i = 0; i < size; i++) {
-      for (var j = 0; j < size; j++) {
-        parts.add(imglib.copyCrop(image, x, y, width, height));
-        x += width;
-      }
-      x = 0;
-      y += height;
-    }
-
-    // convert image from image package to Image Widget to display
-    final output = <Uint8List>[];
-    for (final img in parts) {
-      final image8List = Uint8List.fromList(imglib.encodeJpg(img));
-      output.add(image8List);
-    }
-
-    return output;
-  }
 
   bool canMove(Position currentPosition) =>
       currentPosition.x == whiteSpace.x || currentPosition.y == whiteSpace.y;

@@ -10,30 +10,34 @@ import 'package:slide_puzzle_game/injection_container.dart';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit._(int size, Uint8List imageData, {required this.setAlienSolved})
+  GameCubit._(int size, Uint8List imageData, List<Uint8List> sources)
       : super(
           GameState(
             size: size,
-            puzzle: Puzzle.create(size, imageData),
+            puzzle: Puzzle.create(size, sources: sources),
             moves: 0,
             status: GameStatus.initial,
             imageData: imageData,
           ),
         );
+  factory GameCubit.init(GameDifficult difficult, Uint8List imageData,
+          List<Uint8List> sources) =>
+      GameCubit._(difficult.size, imageData, sources);
 
-  factory GameCubit.easy(Uint8List imageData) =>
-      GameCubit._(3, imageData, setAlienSolved: SetAlienSolved(sl()));
+  // factory GameCubit.easy(Uint8List imageData, List<Uint8List> sources) =>
+  //     GameCubit._(3, imageData, sources);
 
-  factory GameCubit.medimun(Uint8List imageData) =>
-      GameCubit._(4, imageData, setAlienSolved: SetAlienSolved(sl()));
+  // factory GameCubit.medimun(Uint8List imageData, List<Uint8List> sources) =>
+  //     GameCubit._(4, imageData, sources);
 
-  factory GameCubit.hard(Uint8List imageData) =>
-      GameCubit._(5, imageData, setAlienSolved: SetAlienSolved(sl()));
+  // factory GameCubit.hard(Uint8List imageData, List<Uint8List> sources) =>
+  //     GameCubit._(5, imageData, sources);
 
-  factory GameCubit.godLevel(Uint8List imageData) =>
-      GameCubit._(6, imageData, setAlienSolved: SetAlienSolved(sl()));
+  // factory GameCubit.godLevel(Uint8List imageData, List<Uint8List> sources) =>
+  //     GameCubit._(6, imageData, sources);
 
-  final SetAlienSolved setAlienSolved;
+  // Use case for set when alien is solved
+  final SetAlienSolved setAlienSolved = sl<SetAlienSolved>();
 
   Puzzle get puzzle => state.puzzle;
 

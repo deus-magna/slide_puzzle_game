@@ -22,26 +22,43 @@ class GameView extends StatelessWidget {
 
   final GameParams gameParams;
 
-  GameCubit getCubit(GameParams params) {
-    switch (params.gameDifficult) {
-      case GameDifficult.easy:
-        return GameCubit.easy(params.assetData);
-      case GameDifficult.medimum:
-        return GameCubit.medimun(params.assetData);
-      case GameDifficult.hard:
-        return GameCubit.hard(params.assetData);
-      case GameDifficult.godLevel:
-        return GameCubit.godLevel(params.assetData);
-      default:
-        return GameCubit.easy(params.assetData);
-    }
-  }
+  // GameCubit getCubit(GameParams params) {
+  //   switch (params.gameDifficult) {
+  //     case GameDifficult.easy:
+  //       return GameCubit.easy(params.assetData, params.assets);
+  //     case GameDifficult.medimum:
+  //       return GameCubit.medimun(params.assetData, params.assets);
+  //     case GameDifficult.hard:
+  //       return GameCubit.hard(params.assetData, params.assets);
+  //     case GameDifficult.godLevel:
+  //       return GameCubit.godLevel(params.assetData, params.assets);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   body: BlocProvider(
+    //     create: (context) => getCubit(gameParams),
+    //     child: BlocConsumer<GameCubit, GameState>(
+    //       listener: (context, state) {
+    //         // TODO: implement listener
+    //       },
+    //       builder: (context, state) {
+    //         return const Center(
+    //           child: Text('Hola Mundo'),
+    //         );
+    //       },
+    //     ),
+    //   ),
+    // );
     return Scaffold(
       body: BlocProvider(
-        create: (context) => getCubit(gameParams),
+        create: (context) => GameCubit.init(
+          gameParams.gameDifficult,
+          gameParams.assetData,
+          gameParams.assets,
+        ),
         child: BlocConsumer<GameCubit, GameState>(
           listener: (_, state) async {
             if (state.status == GameStatus.solved) {
@@ -200,7 +217,7 @@ class BoardTile extends StatelessWidget {
             child: Stack(
               children: [
                 Image(
-                  image: MemoryImage(tile.source),
+                  image: MemoryImage(tile.source!),
                   fit: BoxFit.cover,
                 ),
                 Text(
