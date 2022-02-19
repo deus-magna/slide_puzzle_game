@@ -3,15 +3,18 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 import 'package:slide_puzzle_game/data/models/game_params.dart';
+import 'package:slide_puzzle_game/data/models/ticker.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
 import 'package:slide_puzzle_game/presentation/views/game/header.dart';
 import 'package:slide_puzzle_game/presentation/views/game/menu.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
@@ -25,22 +28,30 @@ class GameView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocProvider(
-        create: (context) => GameCubit.init(
-          gameParams.gameDifficult,
-          gameParams.assetData,
-          gameParams.assets,
-          gameParams.alienName,
-        ),
+      body: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+              create: (context) => GameCubit.init(
+                    gameParams.gameDifficult,
+                    gameParams.assetData,
+                    gameParams.assets,
+                    gameParams.alienName,
+                  )),
+          BlocProvider(
+            create: (_) => TimerBloc(ticker: Ticker()),
+          )
+        ],
         child: BlocConsumer<GameCubit, GameState>(
-          listener: (_, state) async {
+          listener: (context, state) async {
             if (state.status == GameStatus.solved) {
+              context.read<TimerBloc>().add(const TimerPaused());
+              final duration = context.read<TimerBloc>().state.duration;
               Timer(
                 const Duration(milliseconds: 400),
                 () => utils.showMissionCompleteDialog(
                   context,
                   title: AppLocalizations.of(context).missionComplete,
-                  timer: '02:14',
+                  timer: utils.readableTimer(duration),
                   label: AppLocalizations.of(context).totalMoves,
                   moves: '${state.moves}',
                   button: AppLocalizations.of(context).levelsButton,
@@ -56,8 +67,14 @@ class GameView extends StatelessWidget {
             }
           },
           builder: (_, state) {
-            final gameWidth =
-                MediaQuery.of(context).size.width.clamp(300, 450).toDouble();
+            final size = MediaQuery.of(context).size;
+            // final gameWidth = size.width.clamp(300, 450).toDouble();
+            final gameWidth = getValueForScreenType<double>(
+              context: context,
+              mobile: size.width.clamp(250, 350).toDouble(),
+              tablet: size.width.clamp(300, 450).toDouble(),
+              desktop: size.width.clamp(300, 450).toDouble(),
+            );
             print('gameWidth $gameWidth');
             return Stack(
               alignment: Alignment.topCenter,

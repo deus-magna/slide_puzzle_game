@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
+import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
+import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -14,16 +17,19 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final duration = context.select((TimerBloc bloc) => bloc.state.duration);
+
     return SizedBox(
       width: width,
+      height: MediaQuery.of(context).size.height * 0.12,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SpaceContainer(
+          SpaceContainer(
             label: 'timer',
-            value: '02 30',
+            value: utils.readableTimer(duration),
             animationOffset: -400,
-            duration: Duration(milliseconds: 1000),
+            duration: const Duration(milliseconds: 1000),
             direction: Axis.horizontal,
           ),
           const SizedBox(width: 20),
@@ -66,6 +72,7 @@ class SpaceContainer extends StatelessWidget {
           padding: const EdgeInsets.all(10),
           decoration: spaceContainerDecoration,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(label, style: Theme.of(context).textTheme.caption),
               Text(

@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:slide_puzzle_game/presentation/widgets/custom_dialog.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
+String readableTimer(int duration) {
+  final minutesStr = ((duration / 60) % 60).floor().toString().padLeft(2, '0');
+  final secondsStr = (duration % 60).floor().toString().padLeft(2, '0');
+  return '$minutesStr:$secondsStr';
+}
+
 void showMissionCompleteDialog(BuildContext context,
     {required String title,
     required String timer,
@@ -34,12 +40,14 @@ void showMissionCompleteDialog(BuildContext context,
               Expanded(
                 child: SpaceButton(
                     animate: false,
+                    shortButton: true,
                     onPressed: onPressed ?? () => Navigator.of(context).pop(),
                     title: button),
               ),
               Expanded(
                 child: SpaceButton(
                     animate: false,
+                    shortButton: true,
                     onPressed: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/album', ModalRoute.withName('home'));

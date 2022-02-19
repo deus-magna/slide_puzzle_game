@@ -14,6 +14,7 @@ class SpaceButton extends StatelessWidget {
     this.offsetDirection = Axis.horizontal,
     this.duration = const Duration(milliseconds: 800),
     this.animate = true,
+    this.shortButton = false,
     // this.constraints = const BoxConstraints(minWidth: 88, minHeight: 36),
   }) : super(key: key);
 
@@ -26,6 +27,7 @@ class SpaceButton extends StatelessWidget {
   final Axis offsetDirection;
   final Duration duration;
   final bool animate;
+  final bool shortButton;
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +51,16 @@ class SpaceButton extends StatelessWidget {
           decoration: alienButtonDecoration,
           child: Text(
             title,
-            style:
-                Theme.of(context).textTheme.button!.copyWith(color: textColor),
+            style: shortButton
+                ? Theme.of(context)
+                    .textTheme
+                    .button!
+                    .copyWith(color: textColor)
+                    .copyWith(fontSize: 22)
+                : Theme.of(context)
+                    .textTheme
+                    .button!
+                    .copyWith(color: textColor),
             textAlign: TextAlign.center,
           ),
         ),
