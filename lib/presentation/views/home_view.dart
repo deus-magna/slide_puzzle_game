@@ -93,6 +93,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         title: AppLocalizations.of(context).homeRanking,
                         padding: padding,
                         onPressed: () {
+                          context.read<AudioCubit>().win();
                           utils.showMissionCompleteDialog(
                             context,
                             title: AppLocalizations.of(context).missionComplete,

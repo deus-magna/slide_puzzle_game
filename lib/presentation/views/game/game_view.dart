@@ -46,9 +46,9 @@ class GameView extends StatelessWidget {
             if (state.status == GameStatus.solved) {
               context.read<TimerBloc>().add(const TimerPaused());
               final duration = context.read<TimerBloc>().state.duration;
-              Timer(
-                const Duration(milliseconds: 400),
-                () => utils.showMissionCompleteDialog(
+              Timer(const Duration(milliseconds: 400), () {
+                context.read<AudioCubit>().win();
+                utils.showMissionCompleteDialog(
                   context,
                   title: AppLocalizations.of(context).missionComplete,
                   timer: utils.readableTimer(duration),
@@ -62,8 +62,8 @@ class GameView extends StatelessWidget {
                       ..pop();
                   },
                   album: AppLocalizations.of(context).albumButton,
-                ),
-              );
+                );
+              });
             }
           },
           builder: (_, state) {

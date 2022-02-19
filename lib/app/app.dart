@@ -22,17 +22,20 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late AudioPlayer player;
+  late AudioPlayer ambientPlayer;
+  late AudioPlayer soundEffectsPlayer;
 
   @override
   void initState() {
-    player = AudioPlayer();
+    ambientPlayer = AudioPlayer();
+    soundEffectsPlayer = AudioPlayer();
     super.initState();
   }
 
   @override
   void dispose() {
-    player.dispose();
+    ambientPlayer.dispose();
+    soundEffectsPlayer.dispose();
     super.dispose();
   }
 
@@ -40,7 +43,8 @@ class _AppState extends State<App> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => AudioCubit(player)),
+        BlocProvider(
+            create: (_) => AudioCubit(ambientPlayer, soundEffectsPlayer)),
       ],
       child: MaterialApp(
         title: 'Slide the Space',
