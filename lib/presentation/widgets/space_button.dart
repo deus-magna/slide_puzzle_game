@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
+import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 
-class SpaceButton extends StatelessWidget {
+class SpaceButton extends StatefulWidget {
   const SpaceButton({
     Key? key,
     this.onPressed,
@@ -14,8 +16,8 @@ class SpaceButton extends StatelessWidget {
     this.offsetDirection = Axis.horizontal,
     this.duration = const Duration(milliseconds: 800),
     this.animate = true,
-    this.shortButton = false,
-    // this.constraints = const BoxConstraints(minWidth: 88, minHeight: 36),
+    this.isShortButton = false,
+    this.hasSound = true,
   }) : super(key: key);
 
   final void Function()? onPressed;
@@ -27,14 +29,34 @@ class SpaceButton extends StatelessWidget {
   final Axis offsetDirection;
   final Duration duration;
   final bool animate;
-  final bool shortButton;
+  final bool isShortButton;
+  final bool hasSound;
+
+  @override
+  State<SpaceButton> createState() => _SpaceButtonState();
+}
+
+class _SpaceButtonState extends State<SpaceButton> {
+  late AudioPlayer player;
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer()..setAsset('assets/audio/space_coin.mp3');
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return animate
+    return widget.animate
         ? TranslateAnimation(
-            offsetDirection: offsetDirection,
-            duration: duration,
+            offsetDirection: widget.offsetDirection,
+            duration: widget.duration,
             child: _buildButton(context),
           )
         : _buildButton(context);
@@ -42,29 +64,36 @@ class SpaceButton extends StatelessWidget {
 
   Padding _buildButton(BuildContext context) {
     return Padding(
-      padding: padding,
+      padding: widget.padding,
       child: TextButton(
-        onPressed: onPressed,
+        onPressed: () => _onPressed(context),
         child: Container(
-          constraints: constraints,
+          constraints: widget.constraints,
           alignment: Alignment.center,
           decoration: alienButtonDecoration,
           child: Text(
-            title,
-            style: shortButton
+            widget.title,
+            style: widget.isShortButton
                 ? Theme.of(context)
                     .textTheme
                     .button!
-                    .copyWith(color: textColor)
+                    .copyWith(color: widget.textColor)
                     .copyWith(fontSize: 22)
                 : Theme.of(context)
                     .textTheme
                     .button!
-                    .copyWith(color: textColor),
+                    .copyWith(color: widget.textColor),
             textAlign: TextAlign.center,
           ),
         ),
       ),
     );
+  }
+
+  void _onPressed(BuildContext context) {
+    if (widget.hasSound) {
+      player.replay(context);
+    }
+    widget.onPressed?.call();
   }
 }

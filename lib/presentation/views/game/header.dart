@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
+import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
 
 class Header extends StatelessWidget {
@@ -26,7 +27,7 @@ class Header extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SpaceContainer(
-            label: 'timer',
+            label: AppLocalizations.of(context).gameTimer,
             value: utils.readableTimer(duration),
             animationOffset: -400,
             duration: const Duration(milliseconds: 1000),
@@ -34,7 +35,7 @@ class Header extends StatelessWidget {
           ),
           const SizedBox(width: 20),
           SpaceContainer(
-            label: 'moves',
+            label: AppLocalizations.of(context).gameMoves,
             value: '$moves',
             animationOffset: 400,
             duration: const Duration(milliseconds: 1000),

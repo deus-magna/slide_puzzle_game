@@ -33,7 +33,7 @@ class Puzzle extends Equatable {
         }
       }
     }
-    print('termina puzzle create');
+
     return Puzzle._(
       tiles: tiles,
       whiteSpace: whiteSpace,
@@ -131,7 +131,7 @@ class Puzzle extends Equatable {
       ..shuffle();
 
     // final values = [0, 8, 2, 1, 4, 3, 7, 6, 5];
-    print('Is Solvable? ${_isSolvable(values)}');
+    // print('Is Solvable? ${_isSolvable(values)}');
     if (_isSolvable(values)) {
       var x = 0, y = 0;
       late Position emptyPosition;
@@ -178,7 +178,7 @@ class Puzzle extends Equatable {
         emptyPositionRow = row;
       }
     }
-    print('emptyPositionRow: $emptyPositionRow');
+    // print('emptyPositionRow: $emptyPositionRow');
     return emptyPositionRow;
   }
 
@@ -199,13 +199,11 @@ class Puzzle extends Equatable {
         }
       }
     }
-    print('Inversions: $inversionsCount');
     return inversionsCount;
   }
 
   bool _isSolvable(List<int> values) {
     final n = math.sqrt(values.length).toInt();
-    print('N: $n');
     final inversionsCount = _getInversionsCount(values);
 
     // Si N es impar y el numero de inversiones es par, es solucionable
@@ -215,7 +213,6 @@ class Puzzle extends Equatable {
       // Si N es par, necesitamos la posicion del tile vacio
       final emptyPositionRow = _findEmptyPosition(values);
       final emptyPositionRowFromBottom = n - emptyPositionRow + 1;
-      print('emptyPositionRowFromBottom: $emptyPositionRowFromBottom');
       // Si el espacio vacio es par y
       // las inversiones son impar, se puede solucionar
       if (emptyPositionRowFromBottom.isEven && inversionsCount.isOdd) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/presentation/widgets/custom_dialog.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
@@ -40,14 +42,19 @@ void showMissionCompleteDialog(BuildContext context,
               Expanded(
                 child: SpaceButton(
                     animate: false,
-                    shortButton: true,
-                    onPressed: onPressed ?? () => Navigator.of(context).pop(),
+                    isShortButton: true,
+                    onPressed: () {
+                      context.read<AudioCubit>().playMenuMusic();
+                      Navigator.of(context)
+                        ..pop()
+                        ..pop();
+                    },
                     title: button),
               ),
               Expanded(
                 child: SpaceButton(
                     animate: false,
-                    shortButton: true,
+                    isShortButton: true,
                     onPressed: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
                           '/album', ModalRoute.withName('home'));

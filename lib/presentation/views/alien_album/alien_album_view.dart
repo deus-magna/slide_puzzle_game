@@ -95,8 +95,9 @@ class AlienAlbumBody extends StatelessWidget {
         nature: 'Amigable',
         imagePath: 'assets/img/entries/uan.png',
         isSolved: isAlienSolved(alienName: 'uan'),
-        description:
-            'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
+        description: '''
+Este alien es amigable y es uno de los mas fáciles de ver 
+en este planeta, hay varios y su color depende de su estado de animo.''',
       ),
       AlienEntry(
         name: 'Lemhost',

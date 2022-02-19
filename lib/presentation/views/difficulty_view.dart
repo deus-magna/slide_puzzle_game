@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:slide_puzzle_game/core/framework/framework.dart';
-import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/difficult_view/difficult_cubit.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
@@ -21,20 +19,6 @@ class DifficultyView extends StatefulWidget {
 }
 
 class _DifficultyViewState extends State<DifficultyView> {
-  late AudioPlayer player;
-
-  @override
-  void initState() {
-    super.initState();
-    player = AudioPlayer()..setAsset('assets/audio/space_coin.mp3');
-  }
-
-  @override
-  void dispose() {
-    player.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -123,14 +107,15 @@ class _DifficultyViewState extends State<DifficultyView> {
                       const SizedBox(height: 10),
                       SpaceButton(
                         onPressed: () =>
-                            pushGameView(context, GameDifficult.easy),
+                            _pushGameView(context, GameDifficult.easy),
                         title: AppLocalizations.of(context).difficultEasy,
                         constraints: constraints,
+                        hasSound: true,
                       ),
                       const SizedBox(height: 25),
                       SpaceButton(
                         onPressed: () =>
-                            pushGameView(context, GameDifficult.medimum),
+                            _pushGameView(context, GameDifficult.medimum),
                         title: AppLocalizations.of(context).difficultMedium,
                         duration: const Duration(milliseconds: duration * 2),
                         constraints: constraints,
@@ -138,7 +123,7 @@ class _DifficultyViewState extends State<DifficultyView> {
                       const SizedBox(height: 25),
                       SpaceButton(
                         onPressed: () =>
-                            pushGameView(context, GameDifficult.hard),
+                            _pushGameView(context, GameDifficult.hard),
                         title: AppLocalizations.of(context).difficultHard,
                         duration: const Duration(milliseconds: duration * 3),
                         constraints: constraints,
@@ -146,7 +131,7 @@ class _DifficultyViewState extends State<DifficultyView> {
                       const SizedBox(height: 25),
                       SpaceButton(
                         onPressed: () =>
-                            pushGameView(context, GameDifficult.godLevel),
+                            _pushGameView(context, GameDifficult.godLevel),
                         title: AppLocalizations.of(context).difficultGooLevel,
                         duration: const Duration(milliseconds: duration * 4),
                         constraints: constraints,
@@ -163,12 +148,11 @@ class _DifficultyViewState extends State<DifficultyView> {
     );
   }
 
-  Future<void> pushGameView(
+  void _pushGameView(
     BuildContext context,
     GameDifficult gameDifficult,
-  ) async {
-    unawaited(player.replay(context));
-
-    await context.read<DifficultCubit>().loadAssets(gameDifficult);
+  ) {
+    Timer(const Duration(milliseconds: 50),
+        () => context.read<DifficultCubit>().loadAssets(gameDifficult));
   }
 }

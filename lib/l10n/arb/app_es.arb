@@ -14,6 +14,8 @@
     "homeHistory": "historia",
     "homeCredits": "creditos",
     "backButton": "atras",
+    "gameMoves": "movimientos",
+    "gameTimer": "tiempo",
     "missionComplete": "mision completada",
     "totalMoves": "total movimientos",
     "levelsButton": "niveles",
