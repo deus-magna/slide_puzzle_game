@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
-import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game_cubit/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
@@ -21,9 +21,24 @@ class Menu extends StatelessWidget {
           Expanded(
             child: TranslateAnimation(
               duration: const Duration(milliseconds: 2500),
-              offset: MediaQuery.of(context).size.height * 0.5,
+              offset: -400,
+              offsetDirection: Axis.horizontal,
               child: SpaceButton(
                 title: state.status == GameStatus.initial ? 'START' : 'RESET',
+                onPressed: () {
+                  context.read<TimerBloc>().add(const TimerStarted());
+                  context.read<GameCubit>().shuffle();
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: TranslateAnimation(
+              duration: const Duration(milliseconds: 2500),
+              offset: 400,
+              offsetDirection: Axis.horizontal,
+              child: SpaceButton(
+                title: state.status == GameStatus.initial ? 'PAUSE' : 'RESET',
                 onPressed: () {
                   context.read<TimerBloc>().add(const TimerStarted());
                   context.read<GameCubit>().shuffle();

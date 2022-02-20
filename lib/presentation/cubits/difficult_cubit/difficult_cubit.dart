@@ -7,7 +7,7 @@ import 'package:slide_puzzle_game/data/models/alien_asset.dart';
 import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/domain/use_cases/split_image.dart';
 import 'package:slide_puzzle_game/injection_container.dart';
-import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game_cubit/game_cubit.dart';
 
 part 'difficult_state.dart';
 

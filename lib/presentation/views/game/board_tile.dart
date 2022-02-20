@@ -15,6 +15,7 @@ class BoardTile extends StatelessWidget {
     this.onPressed,
     required this.size,
     this.duration = 800,
+    this.offset = 400,
     this.offsetDirection = Axis.vertical,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class BoardTile extends StatelessWidget {
   final double size;
   final int duration;
   final Axis offsetDirection;
+  final double offset;
   final Function()? onPressed;
 
   @override
@@ -33,7 +35,7 @@ class BoardTile extends StatelessWidget {
       top: tile.currentPosition.y * size,
       child: TranslateAnimation(
         duration: Duration(milliseconds: duration),
-        offset: 400,
+        offset: offset,
         offsetDirection: offsetDirection,
         child: GestureDetector(
           onTap: onPressed,

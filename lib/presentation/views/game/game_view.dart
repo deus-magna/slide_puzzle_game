@@ -14,7 +14,7 @@ import 'package:slide_puzzle_game/data/models/game_params.dart';
 import 'package:slide_puzzle_game/data/models/ticker.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
-import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
+import 'package:slide_puzzle_game/presentation/cubits/game_cubit/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
 import 'package:slide_puzzle_game/presentation/views/game/board_tile.dart';
 import 'package:slide_puzzle_game/presentation/views/game/header.dart';
@@ -170,31 +170,31 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
 
   List<Widget> _buildTiles(List<Tile> tiles, double tileSize) {
     final baseDuration = 2000 / widget.state.size;
+    final length = widget.state.size * widget.state.size;
 
     final random = Random();
-    final animation = TileAnimation.values[random.nextInt(2)];
-    print('animation $animation');
+    final animation = TileAnimation.values[random.nextInt(2) + 1];
 
     return tiles.map((tile) {
-      var duration = (baseDuration * tiles.indexOf(tile)).toInt();
+      final index = tiles.indexOf(tile);
+      var duration = (baseDuration * index).toInt();
+      var offset = 0.0;
       switch (animation) {
         case TileAnimation.cascade:
-          duration = (baseDuration * tiles.indexOf(tile)).toInt();
+          duration = (baseDuration * index).toInt();
           break;
         case TileAnimation.random:
-          duration = (baseDuration *
-                  random.nextInt(widget.state.size * widget.state.size))
-              .toInt();
+          duration = (baseDuration * random.nextInt(length)).toInt();
           break;
         case TileAnimation.star:
-          duration = (baseDuration *
-                  random.nextInt(widget.state.size * widget.state.size))
-              .toInt();
+          offset = (index < length / 2) ? 400 : -800;
+          duration = (baseDuration * random.nextInt(length)).toInt();
           break;
       }
       return BoardTile(
         tile: tile,
         size: tileSize,
+        offset: offset,
         duration: duration,
         onPressed: () {
           player.replay(context);
