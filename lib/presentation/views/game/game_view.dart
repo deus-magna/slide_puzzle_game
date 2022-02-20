@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:slide_puzzle_game/data/models/tile.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game_view/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
+import 'package:slide_puzzle_game/presentation/views/game/board_tile.dart';
 import 'package:slide_puzzle_game/presentation/views/game/header.dart';
 import 'package:slide_puzzle_game/presentation/views/game/menu.dart';
 import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
@@ -142,6 +144,7 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
   @override
   Widget build(BuildContext context) {
     const padding = 12.0;
+
     return TranslateAnimation(
       duration: const Duration(milliseconds: 1500),
       offset: MediaQuery.of(context).size.height * 0.5,
@@ -151,24 +154,12 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
           builder: (context, constraints) {
             final tileSize =
                 (constraints.maxWidth - padding) / widget.state.size;
-            print(
-                'tileSize $tileSize and ${tileSize * 3} ${constraints.maxWidth}');
+            final tiles = widget.state.puzzle.tiles;
             return AbsorbPointer(
               absorbing: widget.state.status != GameStatus.playing,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                child: Stack(
-                  children: widget.state.puzzle.tiles
-                      .map((tile) => BoardTile(
-                            tile: tile,
-                            size: tileSize,
-                            onPressed: () {
-                              player.replay(context);
-                              context.read<GameCubit>().onTileTapped(tile);
-                            },
-                          ))
-                      .toList(),
-                ),
+                child: Stack(children: _buildTiles(tiles, tileSize)),
               ),
             );
           },
@@ -176,73 +167,40 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
       ),
     );
   }
-}
 
-class BoardTile extends StatelessWidget {
-  const BoardTile({
-    Key? key,
-    required this.tile,
-    this.onPressed,
-    required this.size,
-  }) : super(key: key);
+  List<Widget> _buildTiles(List<Tile> tiles, double tileSize) {
+    final baseDuration = 2000 / widget.state.size;
 
-  final Tile tile;
-  final double size;
-  final Function()? onPressed;
+    final random = Random();
+    final animation = TileAnimation.values[random.nextInt(2)];
+    print('animation $animation');
 
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedPositioned(
-      duration: const Duration(milliseconds: 200),
-      curve: Curves.easeInOut,
-      left: tile.currentPosition.x * size,
-      top: tile.currentPosition.y * size,
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Container(
-          width: size - 4,
-          height: size - 4,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.white,
-            boxShadow: const [BoxShadow(offset: Offset(0, 10))],
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: Stack(
-              children: [
-                ColorFiltered(
-                  colorFilter: tile.currentPosition == tile.validPosition
-                      ? const ColorFilter.mode(
-                          Colors.transparent,
-                          BlendMode.multiply,
-                        )
-                      : const ColorFilter.mode(
-                          Colors.grey,
-                          BlendMode.saturation,
-                        ),
-                  child: Image(
-                    image: MemoryImage(tile.source!),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Text(
-                  '  ${tile.value}',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ],
-            ),
-            // child: Stack(
-            //   children: [
-            //    Text('(${tile.currentPosition.x},${tile.currentPosition.y})'),
-            //     Center(
-            //       child: Text('${tile.value}'),
-            //     ),
-            //   ],
-            // ),
-          ),
-        ),
-      ),
-    );
+    return tiles.map((tile) {
+      var duration = (baseDuration * tiles.indexOf(tile)).toInt();
+      switch (animation) {
+        case TileAnimation.cascade:
+          duration = (baseDuration * tiles.indexOf(tile)).toInt();
+          break;
+        case TileAnimation.random:
+          duration = (baseDuration *
+                  random.nextInt(widget.state.size * widget.state.size))
+              .toInt();
+          break;
+        case TileAnimation.star:
+          duration = (baseDuration *
+                  random.nextInt(widget.state.size * widget.state.size))
+              .toInt();
+          break;
+      }
+      return BoardTile(
+        tile: tile,
+        size: tileSize,
+        duration: duration,
+        onPressed: () {
+          player.replay(context);
+          context.read<GameCubit>().onTileTapped(tile);
+        },
+      );
+    }).toList();
   }
 }

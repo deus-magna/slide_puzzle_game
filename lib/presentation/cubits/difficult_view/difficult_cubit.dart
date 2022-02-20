@@ -17,6 +17,8 @@ class DifficultCubit extends Cubit<DifficultState> {
   // Use case for split image
   final SplitImage _splitImage = sl<SplitImage>();
 
+  void initialState() => emit(DifficultInitial());
+
   Future<void> loadAssets(GameDifficult gameDifficult) async {
     emit(DifficultLoading());
     final assetData = await _bytesFromAsset(gameDifficult);
