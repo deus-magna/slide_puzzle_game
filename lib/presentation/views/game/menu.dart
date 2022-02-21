@@ -38,10 +38,17 @@ class Menu extends StatelessWidget {
               offset: 400,
               offsetDirection: Axis.horizontal,
               child: SpaceButton(
-                title: state.status == GameStatus.initial ? 'PAUSE' : 'RESET',
+                title: state.status == GameStatus.paused ? 'CONTINUE' : 'PAUSE',
                 onPressed: () {
-                  context.read<TimerBloc>().add(const TimerStarted());
-                  context.read<GameCubit>().shuffle();
+                  if (state.status == GameStatus.paused ||
+                      state.status == GameStatus.playing) {
+                    if (state.status == GameStatus.paused) {
+                      context.read<TimerBloc>().add(const TimerResumed());
+                    } else {
+                      context.read<TimerBloc>().add(const TimerPaused());
+                    }
+                    context.read<GameCubit>().pause();
+                  }
                 },
               ),
             ),

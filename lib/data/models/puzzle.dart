@@ -49,13 +49,14 @@ class Puzzle extends Equatable {
   bool canMove(Position currentPosition) =>
       currentPosition.x == whiteSpace.x || currentPosition.y == whiteSpace.y;
 
+  List<Tile> _whiteSpaceRow() =>
+      tiles.where((tile) => tile.currentPosition.y == whiteSpace.y).toList();
+
   Puzzle move(Tile tile) {
     final copy = [...tiles];
     // left or right
     if (tile.currentPosition.y == whiteSpace.y) {
-      final row = tiles
-          .where((element) => element.currentPosition.y == whiteSpace.y)
-          .toList();
+      final row = _whiteSpaceRow();
 
       // right
       if (tile.currentPosition.x < whiteSpace.x) {

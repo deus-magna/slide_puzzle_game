@@ -27,6 +27,7 @@ enum GameStatus {
   initial,
   playing,
   solved,
+  paused,
 }
 
 class GameState extends Equatable {

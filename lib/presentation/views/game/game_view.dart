@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -26,6 +27,14 @@ class GameView extends StatelessWidget {
   const GameView({Key? key, required this.gameParams}) : super(key: key);
 
   final GameParams gameParams;
+
+  void _handleKeyEvent(BuildContext context, RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      final keyword = event.data.physicalKey;
+
+      context.read<GameCubit>().onKeyboardKeyTaped(keyword);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,45 +77,51 @@ class GameView extends StatelessWidget {
               });
             }
           },
-          builder: (_, state) {
+          builder: (context, state) {
             final size = MediaQuery.of(context).size;
-            // final gameWidth = size.width.clamp(300, 450).toDouble();
             final gameWidth = getValueForScreenType<double>(
               context: context,
               mobile: size.width.clamp(250, 350).toDouble(),
               tablet: size.width.clamp(300, 450).toDouble(),
               desktop: size.width.clamp(300, 450).toDouble(),
             );
-            print('gameWidth $gameWidth');
-            return Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                const GameViewBackground(),
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      children: [
-                        SpaceBar(
-                          onPressed: () =>
-                              context.read<AudioCubit>().playMenuMusic(),
-                        ),
-                        Header(moves: state.moves, width: gameWidth),
-                        const SizedBox(height: 10),
-                        SizedBox(
-                          height: gameWidth,
-                          child: AspectRatio(
-                            aspectRatio: 1,
-                            child: PuzzleBoard(state: state, width: gameWidth),
+            print('GameWith $gameWidth');
+            return RawKeyboardListener(
+              focusNode: FocusNode(),
+              onKey: (event) => _handleKeyEvent(context, event),
+              autofocus: true,
+              includeSemantics: false,
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  const GameViewBackground(),
+                  SafeArea(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: [
+                          SpaceBar(
+                            onPressed: () =>
+                                context.read<AudioCubit>().playMenuMusic(),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        Menu(state: state, width: gameWidth),
-                      ],
+                          Header(moves: state.moves, width: gameWidth),
+                          const SizedBox(height: 10),
+                          SizedBox(
+                            height: gameWidth,
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child:
+                                  PuzzleBoard(state: state, width: gameWidth),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Menu(state: state, width: gameWidth),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             );
           },
         ),
