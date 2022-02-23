@@ -5,8 +5,10 @@ import 'package:slide_puzzle_game/data/repositories/game_repository_impl.dart';
 import 'package:slide_puzzle_game/data/repositories/image_repository_impl.dart';
 import 'package:slide_puzzle_game/domain/repositories/game_repository.dart';
 import 'package:slide_puzzle_game/domain/repositories/image_repository.dart';
+import 'package:slide_puzzle_game/domain/use_cases/get_best_results_for_alien.dart';
 import 'package:slide_puzzle_game/domain/use_cases/is_alien_solved.dart';
 import 'package:slide_puzzle_game/domain/use_cases/set_alien_solved.dart';
+import 'package:slide_puzzle_game/domain/use_cases/set_best_results_for_alien.dart';
 import 'package:slide_puzzle_game/domain/use_cases/split_image.dart';
 
 final sl = GetIt.instance;
@@ -17,6 +19,8 @@ Future<void> init() async {
     ..registerLazySingleton(() => SetAlienSolved(sl()))
     ..registerLazySingleton(() => IsAlienSolved(sl()))
     ..registerLazySingleton(() => SplitImage(sl()))
+    ..registerLazySingleton(() => SetBestResultsForAlien(sl()))
+    ..registerLazySingleton(() => GetBestResultsForAlien(sl()))
     // Repositories
     ..registerLazySingleton<GameRepository>(() => GameRepositoryImpl(sl()))
     ..registerLazySingleton<ImageRepository>(() => ImageRepositoryImpl())

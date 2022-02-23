@@ -5,7 +5,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:slide_puzzle_game/data/models/puzzle.dart';
 import 'package:slide_puzzle_game/data/models/tile.dart';
+import 'package:slide_puzzle_game/domain/use_cases/get_best_results_for_alien.dart';
 import 'package:slide_puzzle_game/domain/use_cases/set_alien_solved.dart';
+import 'package:slide_puzzle_game/domain/use_cases/set_best_results_for_alien.dart';
 import 'package:slide_puzzle_game/injection_container.dart';
 
 part 'game_state.dart';
@@ -42,6 +44,10 @@ class GameCubit extends Cubit<GameState> {
 
   // Use case for set when alien is solved
   final SetAlienSolved setAlienSolved = sl<SetAlienSolved>();
+  final GetBestResultsForAlien getBestResultsForAlien =
+      sl<GetBestResultsForAlien>();
+  final SetBestResultsForAlien setBestResultsForAlien =
+      sl<SetBestResultsForAlien>();
 
   Puzzle get puzzle => state.puzzle;
 
@@ -110,9 +116,6 @@ class GameCubit extends Cubit<GameState> {
     if (puzzle.canMove(tile.currentPosition)) {
       final newPuzzle = puzzle.move(tile);
       final isSolved = newPuzzle.isSolved();
-      if (isSolved) {
-        await _addAlienToAlbum();
-      }
 
       emit(
         state.copyWith(
@@ -124,8 +127,18 @@ class GameCubit extends Cubit<GameState> {
     }
   }
 
-  Future<void> _addAlienToAlbum() async =>
-      setAlienSolved(alienName: state.alienName);
+  Future<void> addAlienToAlbum(int time) async {
+    await setAlienSolved(alienName: state.alienName);
+    final bestMoves =
+        getBestResultsForAlien(alienName: '${state.alienName}_results').first;
+    if (bestMoves == 0) {
+      await setBestResultsForAlien(
+          alienName: '${state.alienName}_results', values: [state.moves, time]);
+    } else if (bestMoves > state.moves) {
+      await setBestResultsForAlien(
+          alienName: '${state.alienName}_results', values: [state.moves, time]);
+    }
+  }
 
   void pause() => emit(state.copyWith(
       status: state.status == GameStatus.paused

@@ -57,6 +57,7 @@ class GameView extends StatelessWidget {
             if (state.status == GameStatus.solved) {
               context.read<TimerBloc>().add(const TimerPaused());
               final duration = context.read<TimerBloc>().state.duration;
+              unawaited(context.read<GameCubit>().addAlienToAlbum(duration));
               Timer(const Duration(milliseconds: 400), () {
                 context.read<AudioCubit>().win();
                 utils.showMissionCompleteDialog(

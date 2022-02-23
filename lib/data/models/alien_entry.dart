@@ -2,6 +2,8 @@ import 'package:equatable/equatable.dart';
 
 class AlienEntry extends Equatable {
   const AlienEntry({
+    required this.bestMoves,
+    required this.bestTime,
     required this.name,
     required this.wieght,
     required this.height,
@@ -18,6 +20,8 @@ class AlienEntry extends Equatable {
   final String description;
   final String imagePath;
   final bool isSolved;
+  final int bestMoves;
+  final int bestTime;
 
   @override
   List<Object?> get props => [
@@ -27,5 +31,7 @@ class AlienEntry extends Equatable {
         nature,
         description,
         imagePath,
+        bestMoves,
+        bestTime,
       ];
 }

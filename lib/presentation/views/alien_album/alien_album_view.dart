@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
+import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 import 'package:slide_puzzle_game/data/models/alien_entry.dart';
+import 'package:slide_puzzle_game/domain/use_cases/get_best_results_for_alien.dart';
 import 'package:slide_puzzle_game/domain/use_cases/is_alien_solved.dart';
 import 'package:slide_puzzle_game/injection_container.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
@@ -87,6 +89,7 @@ class AlienAlbumBody extends StatelessWidget {
 
   List<AlienEntry> _buildAliens() {
     final isAlienSolved = IsAlienSolved(sl());
+    final getBestResultsForAlien = GetBestResultsForAlien(sl());
     return <AlienEntry>[
       AlienEntry(
         name: 'Uan',
@@ -95,6 +98,8 @@ class AlienAlbumBody extends StatelessWidget {
         nature: 'Amigable',
         imagePath: 'assets/img/entries/uan.png',
         isSolved: isAlienSolved(alienName: 'uan'),
+        bestMoves: getBestResultsForAlien(alienName: 'uan_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'uan_results').last,
         description: '''
 Este alien es amigable y es uno de los mas fáciles de ver 
 en este planeta, hay varios y su color depende de su estado de animo.''',
@@ -106,6 +111,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Amigable',
         imagePath: 'assets/img/entries/lemhost.png',
         isSolved: isAlienSolved(alienName: 'lemhost'),
+        bestMoves: getBestResultsForAlien(alienName: 'lemhost_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'lemhost_results').last,
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -116,6 +123,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Amigable',
         imagePath: 'assets/img/entries/balloopus.png',
         isSolved: isAlienSolved(alienName: 'balloopus'),
+        bestMoves: getBestResultsForAlien(alienName: 'balloopus_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'balloopus_results').last,
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -126,6 +135,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Amigable',
         imagePath: 'assets/img/entries/bathead.png',
         isSolved: isAlienSolved(alienName: 'bathead'),
+        bestMoves: getBestResultsForAlien(alienName: 'bathead_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'bathead_results').last,
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -136,6 +147,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Amigable',
         imagePath: 'assets/img/entries/biglaught.png',
         isSolved: isAlienSolved(alienName: 'biglaught'),
+        bestMoves: getBestResultsForAlien(alienName: 'biglaught_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'biglaught_results').last,
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -146,6 +159,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Intrepido',
         imagePath: 'assets/img/entries/inky.png',
         isSolved: isAlienSolved(alienName: 'inky'),
+        bestMoves: getBestResultsForAlien(alienName: 'inky_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'inky_results').last,
         description:
             'Son extremadamente curiosos, detectan rápidamente a otros seres vivos debido a que tiene varios ojos y un gran sentido del oido.',
       ),
@@ -156,6 +171,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Timido',
         imagePath: 'assets/img/entries/ubbi.png',
         isSolved: isAlienSolved(alienName: 'ubbi'),
+        bestMoves: getBestResultsForAlien(alienName: 'ubbi_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'ubbi_results').last,
         description:
             'Es dificil de ver, se encuentra en lugares oscuros y se camufla muy bien con la fauna de este planea, es mas rapido de lo que parece',
       ),
@@ -166,6 +183,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Amigable',
         imagePath: 'assets/img/entries/tentamoon.png',
         isSolved: isAlienSolved(alienName: 'tentamoon'),
+        bestMoves: getBestResultsForAlien(alienName: 'tentamoon_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'tentamoon_results').last,
         description:
             'Este alien es amigable y es uno de los mas fáciles de ver en este planeta, hay varios y su color depende de su estado de animo.',
       ),
@@ -176,6 +195,8 @@ en este planeta, hay varios y su color depende de su estado de animo.''',
         nature: 'Agresivo',
         imagePath: 'assets/img/entries/flamfy.png',
         isSolved: isAlienSolved(alienName: 'flamfy'),
+        bestMoves: getBestResultsForAlien(alienName: 'flamfy_results').first,
+        bestTime: getBestResultsForAlien(alienName: 'flamfy_results').last,
         description:
             'Este alien no esta bien emocionalmente, quema todo a su alrededor ya que puede escupir fuego, son peligrosos y territoriales, se debe tener mucho cuidado',
       ),
@@ -205,6 +226,23 @@ class AlienEntryTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              const Icon(
+                Icons.star_rate_rounded,
+                color: Colors.yellow,
+              ),
+              const SizedBox(width: 10),
+              Text(
+                alienEntry.isSolved
+                    ? 'moves: ${alienEntry.bestMoves} / time: ${utils.readableTimer(alienEntry.bestTime)}'
+                    : 'moves: -- / time: --',
+                style: Theme.of(context).textTheme.headline5,
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
           Row(
             children: [
               Image.asset(

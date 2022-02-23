@@ -13,4 +13,19 @@ class GameRepositoryImpl extends GameRepository {
   Future<void> setSolved(String key) async {
     await gameLocalDatasource.setSolved(key);
   }
+
+  @override
+  List<int> getBestResults(String key) {
+    final results = gameLocalDatasource.getBestResults(key);
+    if (results.isEmpty) {
+      return [0, 0];
+    }
+    return results.map(int.parse).toList();
+  }
+
+  @override
+  Future<void> setBestResults(String key, List<int> values) async {
+    final results = values.map((result) => result.toString()).toList();
+    await gameLocalDatasource.setBestResults(key, results);
+  }
 }
