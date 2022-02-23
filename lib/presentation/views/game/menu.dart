@@ -4,6 +4,7 @@ import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game_cubit/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
+import 'package:slide_puzzle_game/l10n/l10n.dart';
 
 class Menu extends StatelessWidget {
   const Menu({Key? key, required this.state, required this.width})
@@ -24,7 +25,9 @@ class Menu extends StatelessWidget {
               offset: -400,
               offsetDirection: Axis.horizontal,
               child: SpaceButton(
-                title: state.status == GameStatus.initial ? 'START' : 'RESET',
+                title: state.status == GameStatus.initial
+                    ? AppLocalizations.of(context).gameStart
+                    : AppLocalizations.of(context).gameRestart,
                 onPressed: () {
                   context.read<TimerBloc>().add(const TimerStarted());
                   context.read<GameCubit>().shuffle();
@@ -38,7 +41,9 @@ class Menu extends StatelessWidget {
               offset: 400,
               offsetDirection: Axis.horizontal,
               child: SpaceButton(
-                title: state.status == GameStatus.paused ? 'CONTINUE' : 'PAUSE',
+                title: state.status == GameStatus.paused
+                    ? AppLocalizations.of(context).gameContinue
+                    : AppLocalizations.of(context).gamePause,
                 onPressed: () {
                   if (state.status == GameStatus.paused ||
                       state.status == GameStatus.playing) {

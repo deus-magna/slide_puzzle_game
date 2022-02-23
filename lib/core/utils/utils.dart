@@ -140,7 +140,7 @@ void showCustomAlert(BuildContext context,
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 20),
-          Container(
+          SizedBox(
             width: double.infinity,
             child: SpaceButton(
                 onPressed: onPressed == null

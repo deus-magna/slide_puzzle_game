@@ -86,7 +86,7 @@ class GameView extends StatelessWidget {
               tablet: size.width.clamp(300, 450).toDouble(),
               desktop: size.width.clamp(300, 450).toDouble(),
             );
-            print('GameWith $gameWidth');
+
             return RawKeyboardListener(
               focusNode: FocusNode(),
               onKey: (event) => _handleKeyEvent(context, event),

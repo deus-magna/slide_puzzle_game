@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:slide_puzzle_game/core/framework/extensions.dart';
 
 class HomeViewBackground extends StatefulWidget {
   const HomeViewBackground({Key? key}) : super(key: key);

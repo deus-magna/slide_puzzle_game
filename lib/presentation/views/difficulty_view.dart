@@ -94,7 +94,6 @@ class DifficultyView extends StatelessWidget {
                             _loadAlienAssets(context, GameDifficult.easy),
                         title: AppLocalizations.of(context).difficultEasy,
                         constraints: constraints,
-                        hasSound: true,
                       ),
                       const SizedBox(height: 25),
                       SpaceButton(

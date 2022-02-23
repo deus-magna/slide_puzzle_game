@@ -72,14 +72,6 @@ class BoardTile extends StatelessWidget {
                   ),
                 ],
               ),
-              // child: Stack(
-              //   children: [
-              //    Text('(${tile.currentPosition.x},${tile.currentPosition.y})'),
-              //     Center(
-              //       child: Text('${tile.value}'),
-              //     ),
-              //   ],
-              // ),
             ),
           ),
         ),
