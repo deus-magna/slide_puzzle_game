@@ -97,27 +97,29 @@ class GameView extends StatelessWidget {
                 children: [
                   const GameViewBackground(),
                   SafeArea(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        children: [
-                          SpaceBar(
-                            onPressed: () =>
-                                context.read<AudioCubit>().playMenuMusic(),
-                          ),
-                          Header(moves: state.moves, width: gameWidth),
-                          const SizedBox(height: 10),
-                          SizedBox(
-                            height: gameWidth,
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child:
-                                  PuzzleBoard(state: state, width: gameWidth),
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          children: [
+                            SpaceBar(
+                              onPressed: () =>
+                                  context.read<AudioCubit>().playMenuMusic(),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          Menu(state: state, width: gameWidth),
-                        ],
+                            Header(moves: state.moves, width: gameWidth),
+                            const SizedBox(height: 10),
+                            SizedBox(
+                              height: gameWidth,
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child:
+                                    PuzzleBoard(state: state, width: gameWidth),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Menu(state: state, width: gameWidth),
+                          ],
+                        ),
                       ),
                     ),
                   ),

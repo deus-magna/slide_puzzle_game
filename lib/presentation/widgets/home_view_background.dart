@@ -30,6 +30,7 @@ class _HomeViewBackgroundState extends State<HomeViewBackground>
     'assets/img/backgrounds/home_view_background.png',
     fit: BoxFit.cover,
   );
+
   @override
   void initState() {
     super.initState();
