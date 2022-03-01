@@ -74,27 +74,81 @@ class _GameViewBackgroundState extends State<GameViewBackground>
     return AnimatedBuilder(
         animation: Listenable.merge([_controller, _planetController]),
         builder: (context, child) {
+          final size = MediaQuery.of(context).size;
           return Stack(
             children: [
-              const SizedBox(
-                width: double.infinity,
-                height: double.infinity,
-                child: Image(
+              SizedBox(
+                width: size.width,
+                height: size.height,
+                child: const Image(
                   image: AssetImage(
-                      'assets/img/backgrounds/game_view_background_desktop.png'),
+                      'assets/img/backgrounds/game_view/background_mobile.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Positioned(
+                top: 0 - _animationGround.value,
+                height: size.height,
+                width: size.width,
+                child: SizedBox(
+                  width: size.width,
+                  height: size.height,
+                  child: const Image(
+                    image: AssetImage(
+                        'assets/img/backgrounds/game_view/blue_moon_mobile.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: -300 + 300 * _animationPlanet.value,
+                left: (-1 * size.width * 0.3) +
+                    (size.width * 0.3 * _animationPlanet.value),
+                height: size.height,
+                width: size.width,
+                child: SizedBox(
+                  width: size.width,
+                  height: size.height,
+                  child: const Image(
+                    image: AssetImage(
+                        'assets/img/backgrounds/game_view/planet_mobile.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 0 + _animationGround.value,
+                height: size.height,
+                width: size.width,
+                child: SizedBox(
+                  width: size.width,
+                  height: size.height,
+                  child: const Image(
+                    image: AssetImage(
+                        'assets/img/backgrounds/game_view/big_moon_mobile.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: size.width,
+                height: size.height,
+                child: const Image(
+                  image: AssetImage(
+                      'assets/img/backgrounds/game_view/foreground_mobile.png'),
                   fit: BoxFit.cover,
                 ),
               ),
               Positioned(
                 bottom: 0 - _animationGround.value,
-                height: 800,
-                width: 1280,
-                child: const SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Image(
+                height: size.height,
+                width: size.width,
+                child: SizedBox(
+                  width: size.width,
+                  height: size.height,
+                  child: const Image(
                     image: AssetImage(
-                        'assets/img/backgrounds/game_view_ground.png'),
+                        'assets/img/backgrounds/game_view/ground_mobile.png'),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -112,7 +166,7 @@ class _GameViewBackgroundState extends State<GameViewBackground>
           height: double.infinity,
           child: Image(
             image: AssetImage(
-                'assets/img/backgrounds/game_view_background_desktop.png'),
+                'assets/img/backgrounds/game_view/game_view_background_desktop.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -127,84 +181,108 @@ class _GameViewBackgroundState extends State<GameViewBackground>
           final size = MediaQuery.of(context).size;
           return Stack(
             children: [
-              SizedBox(
-                width: size.width,
-                height: size.height,
-                child: const Image(
-                  image: AssetImage(
-                      'assets/img/backgrounds/game_view_background_desktop.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                top: 0 - _animationGround.value,
-                height: size.height,
-                width: size.width,
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
-                  child: const Image(
-                    image: AssetImage(
-                        'assets/img/backgrounds/game_view_blue_moon.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 0 + _animationGround.value,
-                height: size.height,
-                width: size.width,
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
-                  child: const Image(
-                    image: AssetImage(
-                        'assets/img/backgrounds/game_view_big_moon.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              Positioned(
-                top: -300 + 300 * _animationPlanet.value,
-                left: (-1 * size.width * 0.3) +
-                    (size.width * 0.3 * _animationPlanet.value),
-                height: size.height,
-                width: size.width,
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
-                  child: const Image(
-                    image: AssetImage(
-                        'assets/img/backgrounds/game_view_planet.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: size.width,
-                height: size.height,
-                child: const Image(
-                  image: AssetImage(
-                      'assets/img/backgrounds/game_view_foreground_desktop.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                bottom: 0 - _animationGround.value,
-                height: size.height,
-                width: size.width,
-                child: SizedBox(
-                  width: size.width,
-                  height: size.height,
-                  child: const Image(
-                    image: AssetImage(
-                        'assets/img/backgrounds/game_view_ground.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              _buildBackground(size),
+              _buildBlueMoon(size),
+              _buildBigMoon(size),
+              _buildPlanet(size),
+              _buildForeground(size),
+              _buildGround(size),
             ],
           );
         });
+  }
+
+  SizedBox _buildBackground(Size size) {
+    return SizedBox(
+      width: size.width,
+      height: size.height,
+      child: const Image(
+        image: AssetImage(
+            'assets/img/backgrounds/game_view/game_view_background_desktop.png'),
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Positioned _buildGround(Size size) {
+    return Positioned(
+      bottom: 0 - _animationGround.value,
+      height: size.height,
+      width: size.width,
+      child: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: const Image(
+          image: AssetImage(
+              'assets/img/backgrounds/game_view/game_view_ground.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  SizedBox _buildForeground(Size size) {
+    return SizedBox(
+      width: size.width,
+      height: size.height,
+      child: const Image(
+        image: AssetImage(
+            'assets/img/backgrounds/game_view/game_view_foreground_desktop.png'),
+        fit: BoxFit.cover,
+      ),
+    );
+  }
+
+  Positioned _buildPlanet(Size size) {
+    return Positioned(
+      top: -300 + 300 * _animationPlanet.value,
+      left:
+          (-1 * size.width * 0.3) + (size.width * 0.3 * _animationPlanet.value),
+      height: size.height,
+      width: size.width,
+      child: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: const Image(
+          image: AssetImage(
+              'assets/img/backgrounds/game_view/game_view_planet.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Positioned _buildBigMoon(Size size) {
+    return Positioned(
+      top: 0 + _animationGround.value,
+      height: size.height,
+      width: size.width,
+      child: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: const Image(
+          image: AssetImage(
+              'assets/img/backgrounds/game_view/game_view_big_moon.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
+  }
+
+  Positioned _buildBlueMoon(Size size) {
+    return Positioned(
+      top: 0 - _animationGround.value,
+      height: size.height,
+      width: size.width,
+      child: SizedBox(
+        width: size.width,
+        height: size.height,
+        child: const Image(
+          image: AssetImage(
+              'assets/img/backgrounds/game_view/game_view_blue_moon.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+    );
   }
 }
