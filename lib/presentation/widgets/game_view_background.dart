@@ -25,7 +25,7 @@ class _GameViewBackgroundState extends State<GameViewBackground>
 
     _planetController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 30),
+      duration: const Duration(seconds: 60),
     );
 
     _animationGround = Tween<double>(
@@ -151,8 +151,23 @@ class _GameViewBackgroundState extends State<GameViewBackground>
                 ),
               ),
               Positioned(
-                top: 0,
-                left: (-1 * size.width) + (size.width * _animationPlanet.value),
+                top: 0 + _animationGround.value,
+                height: size.height,
+                width: size.width,
+                child: SizedBox(
+                  width: size.width,
+                  height: size.height,
+                  child: const Image(
+                    image: AssetImage(
+                        'assets/img/backgrounds/game_view_big_moon.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: -300 + 300 * _animationPlanet.value,
+                left: (-1 * size.width * 0.3) +
+                    (size.width * 0.3 * _animationPlanet.value),
                 height: size.height,
                 width: size.width,
                 child: SizedBox(
@@ -163,6 +178,15 @@ class _GameViewBackgroundState extends State<GameViewBackground>
                         'assets/img/backgrounds/game_view_planet.png'),
                     fit: BoxFit.cover,
                   ),
+                ),
+              ),
+              SizedBox(
+                width: size.width,
+                height: size.height,
+                child: const Image(
+                  image: AssetImage(
+                      'assets/img/backgrounds/game_view_foreground_desktop.png'),
+                  fit: BoxFit.cover,
                 ),
               ),
               Positioned(
