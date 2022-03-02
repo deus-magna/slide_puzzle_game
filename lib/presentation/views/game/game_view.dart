@@ -20,7 +20,7 @@ import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart
 import 'package:slide_puzzle_game/presentation/views/game/board_tile.dart';
 import 'package:slide_puzzle_game/presentation/views/game/header.dart';
 import 'package:slide_puzzle_game/presentation/views/game/menu.dart';
-import 'package:slide_puzzle_game/presentation/widgets/game_view_background.dart';
+import 'package:slide_puzzle_game/presentation/views/game/game_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 
 class GameView extends StatelessWidget {

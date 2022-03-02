@@ -47,6 +47,7 @@ flutter:
    - assets/img/
    - assets/img/backgrounds/
    - assets/img/backgrounds/game_view/
+   - assets/img/backgrounds/album_view/
    - assets/img/characters/
    - assets/img/tiles/
    - assets/img/entries/
