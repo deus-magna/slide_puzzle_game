@@ -3,6 +3,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/history/history_view_background.dart';
+
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 
 class HistoryView extends StatelessWidget {
