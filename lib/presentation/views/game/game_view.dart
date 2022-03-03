@@ -191,12 +191,13 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
     final length = widget.state.size * widget.state.size;
 
     final random = Random();
-    final animation = TileAnimation.values[random.nextInt(2) + 1];
+    final animation = TileAnimation.values[random.nextInt(3)];
+    print('Animation $animation');
 
     return tiles.map((tile) {
       final index = tiles.indexOf(tile);
       var duration = (baseDuration * index).toInt();
-      var offset = 0.0;
+      var offset = 400.0;
       switch (animation) {
         case TileAnimation.cascade:
           duration = (baseDuration * index).toInt();

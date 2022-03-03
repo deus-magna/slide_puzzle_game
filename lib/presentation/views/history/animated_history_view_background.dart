@@ -1,32 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 class AnimatedHistoryViewBackground extends StatefulWidget {
   const AnimatedHistoryViewBackground._({
     Key? key,
     required this.background,
-    required this.stars,
     required this.planet,
-    required this.moon,
+    this.moon,
     required this.rocket,
     required this.clouds,
   }) : super(key: key);
 
   factory AnimatedHistoryViewBackground.mobile() {
     return const AnimatedHistoryViewBackground._(
-      background: 'assets/img/backgrounds/history_view/background_desktop.png',
-      stars: 'assets/img/backgrounds/history_view/stars_desktop.png',
-      planet: 'assets/img/backgrounds/history_view/planet_desktop.png',
-      moon: 'assets/img/backgrounds/history_view/moon_desktop.png',
-      rocket: 'assets/img/backgrounds/history_view/rocket_desktop.png',
-      clouds: 'assets/img/backgrounds/history_view/clouds_desktop.png',
+      background: 'assets/img/backgrounds/history_view/background_mobile.png',
+      planet: 'assets/img/backgrounds/history_view/planet_mobile.png',
+      rocket: 'assets/img/backgrounds/history_view/rocket_mobile.png',
+      clouds: 'assets/img/backgrounds/history_view/clouds_mobile.png',
     );
   }
 
   factory AnimatedHistoryViewBackground.desktop() {
     return const AnimatedHistoryViewBackground._(
       background: 'assets/img/backgrounds/history_view/background_desktop.png',
-      stars: 'assets/img/backgrounds/history_view/stars_desktop.png',
       planet: 'assets/img/backgrounds/history_view/planet_desktop.png',
       moon: 'assets/img/backgrounds/history_view/moon_desktop.png',
       rocket: 'assets/img/backgrounds/history_view/rocket_desktop.png',
@@ -35,9 +30,9 @@ class AnimatedHistoryViewBackground extends StatefulWidget {
   }
 
   final String background;
-  final String stars;
+
   final String planet;
-  final String moon;
+  final String? moon;
   final String rocket;
   final String clouds;
 
@@ -54,8 +49,8 @@ class _AnimatedHistoryViewBackgroundState
   late Animation<double> _animationClouds;
 
   String get background => widget.background;
-  String get stars => widget.stars;
-  String get moon => widget.moon;
+
+  String? get moon => widget.moon;
   String get planet => widget.planet;
   String get rocket => widget.rocket;
   String get clouds => widget.clouds;
@@ -115,7 +110,6 @@ class _AnimatedHistoryViewBackgroundState
           return Stack(
             children: [
               _buildBackground(size),
-              _buildStars(size),
               _buildMoon(size),
               _buildPlanet(size),
               _buildRocket(size),
@@ -131,17 +125,6 @@ class _AnimatedHistoryViewBackgroundState
       height: size.height,
       child: Image(
         image: AssetImage(background),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _buildStars(Size size) {
-    return SizedBox(
-      width: size.width,
-      height: size.height,
-      child: Image(
-        image: AssetImage(stars),
         fit: BoxFit.cover,
       ),
     );
@@ -199,78 +182,21 @@ class _AnimatedHistoryViewBackgroundState
   }
 
   Widget _buildMoon(Size size) {
-    return RotationTransition(
-      turns: Tween(begin: 0.0, end: 1.0).animate(_planetController),
-      child: Positioned(
-        top: 0,
-        height: size.height,
-        width: size.width,
-        child: Image(
-          image: AssetImage(moon),
-          fit: BoxFit.cover,
+    if (moon != null) {
+      return RotationTransition(
+        turns: Tween(begin: 0.0, end: 1.0).animate(_planetController),
+        child: Positioned(
+          top: 0,
+          height: size.height,
+          width: size.width,
+          child: Image(
+            image: AssetImage(moon!),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
-
-  // Widget _buildMobile() {
-  //   final size = MediaQuery.of(context).size;
-  //   return AnimatedBuilder(
-  //     animation: _controller,
-  //     builder: (context, child) {
-  //       return Stack(
-  //         children: [
-  //           const SizedBox(
-  //             width: double.infinity,
-  //             child: Image(
-  //               image: AssetImage(
-  //                   'assets/img/backgrounds/history_view_background.png'),
-  //               fit: BoxFit.cover,
-  //             ),
-  //           ),
-  //           Positioned(
-  //             top: 10 + (_animationMoon.value * 0.2) / 2,
-  //             right: -(size.height * 0.25) + (_animationMoon.value * 0.2),
-  //             height: size.height * 0.25,
-  //             child: const Image(
-  //               image: AssetImage('assets/img/moon.png'),
-  //               fit: BoxFit.fitHeight,
-  //             ),
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
-  // Widget _buildTablet() {
-  //   final size = MediaQuery.of(context).size;
-  //   return AnimatedBuilder(
-  //     animation: _controller,
-  //     builder: (context, child) {
-  //       return Stack(
-  //         children: [
-  //           const SizedBox(
-  //             width: double.infinity,
-  //             height: double.infinity,
-  //             child: Image(
-  //               image: AssetImage(
-  //                   'assets/img/backgrounds/history_view_background_tablet.png'),
-  //               fit: BoxFit.cover,
-  //             ),
-  //           ),
-  //           Positioned(
-  //             top: 10 + (_animationMoon.value * 0.2) / 2,
-  //             right: -(size.height * 0.25) + (_animationMoon.value * 0.2),
-  //             height: size.height * 0.25,
-  //             child: const Image(
-  //               image: AssetImage('assets/img/moon.png'),
-  //               fit: BoxFit.fitHeight,
-  //             ),
-  //           )
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 }
