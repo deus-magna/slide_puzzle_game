@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 class AnimatedHistoryViewBackground extends StatefulWidget {
@@ -47,6 +49,7 @@ class _AnimatedHistoryViewBackgroundState
   late AnimationController _planetController;
   late AnimationController _rocketController;
   late Animation<double> _animationClouds;
+  late Animation<double> _animationMoon;
 
   String get background => widget.background;
 
@@ -65,7 +68,7 @@ class _AnimatedHistoryViewBackgroundState
 
     _planetController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 120),
+      duration: const Duration(seconds: 40),
     );
 
     _rocketController = AnimationController(
@@ -82,6 +85,9 @@ class _AnimatedHistoryViewBackgroundState
         curve: const Interval(0, 1, curve: Curves.ease),
       ),
     );
+
+    _animationMoon =
+        Tween<double>(begin: 0, end: math.pi * 2).animate(_planetController);
 
     _controller
       ..forward()
@@ -182,13 +188,21 @@ class _AnimatedHistoryViewBackgroundState
   }
 
   Widget _buildMoon(Size size) {
+    final radians = _animationMoon.value;
+    const radius = 100;
+    final startPoint =
+        Offset(radius * math.cos(radians), radius * math.sin(radians));
+
     if (moon != null) {
-      return RotationTransition(
-        turns: Tween(begin: 0.0, end: 1.0).animate(_planetController),
-        child: Positioned(
-          top: 0,
-          height: size.height,
-          width: size.width,
+      return Positioned(
+        top: startPoint.dy * 3,
+        left: startPoint.dx * 7,
+        // top: (size.height * 0.071) * startPoint.dy,
+        // left: (size.width * 0.53) * startPoint.dx,
+        height: size.height * 0.20,
+        width: size.height * 0.20,
+        child: RotationTransition(
+          turns: Tween(begin: 0.0, end: 1.0).animate(_planetController),
           child: Image(
             image: AssetImage(moon!),
             fit: BoxFit.cover,
