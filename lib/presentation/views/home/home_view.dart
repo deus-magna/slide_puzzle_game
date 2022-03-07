@@ -66,6 +66,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 10),
+                      const Image(
+                        image: AssetImage('assets/img/logo.png'),
+                        width: 300,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(height: 30),
                       PlayButton(
                         onPressed: () =>
                             _pushView(child: const DifficultyView()),
