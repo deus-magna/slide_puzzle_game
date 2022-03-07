@@ -18,7 +18,11 @@ dependencies:
   image: ^3.1.1
   intl: ^0.17.0
   just_audio: ^0.9.19
+  path: ^1.8.0
+  path_provider: ^2.0.9
   responsive_builder: ^0.4.1
+  screenshot: ^1.2.3
+  share_plus: ^2.0.0
   shared_preferences: ^2.0.13
 
 dev_dependencies:

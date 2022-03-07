@@ -71,12 +71,12 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         width: 300,
                         fit: BoxFit.cover,
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       PlayButton(
                         onPressed: () =>
                             _pushView(child: const DifficultyView()),
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       SpaceButton(
                         title: AppLocalizations.of(context).homeAlbum,
                         padding: padding,
@@ -84,29 +84,14 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                             _pushView(child: const AlienAlbumView()),
                         constraints: constraints,
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       SpaceButton(
                         title: AppLocalizations.of(context).homeRanking,
                         padding: padding,
-                        onPressed: () {
-                          context.read<AudioCubit>().win();
-                          utils.showMissionCompleteDialog(
-                            context,
-                            title: AppLocalizations.of(context).missionComplete,
-                            timer: '02:14',
-                            label: AppLocalizations.of(context).totalMoves,
-                            moves: '24',
-                            button: AppLocalizations.of(context).levelsButton,
-                            onPressed: () {
-                              context.read<AudioCubit>().playMenuMusic();
-                              Navigator.of(context).pop();
-                            },
-                            album: AppLocalizations.of(context).albumButton,
-                          );
-                        },
+                        onPressed: () {},
                         constraints: constraints,
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       SpaceButton(
                         title: AppLocalizations.of(context).homeHistory,
                         padding: padding,
@@ -114,7 +99,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         onPressed: () => _pushView(child: const HistoryView()),
                         constraints: constraints,
                       ),
-                      const SizedBox(height: 30),
+                      const SizedBox(height: 20),
                       SpaceButton(
                         title: AppLocalizations.of(context).homeCredits,
                         padding: padding,

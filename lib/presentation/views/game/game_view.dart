@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:just_audio/just_audio.dart';
+
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:screenshot/screenshot.dart';
 import 'package:slide_puzzle_game/core/framework/animations.dart';
 import 'package:slide_puzzle_game/core/framework/framework.dart';
 import 'package:slide_puzzle_game/core/managers/audio/audio_extension.dart';
@@ -18,9 +20,9 @@ import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/cubits/game_cubit/game_cubit.dart';
 import 'package:slide_puzzle_game/presentation/cubits/timer_bloc/timer_bloc.dart';
 import 'package:slide_puzzle_game/presentation/views/game/board_tile.dart';
+import 'package:slide_puzzle_game/presentation/views/game/game_view_background.dart';
 import 'package:slide_puzzle_game/presentation/views/game/header.dart';
 import 'package:slide_puzzle_game/presentation/views/game/menu.dart';
-import 'package:slide_puzzle_game/presentation/views/game/game_view_background.dart';
 import 'package:slide_puzzle_game/presentation/widgets/space_bar.dart';
 
 class GameView extends StatelessWidget {
@@ -55,6 +57,8 @@ class GameView extends StatelessWidget {
         child: BlocConsumer<GameCubit, GameState>(
           listener: (context, state) async {
             if (state.status == GameStatus.solved) {
+              final screenshotController = ScreenshotController();
+
               context.read<TimerBloc>().add(const TimerPaused());
               final duration = context.read<TimerBloc>().state.duration;
               unawaited(context.read<GameCubit>().addAlienToAlbum(duration));
@@ -62,11 +66,13 @@ class GameView extends StatelessWidget {
                 context.read<AudioCubit>().win();
                 utils.showMissionCompleteDialog(
                   context,
+                  controller: screenshotController,
                   title: AppLocalizations.of(context).missionComplete,
                   timer: utils.readableTimer(duration),
                   label: AppLocalizations.of(context).totalMoves,
                   moves: '${state.moves}',
                   button: AppLocalizations.of(context).levelsButton,
+                  share: AppLocalizations.of(context).shareButton,
                   onPressed: () {
                     context.read<AudioCubit>().playMenuMusic();
                     Navigator.of(context)
