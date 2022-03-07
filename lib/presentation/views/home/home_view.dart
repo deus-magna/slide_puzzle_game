@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
-import 'package:slide_puzzle_game/core/utils/utils.dart' as utils;
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/alien_album/alien_album_view.dart';
 import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';

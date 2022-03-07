@@ -198,7 +198,6 @@ class _PuzzleBoardState extends State<PuzzleBoard> {
 
     final random = Random();
     final animation = TileAnimation.values[random.nextInt(3)];
-    print('Animation $animation');
 
     return tiles.map((tile) {
       final index = tiles.indexOf(tile);

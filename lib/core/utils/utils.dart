@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
@@ -10,7 +9,7 @@ import 'package:slide_puzzle_game/presentation/widgets/space_button.dart';
 
 String readableTimer(int duration) {
   final minutesStr = ((duration / 60) % 60).floor().toString().padLeft(2, '0');
-  final secondsStr = (duration % 60).floor().toString().padLeft(2, '0');
+  final secondsStr = (duration % 60).toString().padLeft(2, '0');
   return '$minutesStr:$secondsStr';
 }
 
