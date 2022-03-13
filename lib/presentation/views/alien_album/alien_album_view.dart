@@ -260,8 +260,8 @@ class AlienEntryTile extends StatelessWidget {
                     Text(
                       alienEntry.isSolved
                           ? '''
-Peso: ${alienEntry.wieght}\nAltura: ${alienEntry.height}\nNaturaleza: ${alienEntry.nature}'''
-                          : 'Peso: ??\nAltura: ??\nNaturaleza: ??',
+${AppLocalizations.of(context).albumWeight}: ${alienEntry.wieght}\n${AppLocalizations.of(context).albumHeight}: ${alienEntry.height}\n${AppLocalizations.of(context).albumNat}: ${alienEntry.nature}'''
+                          : '${AppLocalizations.of(context).albumWeight}: ??\n${AppLocalizations.of(context).albumHeight}: ??\n${AppLocalizations.of(context).albumNat}: ??',
                       style: Theme.of(context).textTheme.headline5,
                       textAlign: TextAlign.center,
                     ),
@@ -274,7 +274,7 @@ Peso: ${alienEntry.wieght}\nAltura: ${alienEntry.height}\nNaturaleza: ${alienEnt
           Text(
             alienEntry.isSolved
                 ? alienEntry.description
-                : 'Aun no existen datos',
+                : AppLocalizations.of(context).albumNoData,
             textAlign: TextAlign.justify,
             style: const TextStyle(
               color: Colors.white,
