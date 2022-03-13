@@ -50,5 +50,7 @@
     "inkyNature": "intrepid",
     "ubbiNature": "shy",
     "tentamoonNature": "shy",
-    "flamfyNature": "aggressive"
+    "flamfyNature": "aggressive",
+    "creditsTitle": "credits",
+    "creditsText": "source code: https://github.com/deus-magna/slide_puzzle_game\n\nsounds effect: https://mixkit.co/\n\nambient music: https://pixabay.com/\n\nbackgrounds and assets: https://www.shutterstock.com/\n"
 }

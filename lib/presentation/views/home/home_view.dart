@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:slide_puzzle_game/core/managers/audio/cubit/audio_cubit.dart';
 import 'package:slide_puzzle_game/l10n/l10n.dart';
 import 'package:slide_puzzle_game/presentation/views/alien_album/alien_album_view.dart';
+import 'package:slide_puzzle_game/presentation/views/credits/credits_view.dart';
 import 'package:slide_puzzle_game/presentation/views/difficulty_view.dart';
 import 'package:slide_puzzle_game/presentation/views/history/history_view.dart';
 import 'package:slide_puzzle_game/presentation/views/home/play_button.dart';
@@ -48,7 +49,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     const duration = 800;
     final size = MediaQuery.of(context).size;
     final constraints = BoxConstraints(
-        maxWidth: (size.width / 2).clamp(200, 300), minHeight: 60);
+        maxWidth: (size.width / 2).clamp(250, 300), minHeight: 60);
 
     return SafeArea(
       child: Column(
@@ -103,6 +104,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
                         title: AppLocalizations.of(context).homeCredits,
                         padding: padding,
                         duration: const Duration(milliseconds: duration * 3),
+                        onPressed: () => _pushView(child: const CreditsView()),
                         constraints: constraints,
                       ),
                       const SizedBox(height: 10),
